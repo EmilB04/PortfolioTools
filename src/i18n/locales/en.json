@@ -1,0 +1,13 @@
+{
+  "nav": {
+    "tools": "Tools"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "language": {
+    "en": "English",
+    "no": "Norwegian"
+  }
+}
