@@ -125,11 +125,11 @@ export function SpeedTest() {
   const handleStart = () => start(mode, limitMs ?? undefined)
 
   const isDark = theme === 'dark'
-  const gridColor = isDark ? '#1f2937' : '#f3f4f6'
-  const axisColor = isDark ? '#6b7280' : '#9ca3af'
-  const tooltipBg = isDark ? '#111827' : '#ffffff'
-  const tooltipBorder = isDark ? '#374151' : '#e5e7eb'
-  const tooltipText = isDark ? '#f3f4f6' : '#111827'
+  const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(28,16,37,0.06)'
+  const axisColor = isDark ? 'rgba(255,255,255,0.35)' : 'rgba(28,16,37,0.4)'
+  const tooltipBg = isDark ? '#000000' : '#f7f4f1'
+  const tooltipBorder = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(28,16,37,0.09)'
+  const tooltipText = isDark ? '#ffffff' : '#1c1025'
 
   const chartData = history.map((m, i) => ({ i, dl: m.download, ul: m.upload }))
 
@@ -143,25 +143,26 @@ export function SpeedTest() {
     <div className="max-w-3xl mx-auto space-y-6">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <div className="p-2.5 rounded-xl bg-blue-500/10 dark:bg-blue-500/10 border border-blue-500/20">
-          <Gauge size={20} className="text-blue-500" />
+        <div className="p-2.5 rounded-xl border" style={{ background: 'var(--accent-bg)', borderColor: 'var(--accent-border)' }}>
+          <Gauge size={20} style={{ color: 'var(--accent)' }} />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">{t('speedTest.title')}</h1>
-          <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Cloudflare · {t(`speedTest.mode${mode === 'continuous' ? 'Continuous' : 'Max'}`)}</p>
+          <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>{t('speedTest.title')}</h1>
+          <p className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>Cloudflare · {t(`speedTest.mode${mode === 'continuous' ? 'Continuous' : 'Max'}`)}</p>
         </div>
       </div>
 
       {/* Mode tabs + primary action */}
       <div className="flex items-center gap-3 flex-wrap">
-        <div className="flex gap-1 p-1 bg-gray-100/80 dark:bg-white/[0.05] rounded-xl border border-gray-200/60 dark:border-white/[0.06]">
+        <div className="flex gap-1 p-1 rounded-xl border" style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
           {(['continuous', 'max'] as const).map((m) => (
             <button key={m} onClick={() => { if (!isRunning) setMode(m) }} disabled={isRunning}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all disabled:cursor-not-allowed ${
-                mode === m
-                  ? 'bg-white dark:bg-white/[0.08] text-gray-900 dark:text-white shadow-sm dark:shadow-none border border-gray-200/80 dark:border-white/10'
-                  : 'text-gray-500 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
-              }`}>
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-150 disabled:cursor-not-allowed"
+              style={{
+                background: mode === m ? 'var(--surface-card)' : 'transparent',
+                color: mode === m ? 'var(--text)' : 'var(--text-subtle)',
+                borderColor: mode === m ? 'var(--border)' : 'transparent',
+              }}>
               {m === 'continuous' ? <Activity size={15} /> : <Zap size={15} />}
               {t(`speedTest.mode${m === 'continuous' ? 'Continuous' : 'Max'}`)}
             </button>
@@ -170,18 +171,21 @@ export function SpeedTest() {
 
         {isRunning ? (
           <button onClick={stop}
-            className="flex items-center gap-2 px-5 py-2 rounded-xl bg-red-600 hover:bg-red-700 active:bg-red-800 text-white text-sm font-semibold transition-colors">
+            className="flex items-center gap-2 px-5 py-2 rounded-xl text-white text-sm font-semibold transition-all duration-150 hover:opacity-90"
+            style={{ background: '#dc2626' }}>
             <Square size={13} fill="currentColor" />{t('speedTest.stop')}
           </button>
         ) : (
           <button onClick={handleStart}
-            className="flex items-center gap-2 px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-sm font-semibold transition-colors">
+            className="flex items-center gap-2 px-5 py-2 rounded-xl text-white text-sm font-semibold transition-all duration-150 hover:opacity-90"
+            style={{ background: 'var(--accent)' }}>
             <Zap size={15} />{t('speedTest.start')}
           </button>
         )}
         {phase === 'complete' && (
           <button onClick={handleStart}
-            className="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            className="px-4 py-2 rounded-xl border text-sm font-medium transition-all duration-150 hover:opacity-80"
+            style={{ borderColor: 'var(--border)', color: 'var(--text-muted)', background: 'var(--surface-card)' }}>
             {t('speedTest.retest')}
           </button>
         )}
@@ -190,16 +194,18 @@ export function SpeedTest() {
       {/* Duration selector */}
       {mode === 'continuous' && !isRunning && (
         <div className="flex items-center gap-3 flex-wrap">
-          <Timer size={14} className="text-gray-400 shrink-0" />
-          <span className="text-sm text-gray-500 dark:text-gray-400 shrink-0">Run for</span>
+          <Timer size={14} style={{ color: 'var(--text-subtle)' }} className="shrink-0" />
+          <span className="text-sm shrink-0" style={{ color: 'var(--text-muted)' }}>Run for</span>
           <div className="flex gap-1.5 flex-wrap">
             {DURATION_OPTIONS.map(({ label, ms }) => (
               <button key={label} onClick={() => setLimitMs(ms)}
-                className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
-                  limitMs === ms
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
-                }`}>{label}
+                className="px-3 py-1 rounded-lg text-sm font-medium transition-all duration-150"
+                style={{
+                  background: limitMs === ms ? 'var(--accent)' : 'var(--surface-card)',
+                  color: limitMs === ms ? '#ffffff' : 'var(--text-muted)',
+                  borderColor: 'var(--border)',
+                }}>
+                {label}
               </button>
             ))}
           </div>
@@ -213,41 +219,42 @@ export function SpeedTest() {
             <>
               {isRunning && (
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: 'var(--accent)' }} />
+                  <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: 'var(--accent)' }} />
                 </span>
               )}
-              <span className={`text-sm ${phase === 'complete' ? 'text-emerald-500 font-medium' : 'text-gray-500 dark:text-gray-400'}`}>
+              <span className="text-sm font-medium" style={{ color: phase === 'complete' ? '#10b981' : 'var(--text-subtle)' }}>
                 {phaseKey(phase) ? t(phaseKey(phase)) : ''}
               </span>
             </>
           )}
         </div>
         {remaining !== null && (
-          <span className="text-sm tabular-nums font-mono text-gray-400">
+          <span className="text-sm tabular-nums font-mono" style={{ color: 'var(--text-subtle)' }}>
             {formatCountdown(remaining)} remaining
           </span>
         )}
       </div>
 
       {/* Metric cards */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-3 sm:gap-4">
         {metrics.map(({ key, value, unit, color, decimals }) => (
-          <div key={key} className="rounded-2xl border border-gray-200/80 dark:border-white/[0.07] bg-white dark:bg-white/[0.03] p-6 flex flex-col items-center gap-1">
-            <p className="text-4xl font-bold tabular-nums transition-colors duration-300"
-              style={{ color: value !== null ? color : undefined }}
-              className={`text-4xl font-bold tabular-nums transition-colors duration-300 ${value !== null ? '' : 'text-gray-300 dark:text-gray-700'}`}>
+          <div key={key} className="rounded-2xl border p-4 sm:p-6 flex flex-col items-center gap-1"
+            style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
+            <p className="text-3xl sm:text-4xl font-bold tabular-nums transition-colors duration-300"
+              style={{ color: value !== null ? color : 'var(--text-subtle)' }}>
               {fmt(value, decimals)}
             </p>
-            <p className="text-xs text-gray-400 uppercase tracking-wider font-medium">{unit}</p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{t(`speedTest.${key}`)}</p>
+            <p className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-subtle)' }}>{unit}</p>
+            <p className="text-xs sm:text-sm mt-1" style={{ color: 'var(--text-muted)' }}>{t(`speedTest.${key}`)}</p>
           </div>
         ))}
       </div>
 
       {/* Combined data card — always visible in continuous mode */}
       {mode === 'continuous' && (
-        <div className="rounded-2xl border border-gray-200/80 dark:border-white/[0.07] bg-white dark:bg-white/[0.03] p-6 space-y-5">
+        <div className="rounded-2xl border p-4 sm:p-6 space-y-5"
+          style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
 
           {/* Two waveforms side by side */}
           <div className="grid grid-cols-2 gap-3">
@@ -269,11 +276,11 @@ export function SpeedTest() {
 
           {/* Chart legend */}
           <div className="flex gap-5">
-            <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+            <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-subtle)' }}>
               <div className="w-4 h-0.5 rounded" style={{ backgroundColor: DL_COLOR }} />
               {t('speedTest.download')}
             </div>
-            <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+            <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-subtle)' }}>
               <div className="w-4 h-0.5 rounded" style={{ backgroundColor: UL_COLOR }} />
               {t('speedTest.upload')}
             </div>
@@ -281,7 +288,7 @@ export function SpeedTest() {
 
           {/* Historical line chart */}
           {history.length === 0 ? (
-            <div className="h-44 flex items-center justify-center text-sm text-gray-400 dark:text-gray-600">
+            <div className="h-44 flex items-center justify-center text-sm" style={{ color: 'var(--text-subtle)' }}>
               {t('speedTest.chartEmpty')}
             </div>
           ) : (

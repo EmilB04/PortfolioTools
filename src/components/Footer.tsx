@@ -9,15 +9,41 @@ function GithubIcon({ size = 14 }: { size?: number }) {
   )
 }
 
+function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border transition-all duration-150"
+      style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}
+      onMouseEnter={e => {
+        e.currentTarget.style.borderColor = 'var(--border-hover)'
+        e.currentTarget.style.color = 'var(--accent)'
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.borderColor = 'var(--border)'
+        e.currentTarget.style.color = 'var(--text-muted)'
+      }}
+    >
+      {children}
+    </a>
+  )
+}
+
 export function Footer() {
   const { t } = useTranslation()
   const year = new Date().getFullYear()
 
   return (
-    <footer className="px-6 lg:px-8 pb-6 pt-4">
-      <div className="max-w-5xl mx-auto rounded-2xl border border-gray-200/80 dark:border-white/[0.07] bg-white/60 dark:bg-white/[0.03] backdrop-blur-sm px-6 py-4 flex flex-wrap items-center justify-between gap-4">
-        <p className="text-xs text-gray-400 dark:text-gray-500">
-          © {year} <span className="font-semibold text-gray-600 dark:text-gray-400">Emil Berglund</span>
+    <footer className="px-4 sm:px-6 lg:px-8 pb-6 pt-4">
+      <div
+        className="max-w-5xl mx-auto rounded-2xl border backdrop-blur-sm px-5 py-4 flex flex-wrap items-center justify-between gap-3"
+        style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
+      >
+        <p className="text-xs" style={{ color: 'var(--text-subtle)' }}>
+          © {year}{' '}
+          <span className="font-semibold" style={{ color: 'var(--text-muted)' }}>Emil Berglund</span>
           <span className="mx-2 opacity-40">·</span>
           {t('footer.madeWith')}
           <span className="mx-2 opacity-40">·</span>
@@ -26,30 +52,21 @@ export function Footer() {
             href="https://claude.ai/code"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium text-gray-500 dark:text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors duration-150"
+            className="font-medium transition-colors duration-150"
+            style={{ color: 'var(--text-muted)' }}
+            onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
+            onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
           >
             Claude Code
           </a>
         </p>
         <div className="flex items-center gap-2">
-          <a
-            href="https://github.com/EmilB04"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-gray-300 dark:hover:border-white/20 hover:bg-gray-50 dark:hover:bg-white/[0.06] transition-all duration-150"
-          >
-            <GithubIcon size={13} />
-            GitHub
-          </a>
-          <a
-            href="https://emilb.no"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-gray-300 dark:hover:border-white/20 hover:bg-gray-50 dark:hover:bg-white/[0.06] transition-all duration-150"
-          >
-            <ExternalLink size={13} />
-            Portfolio
-          </a>
+          <FooterLink href="https://github.com/EmilB04">
+            <GithubIcon size={13} /> GitHub
+          </FooterLink>
+          <FooterLink href="https://emilb.no">
+            <ExternalLink size={13} /> Portfolio
+          </FooterLink>
         </div>
       </div>
     </footer>

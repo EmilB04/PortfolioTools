@@ -1,10 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ── Design tokens (dark-first, matches PortfolioV2) ─────────── */
+:root {
+  --accent:        #f1376e;
+  --accent-bg:     rgba(241, 55, 110, 0.12);
+  --accent-border: rgba(241, 55, 110, 0.4);
+
+  --bg:            #000000;
+  --surface:       rgba(1, 6, 38, 0.65);
+  --surface-card:  rgba(1, 6, 38, 0.35);
+  --text:          #ffffff;
+  --text-muted:    rgba(255, 255, 255, 0.72);
+  --text-subtle:   rgba(255, 255, 255, 0.45);
+  --border:        rgba(255, 255, 255, 0.08);
+  --border-hover:  rgba(241, 55, 110, 0.4);
+  --stars-bg:      radial-gradient(circle at bottom, #020111 0%, #000000 100%);
+  --shadow:        rgba(0,0,0,0.5) 0 10px 20px -4px;
+}
+
+html.light {
+  --bg:            #f7f4f1;
+  --surface:       rgba(255, 252, 248, 0.88);
+  --surface-card:  rgba(255, 252, 248, 0.97);
+  --text:          #1c1025;
+  --text-muted:    rgba(28, 16, 37, 0.68);
+  --text-subtle:   rgba(28, 16, 37, 0.44);
+  --border:        rgba(28, 16, 37, 0.09);
+  --border-hover:  rgba(241, 55, 110, 0.4);
+  --stars-bg:      radial-gradient(ellipse at bottom, #e8cdd8 0%, #ede4f0 45%, #f7f4f1 100%);
+  --shadow:        rgba(0,0,0,0.08) 0 10px 20px -4px;
+}
+
+/* ── Base ───────────────────────────────────────────────────── */
 @layer base {
-  :root {
-    --accent: #3b82f6;
-  }
+  *, *::before, *::after { box-sizing: border-box; }
+
   html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  ::selection {
+    background: var(--accent-bg);
+    color: var(--text);
+  }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent-border); }
+
+  :focus-visible {
+    outline: 2px solid var(--accent-border);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+/* ── Starfield canvas ───────────────────────────────────────── */
+.stars-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--stars-bg);
+  transition: background 0.4s ease;
+}
+
+/* ── Custom utilities ───────────────────────────────────────── */
+@layer utilities {
+  .bg-surface      { background: var(--surface); }
+  .bg-surface-card { background: var(--surface-card); }
+  .border-theme    { border-color: var(--border); }
+  .text-theme      { color: var(--text); }
+  .text-muted      { color: var(--text-muted); }
+  .text-subtle     { color: var(--text-subtle); }
+  .accent-color    { color: var(--accent); }
 }

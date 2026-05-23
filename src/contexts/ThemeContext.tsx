@@ -15,7 +15,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   )
 
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark')
+    const html = document.documentElement
+    if (theme === 'dark') {
+      html.classList.add('dark')
+      html.classList.remove('light')
+    } else {
+      html.classList.remove('dark')
+      html.classList.add('light')
+    }
     localStorage.setItem('theme', theme)
   }, [theme])
 
