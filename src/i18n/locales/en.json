@@ -43,6 +43,9 @@
       "badge": "Real-time"
     }
   },
+  "footer": {
+    "madeWith": "Built with React & TypeScript"
+  },
   "fileConverter": {
     "title": "File Converter",
     "dropzone": "Drop a file here or click to browse",
@@ -60,14 +63,32 @@
   "speedTest": {
     "title": "Speed Test",
     "modeContinuous": "Continuous Monitor",
-    "modeMax": "Max Speed (one-shot)",
+    "modeMax": "Max Speed",
     "download": "Download",
     "upload": "Upload",
     "ping": "Ping",
     "start": "Start Test",
     "stop": "Stop",
+    "retest": "Run Again",
     "mbps": "Mbps",
     "ms": "ms",
-    "comingSoon": "Coming soon"
+    "chartEmpty": "Start a test to see live results here",
+    "phase": {
+      "warmup": "Warming up...",
+      "ping": "Measuring latency...",
+      "download": "Measuring download...",
+      "upload": "Measuring upload...",
+      "complete": "Test complete"
+    },
+    "summary": {
+      "title": "Session Summary",
+      "cycles": "{{count}} cycle",
+      "cycles_other": "{{count}} cycles",
+      "avgDownload": "Avg. Download",
+      "avgUpload": "Avg. Upload",
+      "avgPing": "Avg. Ping",
+      "peakDownload": "Peak Download",
+      "peakUpload": "Peak Upload"
+    }
   }
 }

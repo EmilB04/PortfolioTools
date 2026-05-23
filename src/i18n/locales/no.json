@@ -43,6 +43,9 @@
       "badge": "Sanntid"
     }
   },
+  "footer": {
+    "madeWith": "Bygd med React & TypeScript"
+  },
   "fileConverter": {
     "title": "Filkonverterer",
     "dropzone": "Slipp en fil her eller klikk for å bla",
@@ -60,14 +63,32 @@
   "speedTest": {
     "title": "Hastighetstest",
     "modeContinuous": "Kontinuerlig overvåking",
-    "modeMax": "Maks hastighet (enkel)",
+    "modeMax": "Maks hastighet",
     "download": "Nedlasting",
     "upload": "Opplasting",
     "ping": "Ping",
     "start": "Start test",
     "stop": "Stopp",
+    "retest": "Kjør igjen",
     "mbps": "Mbps",
     "ms": "ms",
-    "comingSoon": "Kommer snart"
+    "chartEmpty": "Start en test for å se live resultater her",
+    "phase": {
+      "warmup": "Varmer opp...",
+      "ping": "Måler forsinkelse...",
+      "download": "Måler nedlasting...",
+      "upload": "Måler opplasting...",
+      "complete": "Test fullført"
+    },
+    "summary": {
+      "title": "Øktoppsummering",
+      "cycles": "{{count}} syklus",
+      "cycles_other": "{{count}} sykluser",
+      "avgDownload": "Snitt nedlasting",
+      "avgUpload": "Snitt opplasting",
+      "avgPing": "Snitt ping",
+      "peakDownload": "Topp nedlasting",
+      "peakUpload": "Topp opplasting"
+    }
   }
 }
