@@ -17,13 +17,18 @@
     "title": "Portfolio Tools",
     "subtitle": "A collection of browser-based utilities — no uploads, no tracking.",
     "openTool": "Open Tool",
+    "comingSoon": "Coming soon",
+    "runSpeedTest": "Run Speed Test",
+    "tools": "Tools",
     "stats": {
       "formatsSupported": "Formats supported",
       "filesConverted": "Files converted today",
       "filesCompressed": "Files compressed today",
       "avgCompression": "Avg. compression ratio",
-      "avgSpeed": "Avg. speed today",
-      "testsRun": "Tests run today"
+      "avgSpeed": "Avg. download today",
+      "avgDownload": "Avg. download",
+      "avgUpload": "Avg. upload",
+      "testsRun": "Tests today"
     }
   },
   "tools": {

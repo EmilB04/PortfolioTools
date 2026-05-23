@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { saveResult } from '../utils/speedStorage'
 
 export type TestPhase = 'idle' | 'warmup' | 'ping' | 'download' | 'upload' | 'complete'
 
@@ -205,12 +206,14 @@ export function useSpeedTest() {
         if (signal.aborted) break
         setCurrent(c => ({ ...c, upload: +upload.toFixed(1) }))
 
-        setHistory(prev => [...prev.slice(-499), {
+        const m = {
           timestamp: Date.now(),
           download: +download.toFixed(1),
           upload: +upload.toFixed(1),
           ping: +ping.toFixed(0),
-        }])
+        }
+        setHistory(prev => [...prev.slice(-499), m])
+        saveResult(m)
 
         await sleep(3000, signal)
       } catch {
@@ -259,7 +262,9 @@ export function useSpeedTest() {
       if (signal.aborted) return
       setCurrent(c => ({ ...c, upload: +upload.toFixed(1) }))
 
-      setHistory([{ timestamp: Date.now(), download: +download.toFixed(1), upload: +upload.toFixed(1), ping: +ping.toFixed(0) }])
+      const m = { timestamp: Date.now(), download: +download.toFixed(1), upload: +upload.toFixed(1), ping: +ping.toFixed(0) }
+      setHistory([m])
+      saveResult(m)
       setPhase('complete')
     } catch {
       if (!signal.aborted) setPhase('idle')

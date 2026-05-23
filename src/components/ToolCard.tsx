@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Clock } from 'lucide-react'
 
 interface Stat {
   label: string
@@ -16,18 +16,24 @@ interface ToolCardProps {
   href: string
   accentColor: string
   accentBg: string
+  comingSoon?: boolean
 }
 
-export function ToolCard({ title, description, badge, icon, stats, href, accentColor, accentBg }: ToolCardProps) {
+export function ToolCard({ title, description, badge, icon, stats, href, accentColor, accentBg, comingSoon }: ToolCardProps) {
   const { t } = useTranslation()
 
   return (
     <Link
-      to={href}
-      className="group relative flex flex-col rounded-2xl border border-gray-200/80 dark:border-white/[0.07] bg-white dark:bg-white/[0.03] overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/[0.07] dark:hover:shadow-black/40 hover:border-gray-300/80 dark:hover:border-white/[0.12]"
+      to={comingSoon ? '#' : href}
+      onClick={comingSoon ? (e) => e.preventDefault() : undefined}
+      className={`group relative flex flex-col rounded-2xl border border-gray-200/80 dark:border-white/[0.07] bg-white dark:bg-white/[0.03] overflow-hidden transition-all duration-200 ${
+        comingSoon
+          ? 'cursor-default opacity-60'
+          : 'hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/[0.07] dark:hover:shadow-black/40 hover:border-gray-300/80 dark:hover:border-white/[0.12]'
+      }`}
     >
       {/* Top accent line */}
-      <div className="h-px w-full" style={{ background: `linear-gradient(90deg, transparent, ${accentColor}80, transparent)` }} />
+      <div className="h-px w-full" style={{ background: `linear-gradient(90deg, transparent, ${accentColor}${comingSoon ? '40' : '80'}, transparent)` }} />
 
       <div className="p-6 flex-1 flex flex-col gap-5">
         {/* Header row */}
@@ -62,10 +68,19 @@ export function ToolCard({ title, description, badge, icon, stats, href, accentC
 
       {/* CTA footer */}
       <div className="px-6 py-3.5 border-t border-gray-100 dark:border-white/[0.05] flex items-center justify-between bg-gray-50/50 dark:bg-white/[0.02]">
-        <span className="text-[13px] font-medium" style={{ color: accentColor }}>
-          {t('dashboard.openTool')}
-        </span>
-        <ArrowRight size={14} style={{ color: accentColor }} className="transition-transform duration-150 group-hover:translate-x-0.5" />
+        {comingSoon ? (
+          <span className="inline-flex items-center gap-1.5 text-[13px] font-medium text-gray-400 dark:text-gray-600">
+            <Clock size={13} />
+            {t('dashboard.comingSoon')}
+          </span>
+        ) : (
+          <>
+            <span className="text-[13px] font-medium" style={{ color: accentColor }}>
+              {t('dashboard.openTool')}
+            </span>
+            <ArrowRight size={14} style={{ color: accentColor }} className="transition-transform duration-150 group-hover:translate-x-0.5" />
+          </>
+        )}
       </div>
     </Link>
   )

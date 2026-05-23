@@ -17,13 +17,18 @@
     "title": "Portfolio Tools",
     "subtitle": "En samling nettleserbaserte verktøy — ingen opplasting, ingen sporing.",
     "openTool": "Åpne verktøy",
+    "comingSoon": "Kommer snart",
+    "runSpeedTest": "Kjør hastighetstest",
+    "tools": "Verktøy",
     "stats": {
       "formatsSupported": "Formater støttet",
       "filesConverted": "Filer konvertert i dag",
       "filesCompressed": "Filer komprimert i dag",
       "avgCompression": "Snitt komprimeringsgrad",
-      "avgSpeed": "Snitthastighet i dag",
-      "testsRun": "Tester kjørt i dag"
+      "avgSpeed": "Snitt nedlasting i dag",
+      "avgDownload": "Snitt nedlasting",
+      "avgUpload": "Snitt opplasting",
+      "testsRun": "Tester i dag"
     }
   },
   "tools": {

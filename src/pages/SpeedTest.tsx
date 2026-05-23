@@ -152,19 +152,39 @@ export function SpeedTest() {
         </div>
       </div>
 
-      {/* Mode tabs */}
-      <div className="flex gap-1 p-1 bg-gray-100/80 dark:bg-white/[0.05] rounded-xl w-fit border border-gray-200/60 dark:border-white/[0.06]">
-        {(['continuous', 'max'] as const).map((m) => (
-          <button key={m} onClick={() => { if (!isRunning) setMode(m) }} disabled={isRunning}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all disabled:cursor-not-allowed ${
-              mode === m
-                ? 'bg-white dark:bg-white/[0.08] text-gray-900 dark:text-white shadow-sm dark:shadow-none border border-gray-200/80 dark:border-white/10'
-                : 'text-gray-500 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
-            }`}>
-            {m === 'continuous' ? <Activity size={15} /> : <Zap size={15} />}
-            {t(`speedTest.mode${m === 'continuous' ? 'Continuous' : 'Max'}`)}
+      {/* Mode tabs + primary action */}
+      <div className="flex items-center gap-3 flex-wrap">
+        <div className="flex gap-1 p-1 bg-gray-100/80 dark:bg-white/[0.05] rounded-xl border border-gray-200/60 dark:border-white/[0.06]">
+          {(['continuous', 'max'] as const).map((m) => (
+            <button key={m} onClick={() => { if (!isRunning) setMode(m) }} disabled={isRunning}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all disabled:cursor-not-allowed ${
+                mode === m
+                  ? 'bg-white dark:bg-white/[0.08] text-gray-900 dark:text-white shadow-sm dark:shadow-none border border-gray-200/80 dark:border-white/10'
+                  : 'text-gray-500 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+              }`}>
+              {m === 'continuous' ? <Activity size={15} /> : <Zap size={15} />}
+              {t(`speedTest.mode${m === 'continuous' ? 'Continuous' : 'Max'}`)}
+            </button>
+          ))}
+        </div>
+
+        {isRunning ? (
+          <button onClick={stop}
+            className="flex items-center gap-2 px-5 py-2 rounded-xl bg-red-600 hover:bg-red-700 active:bg-red-800 text-white text-sm font-semibold transition-colors">
+            <Square size={13} fill="currentColor" />{t('speedTest.stop')}
           </button>
-        ))}
+        ) : (
+          <button onClick={handleStart}
+            className="flex items-center gap-2 px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-sm font-semibold transition-colors">
+            <Zap size={15} />{t('speedTest.start')}
+          </button>
+        )}
+        {phase === 'complete' && (
+          <button onClick={handleStart}
+            className="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            {t('speedTest.retest')}
+          </button>
+        )}
       </div>
 
       {/* Duration selector */}
@@ -322,26 +342,6 @@ export function SpeedTest() {
         )
       })()}
 
-      {/* Actions */}
-      <div className="flex items-center gap-3">
-        {isRunning ? (
-          <button onClick={stop}
-            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold transition-colors">
-            <Square size={15} fill="currentColor" />{t('speedTest.stop')}
-          </button>
-        ) : (
-          <button onClick={handleStart}
-            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold transition-colors">
-            <Zap size={17} />{t('speedTest.start')}
-          </button>
-        )}
-        {phase === 'complete' && (
-          <button onClick={handleStart}
-            className="px-5 py-3 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-            {t('speedTest.retest')}
-          </button>
-        )}
-      </div>
     </div>
   )
 }
