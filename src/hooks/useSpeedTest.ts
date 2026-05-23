@@ -39,9 +39,8 @@ async function measurePing(signal: AbortSignal): Promise<number> {
     const t0 = performance.now()
     await fetch(url, { cache: 'no-store', signal })
     const wallMs = performance.now() - t0
-    const entry = (
-      performance.getEntriesByName(url, 'resource') as PerformanceResourceTiming[]
-    ).at(-1)
+    const _entries = performance.getEntriesByName(url, 'resource') as PerformanceResourceTiming[]
+    const entry = _entries[_entries.length - 1]
     samples.push(
       entry && entry.requestStart > 0 && entry.responseStart > 0
         ? entry.responseStart - entry.requestStart

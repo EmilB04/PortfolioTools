@@ -45,7 +45,7 @@ function Waveform({
   const BARS = 60
   const max = Math.max(10, ...samples) * 1.15
   const pad = Math.max(0, BARS - samples.length)
-  const latest = samples.at(-1) ?? null
+  const latest = samples[samples.length - 1] ?? null
   const visible = samples.slice(-BARS)
 
   return (
@@ -61,21 +61,19 @@ function Waveform({
           ) : (
             <span className="h-1.5 w-1.5 rounded-full bg-gray-300 dark:bg-gray-600" />
           )}
-          <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: isActive ? color : undefined }}
-            className={`text-xs font-semibold uppercase tracking-wider ${isActive ? '' : 'text-gray-400 dark:text-gray-600'}`}>
+          <span className={`text-xs font-semibold uppercase tracking-wider ${isActive ? '' : 'text-gray-400 dark:text-gray-600'}`}
+            style={{ color: isActive ? color : undefined }}>
             {label}
           </span>
         </div>
-        <span className="text-xs font-mono font-semibold tabular-nums"
-          style={{ color: latest !== null ? color : undefined }}
-          className={latest !== null ? '' : 'text-gray-300 dark:text-gray-700'}>
+        <span className={`text-xs font-mono font-semibold tabular-nums ${latest !== null ? '' : 'text-gray-300 dark:text-gray-700'}`}
+          style={{ color: latest !== null ? color : undefined }}>
           {latest !== null ? `${latest.toFixed(1)}` : '--'}<span className="text-gray-400 font-normal"> Mbps</span>
         </span>
       </div>
 
-      <div className="relative flex items-end gap-px rounded-lg px-0.5 py-0.5"
-        style={{ height: 52, backgroundColor: isActive ? bgColor : undefined }}
-        className={`relative flex items-end gap-px rounded-lg px-0.5 py-0.5 ${isActive ? '' : 'bg-gray-50 dark:bg-gray-800/40'}`}>
+      <div className={`relative flex items-end gap-px rounded-lg px-0.5 py-0.5 ${isActive ? '' : 'bg-gray-50 dark:bg-gray-800/40'}`}
+        style={{ height: 52, backgroundColor: isActive ? bgColor : undefined }}>
         {/* midline */}
         <div className="absolute left-0.5 right-0.5 border-t border-dashed border-gray-200 dark:border-gray-700" style={{ top: '50%' }} />
         {/* padding bars */}
