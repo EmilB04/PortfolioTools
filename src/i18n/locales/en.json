@@ -1,6 +1,9 @@
 {
   "nav": {
-    "tools": "Tools"
+    "dashboard": "Dashboard",
+    "fileConverter": "File Converter",
+    "fileCompress": "File Compress",
+    "speedTest": "Speed Test"
   },
   "theme": {
     "light": "Light",
@@ -9,5 +12,62 @@
   "language": {
     "en": "English",
     "no": "Norwegian"
+  },
+  "dashboard": {
+    "title": "Portfolio Tools",
+    "subtitle": "A collection of browser-based utilities — no uploads, no tracking.",
+    "openTool": "Open Tool",
+    "stats": {
+      "formatsSupported": "Formats supported",
+      "filesConverted": "Files converted today",
+      "filesCompressed": "Files compressed today",
+      "avgCompression": "Avg. compression ratio",
+      "avgSpeed": "Avg. speed today",
+      "testsRun": "Tests run today"
+    }
+  },
+  "tools": {
+    "fileConverter": {
+      "name": "File Converter",
+      "description": "Convert between 50+ file formats instantly in your browser. Images, documents, audio and more.",
+      "badge": "50+ formats"
+    },
+    "fileCompress": {
+      "name": "File Compress",
+      "description": "Reduce file sizes without sacrificing quality. Supports images, PDFs and ZIP archives.",
+      "badge": "Lossless"
+    },
+    "speedTest": {
+      "name": "Speed Test",
+      "description": "Measure your real-time download, upload and latency. Continuous monitoring or one-shot max speed.",
+      "badge": "Real-time"
+    }
+  },
+  "fileConverter": {
+    "title": "File Converter",
+    "dropzone": "Drop a file here or click to browse",
+    "selectFormat": "Select output format",
+    "convert": "Convert",
+    "comingSoon": "Coming soon"
+  },
+  "fileCompress": {
+    "title": "File Compress",
+    "dropzone": "Drop a file here or click to browse",
+    "quality": "Quality",
+    "compress": "Compress",
+    "comingSoon": "Coming soon"
+  },
+  "speedTest": {
+    "title": "Speed Test",
+    "modeContinuous": "Continuous Monitor",
+    "modeMax": "Max Speed (one-shot)",
+    "download": "Download",
+    "upload": "Upload",
+    "ping": "Ping",
+    "start": "Start Test",
+    "stop": "Stop",
+    "mbps": "Mbps",
+    "ms": "ms",
+    "comingSoon": "Coming soon"
   }
 }

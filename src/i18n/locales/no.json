@@ -1,6 +1,9 @@
 {
   "nav": {
-    "tools": "Verktøy"
+    "dashboard": "Oversikt",
+    "fileConverter": "Filkonverterer",
+    "fileCompress": "Filkomprimering",
+    "speedTest": "Hastighetstest"
   },
   "theme": {
     "light": "Lys",
@@ -9,5 +12,62 @@
   "language": {
     "en": "Engelsk",
     "no": "Norsk"
+  },
+  "dashboard": {
+    "title": "Portfolio Tools",
+    "subtitle": "En samling nettleserbaserte verktøy — ingen opplasting, ingen sporing.",
+    "openTool": "Åpne verktøy",
+    "stats": {
+      "formatsSupported": "Formater støttet",
+      "filesConverted": "Filer konvertert i dag",
+      "filesCompressed": "Filer komprimert i dag",
+      "avgCompression": "Snitt komprimeringsgrad",
+      "avgSpeed": "Snitthastighet i dag",
+      "testsRun": "Tester kjørt i dag"
+    }
+  },
+  "tools": {
+    "fileConverter": {
+      "name": "Filkonverterer",
+      "description": "Konverter mellom 50+ filformater direkte i nettleseren. Bilder, dokumenter, lyd og mer.",
+      "badge": "50+ formater"
+    },
+    "fileCompress": {
+      "name": "Filkomprimering",
+      "description": "Reduser filstørrelser uten å miste kvalitet. Støtter bilder, PDF-er og ZIP-arkiver.",
+      "badge": "Tapsfri"
+    },
+    "speedTest": {
+      "name": "Hastighetstest",
+      "description": "Mål nedlasting, opplasting og forsinkelse i sanntid. Kontinuerlig overvåking eller enkel makstest.",
+      "badge": "Sanntid"
+    }
+  },
+  "fileConverter": {
+    "title": "Filkonverterer",
+    "dropzone": "Slipp en fil her eller klikk for å bla",
+    "selectFormat": "Velg utdataformat",
+    "convert": "Konverter",
+    "comingSoon": "Kommer snart"
+  },
+  "fileCompress": {
+    "title": "Filkomprimering",
+    "dropzone": "Slipp en fil her eller klikk for å bla",
+    "quality": "Kvalitet",
+    "compress": "Komprimer",
+    "comingSoon": "Kommer snart"
+  },
+  "speedTest": {
+    "title": "Hastighetstest",
+    "modeContinuous": "Kontinuerlig overvåking",
+    "modeMax": "Maks hastighet (enkel)",
+    "download": "Nedlasting",
+    "upload": "Opplasting",
+    "ping": "Ping",
+    "start": "Start test",
+    "stop": "Stopp",
+    "mbps": "Mbps",
+    "ms": "ms",
+    "comingSoon": "Kommer snart"
   }
 }
