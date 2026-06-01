@@ -218,6 +218,7 @@ export function FileConverter() {
   const { t } = useTranslation()
   const [conv, setConv] = useState<ConvState>({ kind: 'idle' })
   const [dragging, setDragging] = useState(false)
+  const [hovering, setHovering] = useState(false)
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null)
   const [estSize, setEstSize] = useState<number | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -296,7 +297,7 @@ export function FileConverter() {
   }, [t])
 
   const onDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault(); setDragging(false)
+    e.preventDefault(); setDragging(false); setHovering(false)
     const file = e.dataTransfer.files[0]
     if (file) handleFile(file)
   }, [handleFile])
@@ -371,19 +372,34 @@ export function FileConverter() {
           onDrop={onDrop}
           onDragOver={e => { e.preventDefault(); setDragging(true) }}
           onDragLeave={() => setDragging(false)}
+          onMouseEnter={() => setHovering(true)}
+          onMouseLeave={() => setHovering(false)}
           onClick={() => inputRef.current?.click()}
-          className="rounded-2xl border-2 border-dashed p-14 flex flex-col items-center gap-4 cursor-pointer transition-all duration-200 select-none"
+          className="rounded-2xl border-2 border-dashed p-14 flex flex-col items-center gap-4 cursor-pointer select-none"
           style={{
-            borderColor: dragging ? '#f97316' : 'var(--border)',
-            background:  dragging ? 'rgba(249,115,22,0.05)' : 'var(--surface)',
+            borderColor: dragging ? '#f97316' : hovering ? 'rgba(249,115,22,0.55)' : 'var(--border)',
+            background:  dragging ? 'rgba(249,115,22,0.06)' : hovering ? 'rgba(249,115,22,0.03)' : 'var(--surface)',
+            transition: 'border-color 0.18s ease, background 0.18s ease',
           }}
         >
-          <div className="p-4 rounded-full transition-colors duration-200"
-            style={{ background: dragging ? 'rgba(249,115,22,0.15)' : 'var(--surface-card)' }}>
-            <Upload size={28} style={{ color: dragging ? '#f97316' : 'var(--text-subtle)' }} />
+          <div className="p-4 rounded-full"
+            style={{
+              background: dragging ? 'rgba(249,115,22,0.18)' : hovering ? 'rgba(249,115,22,0.10)' : 'var(--surface-card)',
+              transition: 'background 0.18s ease, transform 0.18s ease',
+              transform: (dragging || hovering) ? 'scale(1.08)' : 'scale(1)',
+            }}>
+            <Upload size={28}
+              style={{
+                color: dragging ? '#f97316' : hovering ? 'rgba(249,115,22,0.75)' : 'var(--text-subtle)',
+                transition: 'color 0.18s ease',
+              }} />
           </div>
           <div className="text-center">
-            <p className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-sm font-medium"
+              style={{
+                color: (dragging || hovering) ? 'var(--text)' : 'var(--text-muted)',
+                transition: 'color 0.18s ease',
+              }}>
               {t('fileConverter.dropzone')}
             </p>
             <p className="text-xs mt-1.5" style={{ color: 'var(--text-subtle)' }}>
