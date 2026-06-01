@@ -34,8 +34,8 @@
   "tools": {
     "fileConverter": {
       "name": "Filkonverterer",
-      "description": "Konverter mellom 50+ filformater direkte i nettleseren. Bilder, dokumenter, lyd og mer.",
-      "badge": "50+ formater"
+      "description": "Konverter bilder (PNG, JPEG, WebP, GIF, BMP, SVG) og datafiler (JSON, CSV, TSV) — direkte i nettleseren.",
+      "badge": "10+ formater"
     },
     "fileCompress": {
       "name": "Filkomprimering",
@@ -54,9 +54,14 @@
   "fileConverter": {
     "title": "Filkonverterer",
     "dropzone": "Slipp en fil her eller klikk for å bla",
+    "dropzoneFormats": "PNG · JPEG · WebP · GIF · BMP · SVG · JSON · CSV",
     "selectFormat": "Velg utdataformat",
     "convert": "Konverter",
-    "comingSoon": "Kommer snart"
+    "converting": "Konverterer...",
+    "download": "Last ned",
+    "quality": "Kvalitet",
+    "clear": "Konverter en annen fil",
+    "unsupported": "Format støttes ikke"
   },
   "fileCompress": {
     "title": "Filkomprimering",

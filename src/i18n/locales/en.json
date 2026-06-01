@@ -34,8 +34,8 @@
   "tools": {
     "fileConverter": {
       "name": "File Converter",
-      "description": "Convert between 50+ file formats instantly in your browser. Images, documents, audio and more.",
-      "badge": "50+ formats"
+      "description": "Convert images (PNG, JPEG, WebP, GIF, BMP, SVG) and data files (JSON, CSV, TSV) — all in your browser.",
+      "badge": "10+ formats"
     },
     "fileCompress": {
       "name": "File Compress",
@@ -54,9 +54,14 @@
   "fileConverter": {
     "title": "File Converter",
     "dropzone": "Drop a file here or click to browse",
+    "dropzoneFormats": "PNG · JPEG · WebP · GIF · BMP · SVG · JSON · CSV",
     "selectFormat": "Select output format",
     "convert": "Convert",
-    "comingSoon": "Coming soon"
+    "converting": "Converting...",
+    "download": "Download",
+    "quality": "Quality",
+    "clear": "Convert another file",
+    "unsupported": "Format not supported"
   },
   "fileCompress": {
     "title": "File Compress",

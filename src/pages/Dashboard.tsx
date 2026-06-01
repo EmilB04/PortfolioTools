@@ -49,10 +49,10 @@ export function Dashboard() {
       accentColor: '#f97316',
       accentBg: 'rgba(249,115,22,0.12)',
       icon: <FileInput size={20} color="#f97316" />,
-      comingSoon: true,
+      comingSoon: false,
       stats: [
-        { label: t('dashboard.stats.formatsSupported'), value: '50+' },
-        { label: 'Images, docs, audio', value: '···' },
+        { label: t('dashboard.stats.formatsSupported'), value: '10+' },
+        { label: 'Images · JSON · CSV · TSV', value: '0 uploads' },
       ],
     },
     {
