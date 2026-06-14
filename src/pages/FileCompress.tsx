@@ -254,7 +254,7 @@ export function FileCompress() {
   const [estSize, setEstSize]         = useState<number | null>(null)
   const inputRef    = useRef<HTMLInputElement>(null)
   const canvasCache = useRef<{ file: File; canvas: HTMLCanvasElement } | null>(null)
-  const estTimer    = useRef<ReturnType<typeof setTimeout>>()
+  const estTimer    = useRef<ReturnType<typeof setTimeout>>(undefined)
 
   // Derived
   const mime       = state.kind !== 'idle' ? state.mime : ''
@@ -365,7 +365,7 @@ export function FileCompress() {
         canvas = await loadToCanvas(state.file)
         canvasCache.current = { file: state.file, canvas }
       }
-      const { outputMime: om, quality: q, blob } = await autoCompress(canvas, state.file.size)
+      const { outputMime: om, blob } = await autoCompress(canvas, state.file.size)
       const url = URL.createObjectURL(blob)
       setDownloadUrl(prev => { if (prev) URL.revokeObjectURL(prev); return url })
       setEstSize(blob.size)

@@ -223,7 +223,7 @@ export function FileConverter() {
   const [estSize, setEstSize] = useState<number | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const canvasCache = useRef<{ file: File; canvas: HTMLCanvasElement } | null>(null)
-  const estTimer = useRef<ReturnType<typeof setTimeout>>()
+  const estTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
 
   // Derived values for effects
   const isSelected = conv.kind === 'selected'
