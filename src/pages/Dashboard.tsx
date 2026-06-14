@@ -49,10 +49,10 @@ export function Dashboard() {
       accentColor: '#f97316',
       accentBg: 'rgba(249,115,22,0.12)',
       icon: <FileInput size={20} color="#f97316" />,
-      comingSoon: true,
+      comingSoon: false,
       stats: [
-        { label: t('dashboard.stats.formatsSupported'), value: '50+' },
-        { label: 'Images, docs, audio', value: '···' },
+        { label: t('dashboard.stats.formatsSupported'), value: '10+' },
+        { label: 'Images · JSON · CSV · TSV', value: '0 uploads' },
       ],
     },
     {
@@ -63,10 +63,10 @@ export function Dashboard() {
       accentColor: '#10b981',
       accentBg: 'rgba(16,185,129,0.12)',
       icon: <FileArchive size={20} color="#10b981" />,
-      comingSoon: true,
+      comingSoon: false,
       stats: [
-        { label: 'Formats', value: 'JPG, PDF, ZIP' },
-        { label: 'Quality loss', value: 'None' },
+        { label: 'Images · Any file', value: 'Gzip' },
+        { label: 'Max quality loss', value: '0%' },
       ],
     },
   ]

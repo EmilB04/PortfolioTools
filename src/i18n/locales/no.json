@@ -34,13 +34,13 @@
   "tools": {
     "fileConverter": {
       "name": "Filkonverterer",
-      "description": "Konverter mellom 50+ filformater direkte i nettleseren. Bilder, dokumenter, lyd og mer.",
-      "badge": "50+ formater"
+      "description": "Konverter bilder (PNG, JPEG, WebP, GIF, BMP, SVG) og datafiler (JSON, CSV, TSV) — direkte i nettleseren.",
+      "badge": "10+ formater"
     },
     "fileCompress": {
       "name": "Filkomprimering",
-      "description": "Reduser filstørrelser uten å miste kvalitet. Støtter bilder, PDF-er og ZIP-arkiver.",
-      "badge": "Tapsfri"
+      "description": "Komprimer bilder (JPEG, PNG, WebP, GIF, BMP, SVG) med kvalitetskontroll, eller Gzip hvilken som helst fil — direkte i nettleseren.",
+      "badge": "Bilder + Gzip"
     },
     "speedTest": {
       "name": "Hastighetstest",
@@ -54,16 +54,32 @@
   "fileConverter": {
     "title": "Filkonverterer",
     "dropzone": "Slipp en fil her eller klikk for å bla",
+    "dropzoneFormats": "PNG · JPEG · WebP · GIF · BMP · SVG · JSON · CSV",
     "selectFormat": "Velg utdataformat",
     "convert": "Konverter",
-    "comingSoon": "Kommer snart"
+    "converting": "Konverterer...",
+    "download": "Last ned",
+    "quality": "Kvalitet",
+    "clear": "Konverter en annen fil",
+    "unsupported": "Format støttes ikke"
   },
   "fileCompress": {
     "title": "Filkomprimering",
-    "dropzone": "Slipp en fil her eller klikk for å bla",
+    "dropzone": "Slipp hvilken som helst fil her eller klikk for å bla",
+    "dropzoneFormats": "Bilder (JPEG · PNG · WebP · GIF · BMP · SVG) · Alle filer via Gzip",
     "quality": "Kvalitet",
     "compress": "Komprimer",
-    "comingSoon": "Kommer snart"
+    "compressing": "Komprimerer...",
+    "download": "Last ned",
+    "clear": "Komprimer en annen fil",
+    "gzipLabel": "Tapsfri Gzip-komprimering",
+    "gzipUnsupported": "Gzip støttes ikke i denne nettleseren",
+    "smallest": "Minst",
+    "bestQuality": "Best kvalitet",
+    "formatChange": "formatendring",
+    "pngNote": "PNG bruker tapsfri komprimering — bytt til WebP eller JPEG for mindre filer",
+    "auto": "Auto",
+    "autoRunning": "Optimaliserer..."
   },
   "speedTest": {
     "title": "Hastighetstest",
