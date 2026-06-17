@@ -103,13 +103,18 @@ export const onRequestPost = async ({ request, env }: RequestContext) => {
             // SPAs rarely hit networkidle; give client render a short settle.
             await new Promise(r => setTimeout(r, 1200))
 
-            // NB: pass strings (not functions) to evaluate. The Workers bundler
-            // (esbuild keepNames) wraps named functions with a `__name` helper
-            // that is undefined in the page context → "__name is not defined".
+            // Inject axe as a raw <script> tag, NOT via page.evaluate(). The Workers
+            // bundler (esbuild keepNames) wraps evaluated code with a `__name` helper
+            // that lives in the outer Worker scope, not the page → "__name is not
+            // defined" when axe runs. addScriptTag({content}) injects the source
+            // verbatim into page scope, untouched by the bundler.
+            // ({path} is unavailable — Workers have no filesystem.)
             stage = 'inject-axe'
             console.log(`[wcag] inject axe (source ${axe.source.length} bytes) ${url}`)
-            await page.evaluate(axe.source)
+            await page.addScriptTag({ content: axe.source })
 
+            // Call axe.run via a string expression (also string, not a function, to
+            // keep it clear of the bundler's __name wrapping).
             stage = 'axe-run'
             console.log(`[wcag] axe.run ${url}`)
             const results = (await page.evaluate(
