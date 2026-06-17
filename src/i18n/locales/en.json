@@ -3,7 +3,8 @@
     "dashboard": "Dashboard",
     "fileConverter": "File Converter",
     "fileCompress": "File Compress",
-    "speedTest": "Speed Test"
+    "speedTest": "Speed Test",
+    "qrGenerator": "QR Generator"
   },
   "theme": {
     "light": "Light",
@@ -46,6 +47,11 @@
       "name": "Speed Test",
       "description": "Measure your real-time download, upload and latency. Continuous monitoring or one-shot max speed.",
       "badge": "Real-time"
+    },
+    "qrGenerator": {
+      "name": "QR Generator",
+      "description": "Create QR codes for links, text or Wi-Fi with custom colors. Export PNG or SVG — all in your browser.",
+      "badge": "PNG + SVG"
     }
   },
   "footer": {
@@ -116,5 +122,22 @@
       "peakDownload": "Peak Download",
       "peakUpload": "Peak Upload"
     }
+  },
+  "qrGenerator": {
+    "title": "QR Generator",
+    "subtitle": "Links · text · Wi-Fi · browser-only, no uploads",
+    "contentLabel": "Content",
+    "placeholder": "https://emilb.no  ·  any text…",
+    "errorCorrection": "Error correction",
+    "recovery": "Recovers",
+    "ecHint": "Higher levels survive more damage but pack less data.",
+    "foreground": "Foreground",
+    "background": "Background",
+    "exportSize": "Export size (px)",
+    "quietZone": "Quiet zone",
+    "emptyPreview": "Enter content to generate a QR code",
+    "copyImage": "Copy image",
+    "copied": "Copied!",
+    "reset": "Reset"
   }
 }

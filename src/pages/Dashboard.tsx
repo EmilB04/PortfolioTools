@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { FileInput, FileArchive, Gauge, Zap, ArrowRight } from 'lucide-react'
+import { FileInput, FileArchive, Gauge, QrCode, Zap, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ToolCard } from '../components/ToolCard'
 import { todayStats } from '../utils/speedStorage'
@@ -67,6 +67,20 @@ export function Dashboard() {
       stats: [
         { label: 'Images · Any file', value: 'Gzip' },
         { label: 'Max quality loss', value: '0%' },
+      ],
+    },
+    {
+      title: t('tools.qrGenerator.name'),
+      description: t('tools.qrGenerator.description'),
+      badge: t('tools.qrGenerator.badge'),
+      href: '/qr-generator',
+      accentColor: '#8b5cf6',
+      accentBg: 'rgba(139,92,246,0.12)',
+      icon: <QrCode size={20} color="#8b5cf6" />,
+      comingSoon: false,
+      stats: [
+        { label: 'PNG · SVG export', value: '0 uploads' },
+        { label: 'Custom colors', value: 'L/M/Q/H' },
       ],
     },
   ]

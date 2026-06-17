@@ -3,7 +3,8 @@
     "dashboard": "Oversikt",
     "fileConverter": "Filkonverterer",
     "fileCompress": "Filkomprimering",
-    "speedTest": "Hastighetstest"
+    "speedTest": "Hastighetstest",
+    "qrGenerator": "QR-generator"
   },
   "theme": {
     "light": "Lys",
@@ -46,6 +47,11 @@
       "name": "Hastighetstest",
       "description": "Mål nedlasting, opplasting og forsinkelse i sanntid. Kontinuerlig overvåking eller enkel makstest.",
       "badge": "Sanntid"
+    },
+    "qrGenerator": {
+      "name": "QR-generator",
+      "description": "Lag QR-koder for lenker, tekst eller Wi-Fi med egne farger. Eksporter PNG eller SVG — alt i nettleseren.",
+      "badge": "PNG + SVG"
     }
   },
   "footer": {
@@ -116,5 +122,22 @@
       "peakDownload": "Topp nedlasting",
       "peakUpload": "Topp opplasting"
     }
+  },
+  "qrGenerator": {
+    "title": "QR-generator",
+    "subtitle": "Lenker · tekst · Wi-Fi · kun nettleser, ingen opplasting",
+    "contentLabel": "Innhold",
+    "placeholder": "https://emilb.no  ·  hvilken som helst tekst…",
+    "errorCorrection": "Feilkorreksjon",
+    "recovery": "Gjenoppretter",
+    "ecHint": "Høyere nivå tåler mer skade, men rommer mindre data.",
+    "foreground": "Forgrunn",
+    "background": "Bakgrunn",
+    "exportSize": "Eksportstørrelse (px)",
+    "quietZone": "Stillesone",
+    "emptyPreview": "Skriv inn innhold for å lage en QR-kode",
+    "copyImage": "Kopier bilde",
+    "copied": "Kopiert!",
+    "reset": "Nullstill"
   }
 }
