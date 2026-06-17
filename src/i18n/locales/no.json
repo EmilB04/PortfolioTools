@@ -161,6 +161,10 @@
     "pageError": "Feilet",
     "pageClean": "Ingen tilgjengelighetsproblemer på denne siden.",
     "howToFix": "Slik fikser du det",
+    "history": "Historikk",
+    "clearHistory": "Tøm alt",
+    "view": "Vis",
+    "delete": "Slett",
     "impact": {
       "critical": "Kritisk",
       "serious": "Alvorlig",

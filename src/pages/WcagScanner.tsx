@@ -2,8 +2,12 @@ import { useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Accessibility, ScanLine, Square, Loader2, AlertTriangle,
-  CheckCircle2, ChevronDown, ExternalLink, Globe,
+  CheckCircle2, ChevronDown, ExternalLink, Globe, History, Trash2, Eye,
 } from 'lucide-react'
+import {
+  loadScans, saveScan, deleteScan, clearScans,
+  type PageResult, type WcagScanEntry,
+} from '../utils/wcagStorage'
 
 const ACCENT = '#14b8a6'
 // Same-origin Cloudflare Pages Function. Override with VITE_WCAG_WORKER_URL for local dev.
@@ -19,18 +23,6 @@ const IMPACT_COLOR: Record<string, string> = {
 }
 const IMPACT_ORDER: Impact[] = ['critical', 'serious', 'moderate', 'minor']
 
-interface ViolationNode { html: string; target: string[]; failureSummary: string }
-interface Violation {
-  id: string
-  impact: string | null
-  help: string
-  helpUrl: string
-  description: string
-  nodes: ViolationNode[]
-  nodeCount: number
-}
-interface PageResult { url: string; violations: Violation[]; error?: string }
-
 const MAX_OPTIONS = [5, 10, 20, 30]
 
 export function WcagScanner() {
@@ -41,6 +33,7 @@ export function WcagScanner() {
   const [status, setStatus]     = useState<'idle' | 'scanning' | 'done' | 'error'>('idle')
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [openPage, setOpenPage] = useState<string | null>(null)
+  const [history, setHistory]   = useState<WcagScanEntry[]>(() => loadScans())
   const abortRef = useRef<AbortController | null>(null)
 
   const totals = useMemo(() => {
@@ -68,6 +61,7 @@ export function WcagScanner() {
     setPages([]); setOpenPage(null); setErrorMsg(null); setStatus('scanning')
     const ac = new AbortController()
     abortRef.current = ac
+    const collected: PageResult[] = []
 
     try {
       const res = await fetch(SCAN_URL, {
@@ -94,7 +88,9 @@ export function WcagScanner() {
           if (!chunk.startsWith('data: ')) continue
           const ev = JSON.parse(chunk.slice(6))
           if (ev.type === 'page') {
-            setPages(prev => [...prev, { url: ev.url, violations: ev.violations ?? [], error: ev.error }])
+            const pr: PageResult = { url: ev.url, violations: ev.violations ?? [], error: ev.error }
+            collected.push(pr)
+            setPages(prev => [...prev, pr])
           } else if (ev.type === 'done') {
             setStatus('done')
           } else if (ev.type === 'error') {
@@ -103,6 +99,21 @@ export function WcagScanner() {
         }
       }
       setStatus(s => (s === 'scanning' ? 'done' : s))
+      if (collected.length > 0) {
+        const totalIssues = collected.reduce(
+          (s, p) => s + p.violations.reduce((n, v) => n + v.nodeCount, 0), 0,
+        )
+        const entry: WcagScanEntry = {
+          id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+          timestamp: Date.now(),
+          url: full,
+          maxPages,
+          pages: collected,
+          pagesScanned: collected.length,
+          totalIssues,
+        }
+        setHistory(saveScan(entry))
+      }
     } catch (e) {
       if ((e as Error).name === 'AbortError') return
       setErrorMsg(e instanceof Error ? e.message : 'Scan failed')
@@ -113,6 +124,20 @@ export function WcagScanner() {
   }, [url, maxPages])
 
   const isScanning = status === 'scanning'
+
+  const viewScan = useCallback((entry: WcagScanEntry) => {
+    abortRef.current?.abort()
+    abortRef.current = null
+    setUrl(entry.url)
+    setMaxPages(entry.maxPages)
+    setPages(entry.pages)
+    setOpenPage(null)
+    setErrorMsg(null)
+    setStatus('done')
+  }, [])
+
+  const removeScan = useCallback((id: string) => setHistory(deleteScan(id)), [])
+  const clearAll = useCallback(() => setHistory(clearScans()), [])
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
@@ -297,6 +322,56 @@ export function WcagScanner() {
           )
         })}
       </div>
+
+      {/* History */}
+      {history.length > 0 && (
+        <div className="space-y-2 pt-2">
+          <div className="flex items-center justify-between">
+            <h2 className="text-sm font-semibold flex items-center gap-1.5" style={{ color: 'var(--text)' }}>
+              <History size={14} style={{ color: 'var(--text-subtle)' }} /> {t('wcagScanner.history')}
+            </h2>
+            <button onClick={clearAll}
+              className="text-xs hover:underline" style={{ color: 'var(--text-subtle)' }}>
+              {t('wcagScanner.clearHistory')}
+            </button>
+          </div>
+          {history.map(h => (
+            <div key={h.id} className="flex items-center justify-between gap-3 rounded-xl border px-4 py-2.5"
+              style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
+              <div className="min-w-0">
+                <div className="text-sm truncate" style={{ color: 'var(--text)' }}>
+                  {h.url.replace(/^https?:\/\//, '')}
+                </div>
+                <div className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
+                  {new Date(h.timestamp).toLocaleString()} · {t('wcagScanner.scanned', { count: h.pagesScanned })}
+                </div>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                {h.totalIssues === 0 ? (
+                  <span className="text-xs flex items-center gap-1" style={{ color: '#10b981' }}>
+                    <CheckCircle2 size={12} /> 0
+                  </span>
+                ) : (
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full"
+                    style={{ background: 'rgba(220,38,38,0.12)', color: '#dc2626' }}>
+                    {t('wcagScanner.issues', { count: h.totalIssues })}
+                  </span>
+                )}
+                <button onClick={() => viewScan(h)} title={t('wcagScanner.view')}
+                  className="p-1.5 rounded-lg transition-colors hover:opacity-80"
+                  style={{ color: ACCENT }}>
+                  <Eye size={15} />
+                </button>
+                <button onClick={() => removeScan(h.id)} title={t('wcagScanner.delete')}
+                  className="p-1.5 rounded-lg transition-colors hover:opacity-80"
+                  style={{ color: 'var(--text-subtle)' }}>
+                  <Trash2 size={15} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

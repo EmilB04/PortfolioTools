@@ -161,6 +161,10 @@
     "pageError": "Failed",
     "pageClean": "No accessibility issues on this page.",
     "howToFix": "How to fix",
+    "history": "History",
+    "clearHistory": "Clear all",
+    "view": "View",
+    "delete": "Delete",
     "impact": {
       "critical": "Critical",
       "serious": "Serious",
