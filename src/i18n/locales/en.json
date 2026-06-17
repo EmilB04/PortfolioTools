@@ -76,15 +76,20 @@
     "gzipUnsupported": "Gzip not supported in this browser",
     "smallest": "Smallest",
     "bestQuality": "Best quality",
-    "formatChange": "format change",
     "pngNote": "PNG uses lossless compression — switch to WebP or JPEG for smaller files",
     "auto": "Auto",
-    "autoRunning": "Optimizing..."
+    "autoRunning": "Optimizing...",
+    "autoTarget": "Auto target size",
+    "smaller": "Smaller",
+    "largerBetter": "Larger · better quality"
   },
   "speedTest": {
     "title": "Speed Test",
+    "modeLabel": "Test mode",
     "modeContinuous": "Continuous Monitor",
+    "modeContinuousDesc": "Track speed over time with a live chart",
     "modeMax": "Max Speed",
+    "modeMaxDesc": "One-shot test for peak download & upload",
     "download": "Download",
     "upload": "Upload",
     "ping": "Ping",

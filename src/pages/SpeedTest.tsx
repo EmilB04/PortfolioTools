@@ -150,41 +150,58 @@ export function SpeedTest() {
         </div>
       </div>
 
-      {/* Mode tabs + primary action */}
-      <div className="flex items-center gap-3 flex-wrap">
-        <div className="flex gap-1 p-1 rounded-xl border" style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
-          {(['continuous', 'max'] as const).map((m) => (
-            <button key={m} onClick={() => { if (!isRunning) setMode(m) }} disabled={isRunning}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-150 disabled:cursor-not-allowed"
+      {/* Mode selector — segmented cards */}
+      <div className="grid grid-cols-2 gap-3" role="radiogroup" aria-label={t('speedTest.modeLabel')}>
+        {([
+          { id: 'continuous' as const, icon: Activity, title: t('speedTest.modeContinuous'), desc: t('speedTest.modeContinuousDesc') },
+          { id: 'max' as const,        icon: Zap,      title: t('speedTest.modeMax'),        desc: t('speedTest.modeMaxDesc') },
+        ]).map(({ id, icon: Icon, title, desc }) => {
+          const selected = mode === id
+          return (
+            <button key={id} type="button" role="radio" aria-checked={selected}
+              onClick={() => { if (!isRunning) setMode(id) }} disabled={isRunning}
+              className="group relative text-left rounded-2xl border p-4 transition-all duration-200 disabled:cursor-not-allowed"
               style={{
-                background: mode === m ? 'var(--surface-card)' : 'transparent',
-                color: mode === m ? 'var(--text)' : 'var(--text-subtle)',
-                borderColor: mode === m ? 'var(--border)' : 'transparent',
+                background: selected ? 'var(--accent-bg)' : 'var(--surface)',
+                borderColor: selected ? 'var(--accent-border)' : 'var(--border)',
+                opacity: isRunning && !selected ? 0.45 : 1,
+                boxShadow: selected ? '0 0 0 1px var(--accent-border)' : undefined,
               }}>
-              {m === 'continuous' ? <Activity size={15} /> : <Zap size={15} />}
-              {t(`speedTest.mode${m === 'continuous' ? 'Continuous' : 'Max'}`)}
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-lg shrink-0 transition-colors duration-200"
+                  style={{
+                    background: selected ? 'var(--accent)' : 'var(--surface-card)',
+                    color: selected ? '#ffffff' : 'var(--text-subtle)',
+                  }}>
+                  <Icon size={18} />
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-sm font-semibold" style={{ color: selected ? 'var(--accent)' : 'var(--text)' }}>
+                      {title}
+                    </span>
+                  </div>
+                  <p className="text-xs mt-0.5 leading-snug" style={{ color: 'var(--text-subtle)' }}>{desc}</p>
+                </div>
+              </div>
             </button>
-          ))}
-        </div>
+          )
+        })}
+      </div>
 
+      {/* Primary action */}
+      <div className="flex items-center gap-3 flex-wrap">
         {isRunning ? (
           <button onClick={stop}
-            className="flex items-center gap-2 px-5 py-2 rounded-xl text-white text-sm font-semibold transition-all duration-150 hover:opacity-90"
+            className="flex items-center justify-center gap-2 flex-1 px-5 py-3 rounded-xl text-white text-sm font-semibold transition-all duration-150 hover:opacity-90"
             style={{ background: '#dc2626' }}>
             <Square size={13} fill="currentColor" />{t('speedTest.stop')}
           </button>
         ) : (
           <button onClick={handleStart}
-            className="flex items-center gap-2 px-5 py-2 rounded-xl text-white text-sm font-semibold transition-all duration-150 hover:opacity-90"
+            className="flex items-center justify-center gap-2 flex-1 px-5 py-3 rounded-xl text-white text-sm font-semibold transition-all duration-150 hover:opacity-90"
             style={{ background: 'var(--accent)' }}>
-            <Zap size={15} />{t('speedTest.start')}
-          </button>
-        )}
-        {phase === 'complete' && (
-          <button onClick={handleStart}
-            className="px-4 py-2 rounded-xl border text-sm font-medium transition-all duration-150 hover:opacity-80"
-            style={{ borderColor: 'var(--border)', color: 'var(--text-muted)', background: 'var(--surface-card)' }}>
-            {t('speedTest.retest')}
+            <Zap size={15} />{phase === 'complete' ? t('speedTest.retest') : t('speedTest.start')}
           </button>
         )}
       </div>

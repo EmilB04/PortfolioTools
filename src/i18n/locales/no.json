@@ -76,15 +76,20 @@
     "gzipUnsupported": "Gzip støttes ikke i denne nettleseren",
     "smallest": "Minst",
     "bestQuality": "Best kvalitet",
-    "formatChange": "formatendring",
     "pngNote": "PNG bruker tapsfri komprimering — bytt til WebP eller JPEG for mindre filer",
     "auto": "Auto",
-    "autoRunning": "Optimaliserer..."
+    "autoRunning": "Optimaliserer...",
+    "autoTarget": "Auto målstørrelse",
+    "smaller": "Mindre",
+    "largerBetter": "Større · bedre kvalitet"
   },
   "speedTest": {
     "title": "Hastighetstest",
+    "modeLabel": "Testmodus",
     "modeContinuous": "Kontinuerlig overvåking",
+    "modeContinuousDesc": "Følg hastigheten over tid med sanntidsgraf",
     "modeMax": "Maks hastighet",
+    "modeMaxDesc": "Engangstest for topp ned- og opplasting",
     "download": "Nedlasting",
     "upload": "Opplasting",
     "ping": "Ping",
