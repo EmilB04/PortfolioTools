@@ -3,7 +3,9 @@
     "dashboard": "Oversikt",
     "fileConverter": "Filkonverterer",
     "fileCompress": "Filkomprimering",
-    "speedTest": "Hastighetstest"
+    "speedTest": "Hastighetstest",
+    "qrGenerator": "QR-generator",
+    "wcagScanner": "WCAG-skanner"
   },
   "theme": {
     "light": "Lys",
@@ -46,6 +48,16 @@
       "name": "Hastighetstest",
       "description": "Mål nedlasting, opplasting og forsinkelse i sanntid. Kontinuerlig overvåking eller enkel makstest.",
       "badge": "Sanntid"
+    },
+    "qrGenerator": {
+      "name": "QR-generator",
+      "description": "Lag QR-koder for lenker, tekst eller Wi-Fi med egne farger. Eksporter PNG eller SVG — alt i nettleseren.",
+      "badge": "PNG + SVG"
+    },
+    "wcagScanner": {
+      "name": "WCAG-skanner",
+      "description": "Gjennomsøk et helt nettsted og sjekk hver side for WCAG-tilgjengelighet med axe-core.",
+      "badge": "axe-core"
     }
   },
   "footer": {
@@ -76,15 +88,20 @@
     "gzipUnsupported": "Gzip støttes ikke i denne nettleseren",
     "smallest": "Minst",
     "bestQuality": "Best kvalitet",
-    "formatChange": "formatendring",
     "pngNote": "PNG bruker tapsfri komprimering — bytt til WebP eller JPEG for mindre filer",
     "auto": "Auto",
-    "autoRunning": "Optimaliserer..."
+    "autoRunning": "Optimaliserer...",
+    "autoTarget": "Auto målstørrelse",
+    "smaller": "Mindre",
+    "largerBetter": "Større · bedre kvalitet"
   },
   "speedTest": {
     "title": "Hastighetstest",
+    "modeLabel": "Testmodus",
     "modeContinuous": "Kontinuerlig overvåking",
+    "modeContinuousDesc": "Følg hastigheten over tid med sanntidsgraf",
     "modeMax": "Maks hastighet",
+    "modeMaxDesc": "Engangstest for topp ned- og opplasting",
     "download": "Nedlasting",
     "upload": "Opplasting",
     "ping": "Ping",
@@ -110,6 +127,45 @@
       "avgPing": "Snitt ping",
       "peakDownload": "Topp nedlasting",
       "peakUpload": "Topp opplasting"
+    }
+  },
+  "qrGenerator": {
+    "title": "QR-generator",
+    "subtitle": "Lenker · tekst · Wi-Fi · kun nettleser, ingen opplasting",
+    "contentLabel": "Innhold",
+    "placeholder": "https://emilb.no  ·  hvilken som helst tekst…",
+    "errorCorrection": "Feilkorreksjon",
+    "recovery": "Gjenoppretter",
+    "ecHint": "Høyere nivå tåler mer skade, men rommer mindre data.",
+    "foreground": "Forgrunn",
+    "background": "Bakgrunn",
+    "exportSize": "Eksportstørrelse (px)",
+    "quietZone": "Stillesone",
+    "emptyPreview": "Skriv inn innhold for å lage en QR-kode",
+    "copyImage": "Kopier bilde",
+    "copied": "Kopiert!",
+    "reset": "Nullstill"
+  },
+  "wcagScanner": {
+    "title": "WCAG-skanner",
+    "subtitle": "Gjennomsøk nettsted · sjekk hver side med axe-core",
+    "placeholder": "eksempel.no",
+    "pages": "Maks sider",
+    "scan": "Skann",
+    "stop": "Stopp",
+    "scanned": "{{count}} side skannet",
+    "scanned_other": "{{count}} sider skannet",
+    "clean": "Ingen problemer funnet",
+    "issues": "{{count}} problem",
+    "issues_other": "{{count}} problemer",
+    "pageError": "Feilet",
+    "pageClean": "Ingen tilgjengelighetsproblemer på denne siden.",
+    "howToFix": "Slik fikser du det",
+    "impact": {
+      "critical": "Kritisk",
+      "serious": "Alvorlig",
+      "moderate": "Moderat",
+      "minor": "Mindre"
     }
   }
 }

@@ -1,0 +1,14 @@
+# Cloudflare Pages config — enables the WCAG scanner Pages Function.
+# The static site builds to dist/; functions/ is auto-deployed as Pages Functions.
+#
+# Set `name` to your Pages project name. Browser Rendering must be enabled on the
+# account (free tier: limited browser minutes/day).
+
+name = "portfoliotools"
+pages_build_output_dir = "dist"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+# Headless browser binding used by functions/api/wcag-scan.ts
+[browser]
+binding = "BROWSER"

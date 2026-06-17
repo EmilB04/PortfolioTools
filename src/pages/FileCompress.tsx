@@ -22,12 +22,6 @@ const IMAGE_MIMES = new Set([
   ...(AVIF_SUPPORTED ? ['image/avif'] : []),
 ])
 
-const IMG_OUTPUTS = [
-  'image/webp',
-  'image/jpeg',
-  ...(AVIF_SUPPORTED ? ['image/avif'] : []),
-]
-
 const MIME_LABEL: Record<string, string> = {
   'image/jpeg':    'JPEG',
   'image/png':     'PNG',
@@ -86,8 +80,9 @@ async function gzipFile(file: File): Promise<Blob> {
 async function autoCompress(
   canvas: HTMLCanvasElement,
   originalSize: number,
+  targetRatio = 0.72, // aim for ≤ this fraction of original
 ): Promise<{ outputMime: string; quality: number; blob: Blob }> {
-  const TARGET_RATIO = 0.72 // aim for ≤ 72% of original
+  const TARGET_RATIO = targetRatio
 
   // Prefer AVIF over WebP when available (typically 20-50% smaller)
   // Skip JPEG in auto — it doesn't preserve transparency
@@ -175,11 +170,13 @@ function detectMime(file: File): string {
   return (ext && map[ext]) ? map[ext] : (file.type || 'application/octet-stream')
 }
 
-function defaultOutputMime(inputMime: string): string {
-  if (inputMime === 'image/jpeg') return 'image/jpeg'
-  if (inputMime === 'image/webp') return 'image/webp'
-  if (AVIF_SUPPORTED && inputMime === 'image/avif') return 'image/avif'
-  return 'image/webp'
+// Compress keeps the original format. Formats the canvas can't re-encode
+// (gif/bmp/svg) fall back to WebP since canvas.toBlob can't emit them.
+const CANVAS_ENCODABLE = new Set(['image/jpeg', 'image/webp', 'image/avif', 'image/png'])
+
+function compressOutputMime(inputMime: string): string {
+  if (inputMime === 'image/avif' && !AVIF_SUPPORTED) return 'image/webp'
+  return CANVAS_ENCODABLE.has(inputMime) ? inputMime : 'image/webp'
 }
 
 // ── State ──────────────────────────────────────────────────────────────────────
@@ -250,6 +247,7 @@ export function FileCompress() {
   const [dragging, setDragging]       = useState(false)
   const [hovering, setHovering]       = useState(false)
   const [autoRunning, setAutoRunning] = useState(false)
+  const [targetPct, setTargetPct]     = useState(60) // Auto target: % of original size
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null)
   const [estSize, setEstSize]         = useState<number | null>(null)
   const inputRef    = useRef<HTMLInputElement>(null)
@@ -316,7 +314,7 @@ export function FileCompress() {
     setEstSize(null)
     setState({
       kind: 'ready', file: f, mime: m,
-      outputMime: isImg ? defaultOutputMime(m) : 'application/gzip',
+      outputMime: isImg ? compressOutputMime(m) : 'application/gzip',
       quality: 80,
     })
   }, [])
@@ -365,7 +363,7 @@ export function FileCompress() {
         canvas = await loadToCanvas(state.file)
         canvasCache.current = { file: state.file, canvas }
       }
-      const { outputMime: om, blob } = await autoCompress(canvas, state.file.size)
+      const { outputMime: om, blob } = await autoCompress(canvas, state.file.size, targetPct / 100)
       const url = URL.createObjectURL(blob)
       setDownloadUrl(prev => { if (prev) URL.revokeObjectURL(prev); return url })
       setEstSize(blob.size)
@@ -375,7 +373,7 @@ export function FileCompress() {
     } finally {
       setAutoRunning(false)
     }
-  }, [state, isImage])
+  }, [state, isImage, targetPct])
 
   const handleDownload = useCallback(() => {
     if (state.kind !== 'done' || !downloadUrl) return
@@ -490,33 +488,6 @@ export function FileCompress() {
           {/* Image controls */}
           {isImage && (state.kind === 'ready' || state.kind === 'done') && (
             <div className="space-y-4">
-              {/* Output format tabs */}
-              <div className="flex items-center gap-3 flex-wrap">
-                <span className="text-xs font-medium shrink-0" style={{ color: 'var(--text-subtle)' }}>
-                  Output
-                </span>
-                <div className="flex gap-1 p-1 rounded-xl border"
-                  style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}>
-                  {IMG_OUTPUTS.map(tm => (
-                    <button key={tm}
-                      disabled={state.kind === 'done'}
-                      onClick={() => setState(s => s.kind === 'ready' ? { ...s, outputMime: tm } : s)}
-                      className="px-3 py-1 rounded-lg text-sm font-medium transition-all duration-150 disabled:cursor-default"
-                      style={{
-                        background: outputMime === tm ? '#10b981' : 'transparent',
-                        color:      outputMime === tm ? '#ffffff' : 'var(--text-subtle)',
-                      }}>
-                      {MIME_LABEL[tm]}
-                    </button>
-                  ))}
-                </div>
-                {outputMime !== mime && state.kind === 'ready' && (
-                  <span className="text-xs" style={{ color: 'var(--text-subtle)' }}>
-                    ({t('fileCompress.formatChange')})
-                  </span>
-                )}
-              </div>
-
               {/* Quality slider */}
               {state.kind === 'ready' && needsQuality && (
                 <div className="space-y-2">
@@ -553,6 +524,39 @@ export function FileCompress() {
                 <p className="text-xs px-1" style={{ color: 'var(--text-subtle)' }}>
                   {t('fileCompress.pngNote')}
                 </p>
+              )}
+
+              {/* Auto target slider */}
+              {state.kind === 'ready' && (
+                <div className="space-y-2 rounded-xl border p-3"
+                  style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-medium flex items-center gap-1.5" style={{ color: 'var(--text-subtle)' }}>
+                      <Wand2 size={12} style={{ color: '#10b981' }} />
+                      {t('fileCompress.autoTarget')}
+                    </span>
+                    <div className="flex items-center gap-3">
+                      {file && (
+                        <span className="text-xs tabular-nums" style={{ color: 'var(--text-subtle)' }}>
+                          ≤ {fmtBytes(Math.round(file.size * targetPct / 100))}
+                        </span>
+                      )}
+                      <span className="text-xs font-mono font-semibold w-9 text-right" style={{ color: '#10b981' }}>
+                        {targetPct}%
+                      </span>
+                    </div>
+                  </div>
+                  <input
+                    type="range" min={20} max={95} value={targetPct}
+                    onChange={e => setTargetPct(Number(e.target.value))}
+                    className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
+                    style={{ accentColor: '#10b981' }}
+                  />
+                  <div className="flex justify-between text-xs" style={{ color: 'var(--text-subtle)' }}>
+                    <span>{t('fileCompress.smaller')}</span>
+                    <span>{t('fileCompress.largerBetter')}</span>
+                  </div>
+                </div>
               )}
             </div>
           )}
