@@ -5,6 +5,7 @@ import { FileConverter } from './pages/FileConverter'
 import { FileCompress } from './pages/FileCompress'
 import { SpeedTest } from './pages/SpeedTest'
 import { QrGenerator } from './pages/QrGenerator'
+import { WcagScanner } from './pages/WcagScanner'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="file-compress" element={<FileCompress />} />
           <Route path="speed-test" element={<SpeedTest />} />
           <Route path="qr-generator" element={<QrGenerator />} />
+          <Route path="wcag-scanner" element={<WcagScanner />} />
         </Route>
       </Routes>
     </BrowserRouter>

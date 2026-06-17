@@ -4,7 +4,8 @@
     "fileConverter": "File Converter",
     "fileCompress": "File Compress",
     "speedTest": "Speed Test",
-    "qrGenerator": "QR Generator"
+    "qrGenerator": "QR Generator",
+    "wcagScanner": "WCAG Scanner"
   },
   "theme": {
     "light": "Light",
@@ -52,6 +53,11 @@
       "name": "QR Generator",
       "description": "Create QR codes for links, text or Wi-Fi with custom colors. Export PNG or SVG — all in your browser.",
       "badge": "PNG + SVG"
+    },
+    "wcagScanner": {
+      "name": "WCAG Scanner",
+      "description": "Crawl a whole site and audit every page for WCAG accessibility issues with axe-core.",
+      "badge": "axe-core"
     }
   },
   "footer": {
@@ -139,5 +145,27 @@
     "copyImage": "Copy image",
     "copied": "Copied!",
     "reset": "Reset"
+  },
+  "wcagScanner": {
+    "title": "WCAG Scanner",
+    "subtitle": "Crawl a site · audit every page with axe-core",
+    "placeholder": "example.com",
+    "pages": "Max pages",
+    "scan": "Scan",
+    "stop": "Stop",
+    "scanned": "{{count}} page scanned",
+    "scanned_other": "{{count}} pages scanned",
+    "clean": "No issues found",
+    "issues": "{{count}} issue",
+    "issues_other": "{{count}} issues",
+    "pageError": "Failed",
+    "pageClean": "No accessibility issues on this page.",
+    "howToFix": "How to fix",
+    "impact": {
+      "critical": "Critical",
+      "serious": "Serious",
+      "moderate": "Moderate",
+      "minor": "Minor"
+    }
   }
 }

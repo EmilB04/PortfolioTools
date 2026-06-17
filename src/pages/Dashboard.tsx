@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { FileInput, FileArchive, Gauge, QrCode, Zap, ArrowRight } from 'lucide-react'
+import { FileInput, FileArchive, Gauge, QrCode, Accessibility, Zap, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ToolCard } from '../components/ToolCard'
 import { todayStats } from '../utils/speedStorage'
@@ -81,6 +81,20 @@ export function Dashboard() {
       stats: [
         { label: 'PNG · SVG export', value: '0 uploads' },
         { label: 'Custom colors', value: 'L/M/Q/H' },
+      ],
+    },
+    {
+      title: t('tools.wcagScanner.name'),
+      description: t('tools.wcagScanner.description'),
+      badge: t('tools.wcagScanner.badge'),
+      href: '/wcag-scanner',
+      accentColor: '#14b8a6',
+      accentBg: 'rgba(20,184,166,0.12)',
+      icon: <Accessibility size={20} color="#14b8a6" />,
+      comingSoon: false,
+      stats: [
+        { label: 'Crawls all pages', value: 'axe-core' },
+        { label: 'WCAG 2 · A/AA/AAA', value: 'Live' },
       ],
     },
   ]

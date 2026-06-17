@@ -4,7 +4,8 @@
     "fileConverter": "Filkonverterer",
     "fileCompress": "Filkomprimering",
     "speedTest": "Hastighetstest",
-    "qrGenerator": "QR-generator"
+    "qrGenerator": "QR-generator",
+    "wcagScanner": "WCAG-skanner"
   },
   "theme": {
     "light": "Lys",
@@ -52,6 +53,11 @@
       "name": "QR-generator",
       "description": "Lag QR-koder for lenker, tekst eller Wi-Fi med egne farger. Eksporter PNG eller SVG — alt i nettleseren.",
       "badge": "PNG + SVG"
+    },
+    "wcagScanner": {
+      "name": "WCAG-skanner",
+      "description": "Gjennomsøk et helt nettsted og sjekk hver side for WCAG-tilgjengelighet med axe-core.",
+      "badge": "axe-core"
     }
   },
   "footer": {
@@ -139,5 +145,27 @@
     "copyImage": "Kopier bilde",
     "copied": "Kopiert!",
     "reset": "Nullstill"
+  },
+  "wcagScanner": {
+    "title": "WCAG-skanner",
+    "subtitle": "Gjennomsøk nettsted · sjekk hver side med axe-core",
+    "placeholder": "eksempel.no",
+    "pages": "Maks sider",
+    "scan": "Skann",
+    "stop": "Stopp",
+    "scanned": "{{count}} side skannet",
+    "scanned_other": "{{count}} sider skannet",
+    "clean": "Ingen problemer funnet",
+    "issues": "{{count}} problem",
+    "issues_other": "{{count}} problemer",
+    "pageError": "Feilet",
+    "pageClean": "Ingen tilgjengelighetsproblemer på denne siden.",
+    "howToFix": "Slik fikser du det",
+    "impact": {
+      "critical": "Kritisk",
+      "serious": "Alvorlig",
+      "moderate": "Moderat",
+      "minor": "Mindre"
+    }
   }
 }

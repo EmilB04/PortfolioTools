@@ -1,12 +1,13 @@
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { LayoutDashboard, FileInput, FileArchive, Gauge, QrCode, PanelLeftClose, PanelLeftOpen, X } from 'lucide-react'
+import { LayoutDashboard, FileInput, FileArchive, Gauge, QrCode, Accessibility, PanelLeftClose, PanelLeftOpen, X } from 'lucide-react'
 
 const navItems = [
   { key: 'dashboard', icon: LayoutDashboard, to: '/' },
   { key: 'fileConverter', icon: FileInput, to: '/file-converter' },
   { key: 'fileCompress', icon: FileArchive, to: '/file-compress' },
   { key: 'qrGenerator', icon: QrCode, to: '/qr-generator' },
+  { key: 'wcagScanner', icon: Accessibility, to: '/wcag-scanner' },
   { key: 'speedTest', icon: Gauge, to: '/speed-test' },
 ] as const
 
