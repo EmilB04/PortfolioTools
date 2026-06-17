@@ -7,7 +7,12 @@ import puppeteer, { type Browser } from '@cloudflare/puppeteer'
 import axe from 'axe-core'
 
 interface Env {
-  BROWSER: Fetcher
+  BROWSER: { fetch: typeof fetch }
+}
+
+interface RequestContext {
+  request: Request
+  env: Env
 }
 
 const MAX_PAGES_CAP = 30
@@ -52,10 +57,10 @@ function corsHeaders(request: Request): Record<string, string> {
   return {} // same-origin requests need no CORS headers
 }
 
-export const onRequestOptions: PagesFunction<Env> = async ({ request }) =>
+export const onRequestOptions = async ({ request }: Pick<RequestContext, 'request'>) =>
   new Response(null, { headers: corsHeaders(request) })
 
-export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+export const onRequestPost = async ({ request, env }: RequestContext) => {
   const cors = corsHeaders(request)
 
   let body: { url?: string; maxPages?: number }
@@ -76,80 +81,96 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const enc = new TextEncoder()
   const send = (event: object) => writer.write(enc.encode(`data: ${JSON.stringify(event)}\n\n`))
 
-  ;(async () => {
-    let browser: Browser | null = null
-    try {
-      browser = await puppeteer.launch(env.BROWSER)
-      const seen = new Set<string>([startUrl])
-      const queue: string[] = [startUrl]
-      let scanned = 0
-      let totalViolations = 0
+    ; (async () => {
+      let browser: Browser | null = null
+      try {
+        browser = await puppeteer.launch(env.BROWSER)
+        const seen = new Set<string>([startUrl])
+        const queue: string[] = [startUrl]
+        let scanned = 0
+        let totalViolations = 0
 
-      await send({ type: 'start', maxPages })
+        await send({ type: 'start', maxPages })
 
-      while (queue.length > 0 && scanned < maxPages) {
-        const url = queue.shift()!
-        const page = await browser.newPage()
-        try {
-          await page.goto(url, { waitUntil: 'domcontentloaded', timeout: GOTO_TIMEOUT })
-          // SPAs rarely hit networkidle; give client render a short settle.
-          await new Promise(r => setTimeout(r, 1200))
+        while (queue.length > 0 && scanned < maxPages) {
+          const url = queue.shift()!
+          const page = await browser.newPage()
+          let stage = 'init'
+          try {
+            stage = 'goto'
+            console.log(`[wcag] goto ${url}`)
+            await page.goto(url, { waitUntil: 'domcontentloaded', timeout: GOTO_TIMEOUT })
+            // SPAs rarely hit networkidle; give client render a short settle.
+            await new Promise(r => setTimeout(r, 1200))
 
-          // NB: pass strings (not functions) to evaluate. The Workers bundler
-          // (esbuild keepNames) wraps named functions with a `__name` helper
-          // that is undefined in the page context → "__name is not defined".
-          await page.evaluate(axe.source)
-          const results = (await page.evaluate(
-            `window.axe.run(document, { resultTypes: ['violations'] })`
-          )) as { violations: AxeViolation[] }
+            // NB: pass strings (not functions) to evaluate. The Workers bundler
+            // (esbuild keepNames) wraps named functions with a `__name` helper
+            // that is undefined in the page context → "__name is not defined".
+            stage = 'inject-axe'
+            console.log(`[wcag] inject axe (source ${axe.source.length} bytes) ${url}`)
+            await page.evaluate(axe.source)
 
-          const violations = (results.violations ?? []).map(v => ({
-            id: v.id,
-            impact: v.impact,
-            help: v.help,
-            helpUrl: v.helpUrl,
-            description: v.description,
-            nodes: v.nodes.slice(0, 8).map(n => ({
-              html: n.html.slice(0, 400),
-              target: n.target,
-              failureSummary: n.failureSummary,
-            })),
-            nodeCount: v.nodes.length,
-          }))
-          totalViolations += violations.reduce((s, v) => s + v.nodeCount, 0)
-          scanned++
+            stage = 'axe-run'
+            console.log(`[wcag] axe.run ${url}`)
+            const results = (await page.evaluate(
+              `window.axe.run(document, { resultTypes: ['violations'] })`
+            )) as { violations: AxeViolation[] }
 
-          await send({ type: 'page', url, violations })
+            const violations = (results.violations ?? []).map(v => ({
+              id: v.id,
+              impact: v.impact,
+              help: v.help,
+              helpUrl: v.helpUrl,
+              description: v.description,
+              nodes: v.nodes.slice(0, 8).map(n => ({
+                html: n.html.slice(0, 400),
+                target: n.target,
+                failureSummary: n.failureSummary,
+              })),
+              nodeCount: v.nodes.length,
+            }))
+            totalViolations += violations.reduce((s, v) => s + v.nodeCount, 0)
+            scanned++
 
-          if (scanned < maxPages) {
-            const links = (await page.evaluate(
-              `Array.from(document.querySelectorAll('a[href]'), a => a.href)`
-            )) as string[]
-            for (const link of links) {
-              const n = normalizeUrl(link)
-              if (!n || seen.has(n)) continue
-              if (new URL(n).origin !== origin0) continue
-              if (SKIP_EXT.test(new URL(n).pathname)) continue
-              seen.add(n)
-              if (queue.length + scanned < maxPages) queue.push(n)
+            console.log(`[wcag] done ${url}: ${violations.length} rules, ${results.violations?.length ?? 0} raw`)
+            await send({ type: 'page', url, violations })
+
+            if (scanned < maxPages) {
+              stage = 'extract-links'
+              const links = (await page.evaluate(
+                `Array.from(document.querySelectorAll('a[href]'), a => a.href)`
+              )) as string[]
+              for (const link of links) {
+                const n = normalizeUrl(link)
+                if (!n || seen.has(n)) continue
+                if (new URL(n).origin !== origin0) continue
+                if (SKIP_EXT.test(new URL(n).pathname)) continue
+                seen.add(n)
+                if (queue.length + scanned < maxPages) queue.push(n)
+              }
             }
+          } catch (e) {
+            scanned++
+            const msg = e instanceof Error ? e.message : 'Scan failed'
+            const stack = e instanceof Error ? e.stack : undefined
+            console.error(`[wcag] FAIL ${url} @stage=${stage}: ${msg}\n${stack ?? ''}`)
+            await send({ type: 'page', url, stage, error: msg, stack, violations: [] })
+          } finally {
+            await page.close()
           }
-        } catch (e) {
-          scanned++
-          await send({ type: 'page', url, error: e instanceof Error ? e.message : 'Scan failed', violations: [] })
-        } finally {
-          await page.close()
         }
-      }
 
-      await send({ type: 'done', pagesScanned: scanned, totalViolations })
-    } catch (e) {
-      await send({ type: 'error', message: e instanceof Error ? e.message : 'Scan error' })
-    } finally {
-      if (browser) await browser.close().catch(() => {})
-      await writer.close().catch(() => {})
-    }
-  })()
+        await send({ type: 'done', pagesScanned: scanned, totalViolations })
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : 'Scan error'
+        const stack = e instanceof Error ? e.stack : undefined
+        console.error(`[wcag] FATAL: ${msg}\n${stack ?? ''}`)
+        await send({ type: 'error', message: msg, stack })
+      } finally {
+        if (browser) await browser.close().catch(() => { })
+        await writer.close().catch(() => { })
+      }
+    })()
 
   return new Response(readable, {
     headers: { ...cors, 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache' },
