@@ -103,22 +103,17 @@ export const onRequestPost = async ({ request, env }: RequestContext) => {
             // SPAs rarely hit networkidle; give client render a short settle.
             await new Promise(r => setTimeout(r, 1200))
 
-            // Inject axe as a raw <script> tag, NOT via page.evaluate(). The Workers
-            // bundler (esbuild keepNames) wraps evaluated code with a `__name` helper
-            // that lives in the outer Worker scope, not the page → "__name is not
-            // defined" when axe runs. addScriptTag({content}) injects the source
-            // verbatim into page scope, untouched by the bundler.
-            // ({path} is unavailable — Workers have no filesystem.)
-            stage = 'inject-axe'
-            console.log(`[wcag] inject axe (source ${axe.source.length} bytes) ${url}`)
-            await page.addScriptTag({ content: axe.source })
-
-            // Call axe.run via a string expression (also string, not a function, to
-            // keep it clear of the bundler's __name wrapping).
+            // Inject axe AND run it in a SINGLE evaluate string, so both share one
+            // execution context (separate addScriptTag/evaluate calls can land in
+            // different worlds → `window.axe` undefined). Passing a string (not a
+            // function) keeps it clear of the Workers bundler's `__name` helper,
+            // which lives in the outer Worker scope and is undefined in the page
+            // → otherwise "__name is not defined". axe.source's UMD wrapper binds
+            // `axe` onto the page window when executed there.
             stage = 'axe-run'
-            console.log(`[wcag] axe.run ${url}`)
+            console.log(`[wcag] inject+run axe (source ${axe.source.length} bytes) ${url}`)
             const results = (await page.evaluate(
-              `window.axe.run(document, { resultTypes: ['violations'] })`
+              `${axe.source};\nwindow.axe.run(document, { resultTypes: ['violations'] })`
             )) as { violations: AxeViolation[] }
 
             const violations = (results.violations ?? []).map(v => ({
