@@ -37,16 +37,36 @@ function normalizeUrl(raw: string): string | null {
   }
 }
 
+// Allow same-origin (prod) plus local dev so `vite dev` can call the deployed
+// function cross-origin. localhost/127.0.0.1 on any port are permitted.
+function corsHeaders(request: Request): Record<string, string> {
+  const origin = request.headers.get('Origin')
+  if (origin && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+    return {
+      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Vary': 'Origin',
+    }
+  }
+  return {} // same-origin requests need no CORS headers
+}
+
+export const onRequestOptions: PagesFunction<Env> = async ({ request }) =>
+  new Response(null, { headers: corsHeaders(request) })
+
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+  const cors = corsHeaders(request)
+
   let body: { url?: string; maxPages?: number }
   try {
     body = await request.json()
   } catch {
-    return Response.json({ error: 'Invalid JSON body' }, { status: 400 })
+    return Response.json({ error: 'Invalid JSON body' }, { status: 400, headers: cors })
   }
 
   const startUrl = body.url ? normalizeUrl(body.url) : null
-  if (!startUrl) return Response.json({ error: 'Valid `url` required' }, { status: 400 })
+  if (!startUrl) return Response.json({ error: 'Valid `url` required' }, { status: 400, headers: cors })
 
   const maxPages = Math.min(MAX_PAGES_CAP, Math.max(1, body.maxPages ?? DEFAULT_MAX_PAGES))
   const origin0 = new URL(startUrl).origin
@@ -75,11 +95,13 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
           // SPAs rarely hit networkidle; give client render a short settle.
           await new Promise(r => setTimeout(r, 1200))
 
+          // NB: pass strings (not functions) to evaluate. The Workers bundler
+          // (esbuild keepNames) wraps named functions with a `__name` helper
+          // that is undefined in the page context → "__name is not defined".
           await page.evaluate(axe.source)
-          const results = (await page.evaluate(async () => {
-            // @ts-expect-error axe injected above
-            return await window.axe.run(document, { resultTypes: ['violations'] })
-          })) as { violations: AxeViolation[] }
+          const results = (await page.evaluate(
+            `window.axe.run(document, { resultTypes: ['violations'] })`
+          )) as { violations: AxeViolation[] }
 
           const violations = (results.violations ?? []).map(v => ({
             id: v.id,
@@ -100,9 +122,9 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
           await send({ type: 'page', url, violations })
 
           if (scanned < maxPages) {
-            const links = await page.evaluate(() =>
-              Array.from(document.querySelectorAll('a[href]'), a => (a as HTMLAnchorElement).href)
-            )
+            const links = (await page.evaluate(
+              `Array.from(document.querySelectorAll('a[href]'), a => a.href)`
+            )) as string[]
             for (const link of links) {
               const n = normalizeUrl(link)
               if (!n || seen.has(n)) continue
@@ -130,6 +152,6 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   })()
 
   return new Response(readable, {
-    headers: { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache' },
+    headers: { ...cors, 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache' },
   })
 }
