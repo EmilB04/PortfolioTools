@@ -1,4 +1,4 @@
-import { useTheme } from '../contexts/ThemeContext'
+import { useTheme } from '../../contexts/ThemeContext'
 
 function MoonIcon() {
   return (
@@ -12,7 +12,7 @@ function SunIcon() {
   return (
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
       <circle cx="12" cy="12" r="4" fill="currentColor" stroke="none" />
-      {[0,45,90,135,180,225,270,315].map(a => (
+      {[0, 45, 90, 135, 180, 225, 270, 315].map(a => (
         <line
           key={a}
           x1={12 + 6.5 * Math.cos(a * Math.PI / 180)}

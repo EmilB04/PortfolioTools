@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Layout } from './components/Layout'
+import { Layout } from './components/_layout'
 import { Dashboard } from './pages/Dashboard'
 import { FileConverter } from './pages/FileConverter'
 import { FileCompress } from './pages/FileCompress'

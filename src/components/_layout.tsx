@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { Menu } from 'lucide-react'
 import { Sidebar } from './Sidebar'
-import { Footer } from './Footer'
-import { ThemeSwitcher } from './ThemeSwitcher'
-import { LanguageSwitcher } from './LanguageSwitcher'
+import { Footer } from './footer/Footer'
+import { ThemeSwitcher } from './header/ThemeSwitcher'
+import { LanguageSwitcher } from './header/LanguageSwitcher'
 import { ShootingStars } from './ShootingStars'
 
 function getInitialCollapsed(): boolean {
@@ -18,7 +18,7 @@ export function Layout() {
   function toggleCollapsed() {
     setCollapsed(prev => {
       const next = !prev
-      try { localStorage.setItem('sidebar-collapsed', String(next)) } catch {}
+      try { localStorage.setItem('sidebar-collapsed', String(next)) } catch { }
       return next
     })
   }
