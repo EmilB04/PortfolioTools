@@ -170,6 +170,9 @@
     "clearHistory": "Tøm alt",
     "view": "Vis",
     "delete": "Slett",
+    "summary": "Sammendrag",
+    "copy": "Kopier",
+    "copied": "Kopiert",
     "impact": {
       "critical": "Kritisk",
       "serious": "Alvorlig",

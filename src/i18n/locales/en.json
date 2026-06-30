@@ -170,6 +170,9 @@
     "clearHistory": "Clear all",
     "view": "View",
     "delete": "Delete",
+    "summary": "Summary",
+    "copy": "Copy",
+    "copied": "Copied",
     "impact": {
       "critical": "Critical",
       "serious": "Serious",
