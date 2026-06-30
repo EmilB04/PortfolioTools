@@ -9,11 +9,16 @@
   },
   "theme": {
     "light": "Light",
-    "dark": "Dark"
+    "dark": "Dark",
+    "system": "System"
   },
   "language": {
     "en": "English",
     "no": "Norwegian"
+  },
+  "languageSwitcher": {
+    "choose": "Choose language",
+    "section": "Language"
   },
   "dashboard": {
     "title": "Portfolio Tools",

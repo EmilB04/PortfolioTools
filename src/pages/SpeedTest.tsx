@@ -103,7 +103,7 @@ function phaseKey(phase: TestPhase): string {
 // ── Main page ──────────────────────────────────────────────────────────────────
 export function SpeedTest() {
   const { t } = useTranslation()
-  const { theme } = useTheme()
+  const { resolvedTheme } = useTheme()
   const [mode, setMode] = useState<Mode>('continuous')
   const [limitMs, setLimitMs] = useState<number | null>(null)
   const { phase, current, dlSamples, ulSamples, history, start, stop, isRunning } = useSpeedTest()
@@ -122,7 +122,7 @@ export function SpeedTest() {
 
   const handleStart = () => start(mode, limitMs ?? undefined)
 
-  const isDark = theme === 'dark'
+  const isDark = resolvedTheme === 'dark'
   const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(28,16,37,0.06)'
   const axisColor = isDark ? 'rgba(255,255,255,0.35)' : 'rgba(28,16,37,0.4)'
   const tooltipBg = isDark ? '#000000' : '#f7f4f1'

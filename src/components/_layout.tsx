@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { Menu } from 'lucide-react'
-import { Sidebar } from './Sidebar'
+import { Sidebar } from './nav/Sidebar'
 import { Footer } from './footer/Footer'
-import { ThemeSwitcher } from './header/ThemeSwitcher'
-import { LanguageSwitcher } from './header/LanguageSwitcher'
 import { ShootingStars } from './ShootingStars'
+import HeaderSection from './header/HeaderSection'
 
 function getInitialCollapsed(): boolean {
   try { return localStorage.getItem('sidebar-collapsed') === 'true' } catch { return false }
@@ -46,8 +45,8 @@ export function Layout() {
       {/* Main content — scrollable column */}
       <div className="relative z-10 flex-1 flex flex-col min-w-0 overflow-hidden">
         <header
-          className="shrink-0 h-14 flex items-center justify-between gap-2 px-4 sm:px-6 border-b backdrop-blur-xl"
-          style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
+          className="shrink-0 h-14 flex items-center justify-between gap-2 px-4 sm:px-6 backdrop-blur-xl"
+          style={{ background: 'var(--surface)' }}
         >
           <button
             className="lg:hidden p-2 rounded-lg transition-colors"
@@ -59,14 +58,11 @@ export function Layout() {
           </button>
           <div className="hidden lg:block" />
 
-          <div className="flex items-center gap-2 sm:gap-3">
-            <LanguageSwitcher />
-            <ThemeSwitcher />
-          </div>
+          <HeaderSection />
         </header>
 
-        <div className="flex-1 overflow-y-auto">
-          <main className="p-4 sm:p-6 lg:p-8">
+        <div className="flex-1 overflow-y-auto flex flex-col">
+          <main className="flex-1 p-4 sm:p-6 lg:p-8">
             <Outlet />
           </main>
           <Footer />
