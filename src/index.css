@@ -11,8 +11,8 @@
   --accent-border: rgba(241, 55, 110, 0.4);
 
   --bg:            #000000;
-  --surface:       rgba(1, 6, 38, 0.65);
-  --surface-card:  rgba(1, 6, 38, 0.35);
+  --surface:       rgba(1, 6, 38, 0.8);
+  --surface-card:  rgba(1, 6, 38, 0.55);
   --text:          #ffffff;
   --text-muted:    rgba(255, 255, 255, 0.72);
   --text-subtle:   rgba(255, 255, 255, 0.45);

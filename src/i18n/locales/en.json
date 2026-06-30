@@ -9,16 +9,22 @@
   },
   "theme": {
     "light": "Light",
-    "dark": "Dark"
+    "dark": "Dark",
+    "system": "System"
   },
   "language": {
     "en": "English",
     "no": "Norwegian"
   },
+  "languageSwitcher": {
+    "choose": "Choose language",
+    "section": "Language"
+  },
   "dashboard": {
     "title": "Portfolio Tools",
     "subtitle": "A collection of browser-based utilities — no uploads, no tracking.",
     "openTool": "Open Tool",
+    "openNamed": "Open {{tool}}",
     "comingSoon": "Coming soon",
     "runSpeedTest": "Run Speed Test",
     "tools": "Tools",
@@ -161,6 +167,13 @@
     "pageError": "Failed",
     "pageClean": "No accessibility issues on this page.",
     "howToFix": "How to fix",
+    "history": "History",
+    "clearHistory": "Clear all",
+    "view": "View",
+    "delete": "Delete",
+    "summary": "Summary",
+    "copy": "Copy",
+    "copied": "Copied",
     "impact": {
       "critical": "Critical",
       "serious": "Serious",

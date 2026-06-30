@@ -9,16 +9,22 @@
   },
   "theme": {
     "light": "Lys",
-    "dark": "Mørk"
+    "dark": "Mørk",
+    "system": "System"
   },
   "language": {
     "en": "Engelsk",
     "no": "Norsk"
   },
+  "languageSwitcher": {
+    "choose": "Velg språk",
+    "section": "Språk"
+  },
   "dashboard": {
     "title": "Portfolio Tools",
     "subtitle": "En samling nettleserbaserte verktøy — ingen opplasting, ingen sporing.",
     "openTool": "Åpne verktøy",
+    "openNamed": "Åpne {{tool}}",
     "comingSoon": "Kommer snart",
     "runSpeedTest": "Kjør hastighetstest",
     "tools": "Verktøy",
@@ -161,6 +167,13 @@
     "pageError": "Feilet",
     "pageClean": "Ingen tilgjengelighetsproblemer på denne siden.",
     "howToFix": "Slik fikser du det",
+    "history": "Historikk",
+    "clearHistory": "Tøm alt",
+    "view": "Vis",
+    "delete": "Slett",
+    "summary": "Sammendrag",
+    "copy": "Kopier",
+    "copied": "Kopiert",
     "impact": {
       "critical": "Kritisk",
       "serious": "Alvorlig",
