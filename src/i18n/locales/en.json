@@ -24,6 +24,7 @@
     "title": "Portfolio Tools",
     "subtitle": "A collection of browser-based utilities — no uploads, no tracking.",
     "openTool": "Open Tool",
+    "openNamed": "Open {{tool}}",
     "comingSoon": "Coming soon",
     "runSpeedTest": "Run Speed Test",
     "tools": "Tools",

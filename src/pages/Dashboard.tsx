@@ -1,8 +1,12 @@
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FileInput, FileArchive, Gauge, QrCode, Accessibility, Zap, ArrowRight } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FileInput, FileArchive, Gauge, QrCode, Accessibility, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ToolCard } from '../components/ToolCard'
 import { todayStats } from '../utils/speedStorage'
+
+const ROTATE_MS = 6000
 
 function StatPill({ label, value, dim }: { label: string; value: string; dim?: boolean }) {
   return (
@@ -25,6 +29,9 @@ export function Dashboard() {
   const dlDisplay = stats.avgDownload !== null ? `${stats.avgDownload.toFixed(1)} Mbps` : '—'
   const ulDisplay = stats.avgUpload !== null ? `${stats.avgUpload.toFixed(1)} Mbps` : '—'
   const hasData = stats.testsRun > 0
+
+  const [featured, setFeatured] = useState(0)
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const tools = [
     {
@@ -99,6 +106,20 @@ export function Dashboard() {
     },
   ]
 
+  const startTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => setFeatured(i => (i + 1) % tools.length), ROTATE_MS)
+  }, [tools.length])
+
+  useEffect(() => {
+    startTimer()
+    return () => { if (timerRef.current) clearInterval(timerRef.current) }
+  }, [startTimer])
+
+  const goTo = useCallback((i: number) => { setFeatured(i); startTimer() }, [startTimer])
+
+  const hero = tools[featured]
+
   return (
     <div className="max-w-5xl mx-auto space-y-6 sm:space-y-8">
 
@@ -109,32 +130,63 @@ export function Dashboard() {
       >
         <div className="p-5 sm:p-8 md:p-10">
           <div className="flex flex-col gap-6 md:gap-8">
-            {/* Title + CTA */}
-            <div className="space-y-3 max-w-lg">
+            {/* Rotating featured tool */}
+            <div className="space-y-3 max-w-lg min-h-[15rem] sm:min-h-[13rem]">
               <div
-                className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border text-xs font-semibold"
-                style={{ borderColor: 'var(--accent-border)', background: 'var(--accent-bg)', color: 'var(--accent)' }}
+                className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border text-xs font-semibold transition-colors duration-500"
+                style={{ borderColor: hero.accentColor, background: hero.accentBg, color: hero.accentColor }}
               >
-                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--accent)' }} />
-                emilb.no
+                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: hero.accentColor }} />
+                {hero.badge}
               </div>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-tight" style={{ color: 'var(--text)' }}>
-                {t('dashboard.title')}
-              </h1>
-              <p className="text-sm sm:text-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-                {t('dashboard.subtitle')}
-              </p>
-              <Link
-                to="/speed-test"
-                className="inline-flex items-center gap-2 mt-1 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-150 hover:-translate-y-0.5"
-                style={{ background: 'var(--accent)' }}
-                onMouseEnter={e => (e.currentTarget.style.opacity = '0.9')}
-                onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-              >
-                <Zap size={14} />
-                {t('dashboard.runSpeedTest')}
-                <ArrowRight size={14} />
-              </Link>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={hero.href}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.35 }}
+                  className="space-y-3"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="p-2 rounded-xl shrink-0" style={{ background: hero.accentBg }}>
+                      {hero.icon}
+                    </span>
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-tight" style={{ color: 'var(--text)' }}>
+                      {hero.title}
+                    </h1>
+                  </div>
+                  <p className="text-sm sm:text-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                    {hero.description}
+                  </p>
+                  <Link
+                    to={hero.href}
+                    className="inline-flex items-center gap-2 mt-1 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-150 hover:-translate-y-0.5"
+                    style={{ background: hero.accentColor }}
+                    onMouseEnter={e => (e.currentTarget.style.opacity = '0.9')}
+                    onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+                  >
+                    {t('dashboard.openNamed', { tool: hero.title })}
+                    <ArrowRight size={14} />
+                  </Link>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Rotation dots */}
+              <div className="flex items-center gap-2 pt-1">
+                {tools.map((tool, i) => (
+                  <button
+                    key={tool.href}
+                    onClick={() => goTo(i)}
+                    aria-label={tool.title}
+                    className="h-1.5 rounded-full transition-all duration-300"
+                    style={{
+                      width: i === featured ? 20 : 6,
+                      background: i === featured ? hero.accentColor : 'var(--border)',
+                    }}
+                  />
+                ))}
+              </div>
             </div>
 
             {/* Stats row — 3-col grid on all sizes */}

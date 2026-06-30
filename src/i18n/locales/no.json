@@ -24,6 +24,7 @@
     "title": "Portfolio Tools",
     "subtitle": "En samling nettleserbaserte verktøy — ingen opplasting, ingen sporing.",
     "openTool": "Åpne verktøy",
+    "openNamed": "Åpne {{tool}}",
     "comingSoon": "Kommer snart",
     "runSpeedTest": "Kjør hastighetstest",
     "tools": "Verktøy",
