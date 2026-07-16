@@ -92,3 +92,16 @@ html.light {
   .text-subtle     { color: var(--text-subtle); }
   .accent-color    { color: var(--accent); }
 }
+
+/* ── Haptic visual-pulse fallback ───────────────────────────── */
+@keyframes haptic-pulse {
+  0%   { transform: scale(1); filter: brightness(1); }
+  35%  { transform: scale(0.92); filter: brightness(1.15); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+.haptic-pulse-active {
+  animation: haptic-pulse 180ms ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .haptic-pulse-active { animation: none; }
+}
