@@ -5,7 +5,8 @@
     "fileCompress": "File Compress",
     "speedTest": "Speed Test",
     "qrGenerator": "QR Generator",
-    "wcagScanner": "WCAG Scanner"
+    "wcagScanner": "WCAG Scanner",
+    "counter": "Counter"
   },
   "theme": {
     "light": "Light",
@@ -64,6 +65,11 @@
       "name": "WCAG Scanner",
       "description": "Crawl a whole site and audit every page for WCAG accessibility issues with axe-core.",
       "badge": "axe-core"
+    },
+    "counter": {
+      "name": "Counter",
+      "description": "Track people entering and exiting a venue with a simple manual tally. Saved on this device.",
+      "badge": "Manual tally"
     }
   },
   "footer": {
@@ -180,5 +186,24 @@
       "moderate": "Moderate",
       "minor": "Minor"
     }
+  },
+  "counter": {
+    "title": "Entrance Counter",
+    "subtitle": "Track people in and out at the gate",
+    "entered": "Entered",
+    "exited": "Exited",
+    "netInside": "Net inside",
+    "tapToCorrect": "tap number to correct",
+    "actionHint": "Big + counts instantly. Small − and manual edits ask you to confirm first.",
+    "savedNote": "Saved on this device",
+    "resetLabel": "Reset counts",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "confirmRemoveTitle": "Remove one entry?",
+    "confirmRemoveBody": "This will subtract 1 from {{label}}, currently {{from}} → {{to}}. Use this to correct a mistap.",
+    "confirmEditTitle": "Set count manually?",
+    "confirmEditBody": "Change {{label}} from {{from}} to {{to}}. Only do this to fix an incorrect total.",
+    "confirmResetTitle": "Reset all counts?",
+    "confirmResetBody": "This sets both Entered and Exited back to 0. This cannot be undone."
   }
 }

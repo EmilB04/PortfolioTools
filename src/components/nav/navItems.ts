@@ -1,4 +1,4 @@
-import { LayoutDashboard, FileInput, FileArchive, Gauge, QrCode, Accessibility } from 'lucide-react'
+import { LayoutDashboard, FileInput, FileArchive, Gauge, QrCode, Accessibility, DoorOpen } from 'lucide-react'
 
 export const navItems = [
   { key: 'dashboard', icon: LayoutDashboard, to: '/' },
@@ -7,4 +7,5 @@ export const navItems = [
   { key: 'qrGenerator', icon: QrCode, to: '/qr-generator' },
   { key: 'wcagScanner', icon: Accessibility, to: '/wcag-scanner' },
   { key: 'speedTest', icon: Gauge, to: '/speed-test' },
+  { key: 'counter', icon: DoorOpen, to: '/counter' },
 ] as const

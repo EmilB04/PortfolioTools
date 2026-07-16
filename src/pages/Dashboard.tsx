@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FileInput, FileArchive, Gauge, QrCode, Accessibility, ArrowRight } from 'lucide-react'
+import { FileInput, FileArchive, Gauge, QrCode, Accessibility, DoorOpen, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ToolCard } from '../components/ToolCard'
 import { todayStats } from '../utils/speedStorage'
+import { loadCounterState } from '../utils/counterStorage'
 
 const ROTATE_MS = 6000
 
@@ -25,6 +26,7 @@ function StatPill({ label, value, dim }: { label: string; value: string; dim?: b
 export function Dashboard() {
   const { t } = useTranslation()
   const stats = todayStats()
+  const counterState = loadCounterState()
 
   const dlDisplay = stats.avgDownload !== null ? `${stats.avgDownload.toFixed(1)} Mbps` : '—'
   const ulDisplay = stats.avgUpload !== null ? `${stats.avgUpload.toFixed(1)} Mbps` : '—'
@@ -102,6 +104,20 @@ export function Dashboard() {
       stats: [
         { label: 'Crawls all pages', value: 'axe-core' },
         { label: 'WCAG 2 · A/AA/AAA', value: 'Live' },
+      ],
+    },
+    {
+      title: t('tools.counter.name'),
+      description: t('tools.counter.description'),
+      badge: t('tools.counter.badge'),
+      href: '/counter',
+      accentColor: '#3b82f6',
+      accentBg: 'rgba(59,130,246,0.12)',
+      icon: <DoorOpen size={20} color="#3b82f6" />,
+      comingSoon: false,
+      stats: [
+        { label: t('counter.entered'), value: String(counterState.entered) },
+        { label: t('counter.exited'), value: String(counterState.exited) },
       ],
     },
   ]

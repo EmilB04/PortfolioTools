@@ -5,7 +5,8 @@
     "fileCompress": "Filkomprimering",
     "speedTest": "Hastighetstest",
     "qrGenerator": "QR-generator",
-    "wcagScanner": "WCAG-skanner"
+    "wcagScanner": "WCAG-skanner",
+    "counter": "Teller"
   },
   "theme": {
     "light": "Lys",
@@ -64,6 +65,11 @@
       "name": "WCAG-skanner",
       "description": "Gjennomsøk et helt nettsted og sjekk hver side for WCAG-tilgjengelighet med axe-core.",
       "badge": "axe-core"
+    },
+    "counter": {
+      "name": "Teller",
+      "description": "Tell personer som kommer inn og går ut av et arrangement med en enkel manuell telling. Lagres på denne enheten.",
+      "badge": "Manuell telling"
     }
   },
   "footer": {
@@ -180,5 +186,24 @@
       "moderate": "Moderat",
       "minor": "Mindre"
     }
+  },
+  "counter": {
+    "title": "Inngangsteller",
+    "subtitle": "Tell personer inn og ut ved inngangen",
+    "entered": "Inne",
+    "exited": "Ute",
+    "netInside": "Netto inne",
+    "tapToCorrect": "trykk på tallet for å rette",
+    "actionHint": "Store + teller umiddelbart. Lille − og manuelle endringer ber deg bekrefte først.",
+    "savedNote": "Lagret på denne enheten",
+    "resetLabel": "Nullstill telling",
+    "cancel": "Avbryt",
+    "confirm": "Bekreft",
+    "confirmRemoveTitle": "Fjerne én registrering?",
+    "confirmRemoveBody": "Dette trekker 1 fra {{label}}, nå {{from}} → {{to}}. Bruk dette for å rette en feiltrykk.",
+    "confirmEditTitle": "Sette telling manuelt?",
+    "confirmEditBody": "Endre {{label}} fra {{from}} til {{to}}. Gjør dette kun for å rette et feil totaltall.",
+    "confirmResetTitle": "Nullstille all telling?",
+    "confirmResetBody": "Dette setter både Inne og Ute tilbake til 0. Dette kan ikke angres."
   }
 }
