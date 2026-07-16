@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DoorOpen, LogIn, LogOut, Plus, Minus, Pencil, RotateCcw, Smartphone } from 'lucide-react'
 import { loadCounterState, saveCounterState } from '../utils/counterStorage'
-import { vibrate } from '../utils/haptics'
+import { haptic } from '../utils/haptics'
 
 // ── Constants ────────────────────────────────────────────────────────────────────
 
@@ -42,13 +42,13 @@ export function Counter() {
   const net = counts.entered - counts.exited
 
   const increment = () => {
-    vibrate(12)
+    haptic('light')
     setCounts(c => ({ ...c, [mode]: c[mode] + 1 }))
   }
 
   const requestDecrement = () => {
     if (counts[mode] === 0) return
-    vibrate(15)
+    haptic('medium')
     setConfirm({
       title: t('counter.confirmRemoveTitle'),
       body: t('counter.confirmRemoveBody', { label: modeLabel, from: counts[mode], to: counts[mode] - 1 }),
@@ -64,7 +64,7 @@ export function Counter() {
     const val = Math.max(0, parseInt(editValue, 10) || 0)
     const current = counts[mode]
     if (val === current) return
-    vibrate(15)
+    haptic('medium')
     setConfirm({
       title: t('counter.confirmEditTitle'),
       body: t('counter.confirmEditBody', { label: modeLabel, from: current, to: val }),
@@ -74,7 +74,7 @@ export function Counter() {
   }
 
   const requestReset = () => {
-    vibrate(15)
+    haptic('medium')
     setConfirm({
       title: t('counter.confirmResetTitle'),
       body: t('counter.confirmResetBody'),
@@ -109,7 +109,7 @@ export function Counter() {
           const active = mode === m
           const Icon = m === 'entered' ? LogIn : LogOut
           return (
-            <button key={m} onClick={() => { vibrate(8); setMode(m) }}
+            <button key={m} onClick={() => { haptic('light'); setMode(m) }}
               className="flex-1 flex items-center justify-center gap-2 px-3 py-3 rounded-xl text-sm font-semibold transition-all duration-150"
               style={{ background: active ? c.color : 'transparent', color: active ? '#ffffff' : 'var(--text-subtle)' }}>
               <Icon size={16} />
@@ -210,12 +210,12 @@ export function Counter() {
             <h2 className="text-[15px] font-bold" style={{ color: 'var(--text)' }}>{confirm.title}</h2>
             <p className="text-[13px] leading-relaxed" style={{ color: 'var(--text-muted)' }}>{confirm.body}</p>
             <div className="flex gap-2.5 pt-1">
-              <button onClick={() => { vibrate(5); setConfirm(null) }}
+              <button onClick={() => { haptic('light'); setConfirm(null) }}
                 className="flex-1 py-3 rounded-xl text-sm font-semibold border"
                 style={{ borderColor: 'var(--border)', background: 'var(--surface-card)', color: 'var(--text)' }}>
                 {t('counter.cancel')}
               </button>
-              <button onClick={() => { vibrate([10, 30, 10]); confirm.onConfirm(); setConfirm(null) }}
+              <button onClick={() => { haptic('heavy'); confirm.onConfirm(); setConfirm(null) }}
                 className="flex-1 py-3 rounded-xl text-sm font-semibold text-white"
                 style={{ background: confirm.accentColor }}>
                 {t('counter.confirm')}
