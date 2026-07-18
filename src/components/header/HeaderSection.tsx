@@ -4,7 +4,7 @@ import { ThemeSwitcher } from './ThemeSwitcher'
 
 export default function HeaderSection() {
     return (
-        <motion.header
+        <motion.div
             initial={{ opacity: 0, y: -16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
@@ -15,6 +15,6 @@ export default function HeaderSection() {
                     <ThemeSwitcher />
                 </div>
             </div>
-        </motion.header>
+        </motion.div>
     )
 }

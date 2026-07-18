@@ -15,7 +15,7 @@
   --surface-card:  rgba(1, 6, 38, 0.55);
   --text:          #ffffff;
   --text-muted:    rgba(255, 255, 255, 0.72);
-  --text-subtle:   rgba(255, 255, 255, 0.45);
+  --text-subtle:   rgba(255, 255, 255, 0.6);
   --border:        rgba(255, 255, 255, 0.08);
   --border-hover:  rgba(241, 55, 110, 0.4);
   --stars-bg:      radial-gradient(circle at bottom, #020111 0%, #000000 100%);
@@ -28,7 +28,7 @@ html.light {
   --surface-card:  rgba(255, 252, 248, 0.97);
   --text:          #1c1025;
   --text-muted:    rgba(28, 16, 37, 0.68);
-  --text-subtle:   rgba(28, 16, 37, 0.44);
+  --text-subtle:   rgba(28, 16, 37, 0.6);
   --border:        rgba(28, 16, 37, 0.09);
   --border-hover:  rgba(241, 55, 110, 0.4);
   --stars-bg:      radial-gradient(ellipse at bottom, #e8cdd8 0%, #ede4f0 45%, #f7f4f1 100%);

@@ -136,6 +136,7 @@ export function QrGenerator() {
               value={text}
               onChange={e => setText(e.target.value)}
               rows={3}
+              aria-label={t('qrGenerator.contentLabel')}
               placeholder={t('qrGenerator.placeholder')}
               className="w-full rounded-xl border px-3 py-2.5 text-sm resize-y outline-none transition-colors"
               style={{ background: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text)' }}
@@ -177,6 +178,7 @@ export function QrGenerator() {
                 <div className="flex items-center gap-2 rounded-xl border px-2 py-1.5"
                   style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
                   <input type="color" value={value} onChange={e => set(e.target.value)}
+                    aria-label={label}
                     className="w-7 h-7 rounded cursor-pointer border-0 bg-transparent p-0 shrink-0" />
                   <span className="text-xs font-mono uppercase" style={{ color: 'var(--text-muted)' }}>{value}</span>
                 </div>
@@ -211,6 +213,7 @@ export function QrGenerator() {
               </label>
               <input type="range" min={0} max={8} value={margin}
                 onChange={e => setMargin(Number(e.target.value))}
+                aria-label={t('qrGenerator.quietZone')}
                 className="w-full h-1.5 rounded-full appearance-none cursor-pointer mt-2.5"
                 style={{ accentColor: '#8b5cf6' }} />
             </div>
