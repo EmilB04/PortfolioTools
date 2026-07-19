@@ -27,7 +27,7 @@ export function SidebarLogo({ collapsed, isMobileDrawer, mobileClose }: SidebarL
         <img src={logo} alt="EB" className="w-7 h-7 shrink-0 object-contain" />
         {(!collapsed || isMobileDrawer) && (
           <span className="text-[15px] font-bold tracking-tight whitespace-nowrap" style={{ color: 'var(--text)' }}>
-            Portfolio<span style={{ color: 'var(--accent)' }}>Tools</span>
+            Portfolio<span className="text-accent-gradient">Tools</span>
           </span>
         )}
       </a>

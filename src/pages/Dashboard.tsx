@@ -13,12 +13,12 @@ function StatPill({ label, value, dim }: { label: string; value: string; dim?: b
   return (
     <div className="flex flex-col gap-0.5 min-w-0">
       <span
-        className="text-xl sm:text-2xl font-bold tabular-nums tracking-tight truncate"
+        className="fs-xl font-mono font-semibold tabular-nums tracking-tight truncate"
         style={{ color: dim ? 'var(--text-subtle)' : 'var(--text)' }}
       >
         {value}
       </span>
-      <span className="text-xs truncate" style={{ color: 'var(--text-subtle)' }}>{label}</span>
+      <span className="fs-xs truncate" style={{ color: 'var(--text-subtle)' }}>{label}</span>
     </div>
   )
 }
@@ -168,11 +168,11 @@ export function Dashboard() {
                     <span className="p-2 rounded-xl shrink-0" style={{ background: hero.accentBg }}>
                       {hero.icon}
                     </span>
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-tight" style={{ color: 'var(--text)' }}>
+                    <h1 className="fs-3xl font-display font-extrabold tracking-tight" style={{ color: 'var(--text)' }}>
                       {hero.title}
                     </h1>
                   </div>
-                  <p className="text-sm sm:text-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                  <p className="fs-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                     {hero.description}
                   </p>
                   <Link
@@ -224,7 +224,7 @@ export function Dashboard() {
 
       {/* Tool cards */}
       <div>
-        <h2 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--text-subtle)' }}>
+        <h2 className="fs-xs font-mono font-medium uppercase tracking-[0.2em] mb-4" style={{ color: 'var(--text-subtle)' }}>
           {t('dashboard.tools')}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
