@@ -62,7 +62,7 @@ export function Layout() {
         </header>
 
         <div className="flex-1 overflow-y-auto flex flex-col">
-          <main className="flex-1 p-4 sm:p-6 lg:p-8">
+          <main className="flex-1" style={{ padding: 'var(--gap-page)' }}>
             <Outlet />
           </main>
           <Footer />

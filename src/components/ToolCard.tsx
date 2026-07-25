@@ -58,8 +58,8 @@ export function ToolCard({ title, description, badge, icon, stats, href, accentC
 
         {/* Text */}
         <div className="space-y-1.5">
-          <h3 className="text-[15px] font-semibold leading-snug" style={{ color: 'var(--text)' }}>{title}</h3>
-          <p className="text-sm leading-relaxed" style={{ color: 'var(--text-subtle)' }}>{description}</p>
+          <h3 className="fs-lg font-display font-bold leading-tight" style={{ color: 'var(--text)' }}>{title}</h3>
+          <p className="fs-sm leading-relaxed" style={{ color: 'var(--text-subtle)' }}>{description}</p>
         </div>
 
         {/* Stats */}
@@ -70,7 +70,7 @@ export function ToolCard({ title, description, badge, icon, stats, href, accentC
               className="rounded-xl px-3 py-2.5 border"
               style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}
             >
-              <p className="text-sm font-bold leading-none" style={{ color: 'var(--text)' }}>{s.value}</p>
+              <p className="fs-sm font-mono font-semibold leading-none tracking-tight" style={{ color: 'var(--text)' }}>{s.value}</p>
               <p className="text-[11px] mt-1 leading-snug" style={{ color: 'var(--text-subtle)' }}>{s.label}</p>
             </div>
           ))}

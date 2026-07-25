@@ -21,6 +21,22 @@
     "choose": "Choose language",
     "section": "Language"
   },
+  "settingsMenu": {
+    "settings": "Settings",
+    "appearance": "Appearance",
+    "accentColor": "Accent color",
+    "chooseAccent": "Choose accent color"
+  },
+  "cookieConsent": {
+    "section": "Privacy",
+    "message": "This site uses cookies to remember your theme, accent color and language. Nothing is shared with third parties.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "manage": "Change cookie preferences",
+    "statusAccepted": "Preferences are being saved on this device.",
+    "statusDeclined": "Preferences are not saved. Your choices only apply to this session.",
+    "statusUndecided": "You haven't made a choice yet."
+  },
   "dashboard": {
     "title": "Portfolio Tools",
     "subtitle": "A collection of browser-based utilities — no uploads, no tracking.",
