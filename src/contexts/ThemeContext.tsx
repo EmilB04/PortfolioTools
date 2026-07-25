@@ -1,4 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { readPreference, writePreference } from '../lib/cookieConsent';
+import { useCookieConsent } from './useCookieConsent';
 
 type Theme = 'light' | 'dark' | 'system';
 type ResolvedTheme = 'light' | 'dark';
@@ -16,7 +18,7 @@ const getSystemTheme = (): ResolvedTheme =>
   window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 
 const getInitialTheme = (): Theme => {
-  const stored = localStorage.getItem(STORAGE_KEY);
+  const stored = readPreference(STORAGE_KEY);
   if (stored === 'light' || stored === 'dark' || stored === 'system') return stored;
   return 'system';
 };
@@ -27,11 +29,14 @@ const resolveTheme = (theme: Theme): ResolvedTheme =>
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const { consent } = useCookieConsent();
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(() => resolveTheme(getInitialTheme()));
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, theme);
+    if (consent === 'accepted') {
+      writePreference(STORAGE_KEY, theme);
+    }
     setResolvedTheme(resolveTheme(theme));
 
     if (theme !== 'system') return;
@@ -40,7 +45,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const onChange = () => setResolvedTheme(getSystemTheme());
     media.addEventListener('change', onChange);
     return () => media.removeEventListener('change', onChange);
-  }, [theme]);
+  }, [theme, consent]);
 
   useEffect(() => {
     const root = document.documentElement;
