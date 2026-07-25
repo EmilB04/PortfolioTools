@@ -21,6 +21,22 @@
     "choose": "Velg språk",
     "section": "Språk"
   },
+  "settingsMenu": {
+    "settings": "Innstillinger",
+    "appearance": "Utseende",
+    "accentColor": "Aksentfarge",
+    "chooseAccent": "Velg aksentfarge"
+  },
+  "cookieConsent": {
+    "section": "Personvern",
+    "message": "Dette nettstedet bruker informasjonskapsler for å huske tema, aksentfarge og språk. Ingenting deles med tredjeparter.",
+    "accept": "Godta",
+    "decline": "Avslå",
+    "manage": "Endre cookie-innstillinger",
+    "statusAccepted": "Valgene dine lagres på denne enheten.",
+    "statusDeclined": "Valgene dine lagres ikke. De gjelder kun for denne økten.",
+    "statusUndecided": "Du har ikke tatt et valg ennå."
+  },
   "dashboard": {
     "title": "Portfolio Tools",
     "subtitle": "En samling nettleserbaserte verktøy — ingen opplasting, ingen sporing.",
