@@ -112,11 +112,11 @@ export default function SettingsMenu() {
                 aria-label={t('settingsMenu.settings')}
                 onClick={() => setOpen((value) => !value)}
                 className={`
-                    group relative inline-flex h-10 w-10 items-center justify-center rounded-full border
-                    transition-all duration-200 ease-out motion-reduce:transition-none
+                    pp-dropdown-trigger group relative inline-flex h-10 w-10 items-center justify-center rounded-full border
+                    motion-reduce:transition-none
                     ${open
-                        ? 'border-[var(--accent)] bg-[var(--surface-card)] text-[var(--text)] shadow-[0_12px_30px_rgba(0,0,0,0.18)] ring-4 ring-[color:color-mix(in_srgb,var(--accent)_16%,transparent)]'
-                        : 'border-[var(--border)] bg-[var(--surface)] text-[var(--text)] shadow-[0_8px_24px_rgba(0,0,0,0.14)] hover:-translate-y-[1px] hover:border-[var(--border-hover)] hover:bg-[var(--surface-card)] active:translate-y-0 active:scale-[0.985] active:shadow-[0_4px_14px_rgba(0,0,0,0.14)]'
+                        ? 'border-[var(--accent)] bg-[color:color-mix(in_srgb,var(--surface-card)_90%,#000_10%)] text-[var(--text)] shadow-[0_12px_30px_rgba(0,0,0,0.18)] ring-4 ring-[color:color-mix(in_srgb,var(--accent)_16%,transparent)]'
+                        : 'border-[var(--border)] bg-[color:color-mix(in_srgb,var(--surface)_92%,#000_8%)] text-[var(--text)] shadow-[0_8px_24px_rgba(0,0,0,0.14)] hover:border-[var(--border-hover)] hover:bg-[color:color-mix(in_srgb,var(--surface-card)_88%,#000_12%)] active:translate-y-0 active:scale-[0.985] active:shadow-[0_4px_14px_rgba(0,0,0,0.14)]'
                     }
                 `}
             >
@@ -133,10 +133,8 @@ export default function SettingsMenu() {
                 role="dialog"
                 aria-label={t('settingsMenu.settings')}
                 className={`
-                    absolute right-0 top-[calc(100%+0.6rem)] z-[400] w-72 max-w-[calc(100vw-2rem)]
-                    max-h-[70vh] overflow-y-auto rounded-2xl border border-[var(--border)]
-                    bg-[color:color-mix(in_srgb,var(--surface-card)_92%,transparent)]
-                    shadow-[0_18px_48px_rgba(0,0,0,0.22)] backdrop-blur-2xl
+                    pp-dropdown-panel absolute right-0 top-[calc(100%+0.6rem)] z-[600] w-72 max-w-[calc(100vw-2rem)]
+                    max-h-[70vh] overflow-y-auto rounded-[1.4rem]
                     transition-all duration-200 ease-out origin-top-right motion-reduce:transition-none
                     ${open
                         ? 'pointer-events-auto translate-y-0 scale-100 opacity-100'
@@ -160,10 +158,10 @@ export default function SettingsMenu() {
                                         aria-selected={selected}
                                         onClick={() => void handleLanguageSelect(language.code)}
                                         className={`
-                                            flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left
-                                            transition-all duration-200 ease-out motion-reduce:transition-none
+                                            pp-dropdown-item flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left
+                                            motion-reduce:transition-none
                                             ${selected
-                                                ? 'bg-[color:color-mix(in_srgb,var(--accent)_16%,var(--surface-card))] text-[var(--text)] shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--accent)_30%,transparent)]'
+                                                ? 'text-[var(--text)]'
                                                 : 'text-[var(--text-subtle)] hover:bg-[var(--surface)] hover:text-[var(--text)] active:scale-[0.99]'
                                             }
                                         `}
@@ -182,7 +180,7 @@ export default function SettingsMenu() {
                         <h3 className="mb-2 px-1 text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-subtle)]">
                             {t('settingsMenu.appearance')}
                         </h3>
-                        <div className="relative grid grid-cols-3 gap-1 rounded-xl bg-[var(--surface)] p-1">
+                        <div className="relative grid grid-cols-3 gap-1 rounded-xl bg-[color:color-mix(in_srgb,var(--surface)_92%,#000_8%)] p-1.5 ring-1 ring-white/5">
                             <span
                                 className="absolute inset-y-1 rounded-lg transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] pointer-events-none"
                                 style={{
@@ -201,7 +199,7 @@ export default function SettingsMenu() {
                                         aria-pressed={selected}
                                         onClick={() => setTheme(value)}
                                         style={{ color: selected ? activeColor : 'var(--text-subtle)' }}
-                                        className="relative z-10 flex items-center justify-center gap-1.5 rounded-lg px-2 py-2 text-xs font-semibold transition-colors duration-200 hover:text-[var(--text)]"
+                                        className="pp-dropdown-item relative z-10 flex items-center justify-center gap-1.5 rounded-lg px-2 py-2 text-xs font-semibold hover:text-[var(--text)]"
                                     >
                                         <Icon />
                                         {t(labelKey)}
@@ -228,8 +226,7 @@ export default function SettingsMenu() {
                                         aria-label={preset.label}
                                         onClick={() => setAccent(color)}
                                         className={`
-                                            flex h-9 w-9 items-center justify-center rounded-full border-2
-                                            transition-all duration-200 ease-out
+                                            pp-dropdown-item flex h-9 w-9 items-center justify-center rounded-full border-2
                                             ${selected
                                                 ? 'border-[var(--accent)] scale-110'
                                                 : 'border-transparent hover:scale-105'
@@ -258,22 +255,24 @@ export default function SettingsMenu() {
                                     ? t('cookieConsent.statusDeclined')
                                     : t('cookieConsent.statusUndecided')}
                         </p>
-                        <div className="flex gap-2 px-1">
-                            <button
-                                type="button"
-                                onClick={accept}
-                                className="flex-1 rounded-xl bg-[var(--accent)] px-3 py-2 text-xs font-semibold text-white transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
-                            >
-                                {t('cookieConsent.accept')}
-                            </button>
-                            <button
-                                type="button"
-                                onClick={decline}
-                                className="flex-1 rounded-xl border border-[var(--border)] px-3 py-2 text-xs font-semibold text-[var(--text-subtle)] transition-colors duration-200 hover:text-[var(--text)]"
-                            >
-                                {t('cookieConsent.decline')}
-                            </button>
-                        </div>
+                        {consent === null && (
+                            <div className="flex gap-2 px-1">
+                                <button
+                                    type="button"
+                                    onClick={accept}
+                                    className="flex-1 rounded-xl bg-[var(--accent)] px-3 py-2 text-xs font-semibold text-white transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
+                                >
+                                    {t('cookieConsent.accept')}
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={decline}
+                                    className="flex-1 rounded-xl border border-[var(--border)] px-3 py-2 text-xs font-semibold text-[var(--text-subtle)] transition-colors duration-200 hover:text-[var(--text)]"
+                                >
+                                    {t('cookieConsent.decline')}
+                                </button>
+                            </div>
+                        )}
                         {consent !== null && (
                             <button
                                 type="button"

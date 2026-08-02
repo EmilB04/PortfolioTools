@@ -188,6 +188,8 @@
     "issues_other": "{{count}} issues",
     "pageError": "Failed",
     "pageClean": "No accessibility issues on this page.",
+    "emptyTitle": "Find what's blocking your users",
+    "emptyBody": "Enter a URL to crawl the site and audit every page against WCAG with axe-core.",
     "howToFix": "How to fix",
     "history": "History",
     "clearHistory": "Clear all",
