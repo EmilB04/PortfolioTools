@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   Accessibility, ScanLine, Square, Loader2, AlertTriangle,
   CheckCircle2, ChevronDown, ExternalLink, Globe, History, Trash2, Eye,
@@ -16,7 +17,7 @@ const SCAN_URL = (import.meta.env.VITE_WCAG_WORKER_URL as string | undefined) ||
 
 type Impact = 'critical' | 'serious' | 'moderate' | 'minor'
 
-const IMPACT_COLOR: Record<string, string> = {
+const IMPACT_COLOR: Record<Impact, string> = {
   critical: '#dc2626',
   serious:  '#ea580c',
   moderate: '#d97706',
@@ -62,8 +63,64 @@ function buildSummary(pages: PageResult[], url: string): string {
   return lines.join('\n')
 }
 
+// Most severe impact found on a page, or null if clean/errored — drives the row's status dot.
+function worstImpact(p: PageResult): Impact | null {
+  let worst: Impact | null = null
+  for (const v of p.violations) {
+    const imp = (v.impact ?? 'minor') as Impact
+    if (worst === null || IMPACT_ORDER.indexOf(imp) < IMPACT_ORDER.indexOf(worst)) worst = imp
+  }
+  return worst
+}
+
+function timeAgo(ts: number, locale: string): string {
+  const diffMs = ts - Date.now()
+  const mins = Math.round(diffMs / 60000)
+  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' })
+  if (Math.abs(mins) < 1) return rtf.format(0, 'minute')
+  if (Math.abs(mins) < 60) return rtf.format(mins, 'minute')
+  const hours = Math.round(mins / 60)
+  if (Math.abs(hours) < 24) return rtf.format(hours, 'hour')
+  const days = Math.round(hours / 24)
+  if (Math.abs(days) < 30) return rtf.format(days, 'day')
+  const months = Math.round(days / 30)
+  if (Math.abs(months) < 12) return rtf.format(months, 'month')
+  return rtf.format(Math.round(months / 12), 'year')
+}
+
+// Stacked severity bar + legend. Order is meaningful (worst → mildest), so it
+// doubles as a reading key for every list of violations on the page.
+function SeverityBar({ counts, total, labels }: { counts: Record<Impact, number>; total: number; labels: Record<Impact, string> }) {
+  return (
+    <div className="space-y-2.5">
+      <div className="flex h-2 w-full overflow-hidden rounded-full" style={{ background: 'var(--surface-card)' }}>
+        {IMPACT_ORDER.map(imp => {
+          const n = counts[imp]
+          if (n === 0) return null
+          return (
+            <div
+              key={imp}
+              style={{ width: `${(n / total) * 100}%`, background: IMPACT_COLOR[imp] }}
+              title={`${labels[imp]}: ${n}`}
+            />
+          )
+        })}
+      </div>
+      <div className="flex flex-wrap gap-x-5 gap-y-1.5">
+        {IMPACT_ORDER.map(imp => (
+          <div key={imp} className="flex items-center gap-1.5 text-xs">
+            <span className="h-2 w-2 rounded-full shrink-0" style={{ background: IMPACT_COLOR[imp] }} />
+            <span style={{ color: 'var(--text-subtle)' }}>{labels[imp]}</span>
+            <span className="font-mono font-semibold tabular-nums" style={{ color: 'var(--text)' }}>{counts[imp]}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export function WcagScanner() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [url, setUrl]           = useState('')
   const [maxPages, setMaxPages] = useState(10)
   const [pages, setPages]       = useState<PageResult[]>([])
@@ -73,6 +130,16 @@ export function WcagScanner() {
   const [history, setHistory]   = useState<WcagScanEntry[]>(() => loadScans())
   const [openHistory, setOpenHistory] = useState<string | null>(null)
   const abortRef = useRef<AbortController | null>(null)
+
+  const impactLabels = useMemo(
+    () => ({
+      critical: t('wcagScanner.impact.critical'),
+      serious: t('wcagScanner.impact.serious'),
+      moderate: t('wcagScanner.impact.moderate'),
+      minor: t('wcagScanner.impact.minor'),
+    }),
+    [t],
+  )
 
   const totals = useMemo(() => {
     const counts: Record<Impact, number> = { critical: 0, serious: 0, moderate: 0, minor: 0 }
@@ -209,10 +276,17 @@ export function WcagScanner() {
         </div>
       </div>
 
-      {/* Input */}
-      <div className="flex items-center gap-3 flex-wrap">
-        <div className="flex items-center gap-2 flex-1 min-w-[200px] rounded-xl border px-3 py-2.5"
-          style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
+      {/* Control card */}
+      <div className="relative overflow-hidden rounded-2xl border p-4 space-y-3"
+        style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
+        {isScanning && (
+          <div className="absolute inset-x-0 top-0 h-0.5 overflow-hidden" style={{ background: 'var(--surface-card)' }}>
+            <div className="h-full w-1/3 animate-[scan-sweep_1.2s_ease-in-out_infinite]" style={{ background: ACCENT }} />
+          </div>
+        )}
+
+        <div className="flex items-center gap-2 rounded-xl border px-3 py-2.5"
+          style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}>
           <Globe size={15} style={{ color: 'var(--text-subtle)' }} className="shrink-0" />
           <input
             value={url}
@@ -220,54 +294,43 @@ export function WcagScanner() {
             onKeyDown={e => { if (e.key === 'Enter' && !isScanning) scan() }}
             disabled={isScanning}
             placeholder={t('wcagScanner.placeholder')}
-            className="flex-1 bg-transparent text-sm outline-none disabled:opacity-60"
+            className="flex-1 min-w-0 bg-transparent text-sm outline-none disabled:opacity-60"
             style={{ color: 'var(--text)' }}
           />
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="text-xs shrink-0" style={{ color: 'var(--text-subtle)' }}>{t('wcagScanner.pages')}</span>
-          <div className="flex gap-1 p-1 rounded-xl border" style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
-            {MAX_OPTIONS.map(n => (
-              <button key={n} onClick={() => setMaxPages(n)} disabled={isScanning}
-                className="px-2.5 py-1 rounded-lg text-sm font-medium transition-all duration-150 disabled:cursor-not-allowed"
-                style={{
-                  background: maxPages === n ? ACCENT : 'transparent',
-                  color: maxPages === n ? '#ffffff' : 'var(--text-subtle)',
-                }}>
-                {n}
-              </button>
-            ))}
+        <div className="flex items-center justify-between gap-3 flex-wrap">
+          <div className="flex items-center gap-2">
+            <span className="text-xs shrink-0" style={{ color: 'var(--text-subtle)' }}>{t('wcagScanner.pages')}</span>
+            <div className="flex gap-1 p-1 rounded-xl border" style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}>
+              {MAX_OPTIONS.map(n => (
+                <button key={n} onClick={() => setMaxPages(n)} disabled={isScanning}
+                  className="px-2.5 py-1 rounded-lg text-sm font-medium transition-all duration-150 disabled:cursor-not-allowed"
+                  style={{
+                    background: maxPages === n ? ACCENT : 'transparent',
+                    color: maxPages === n ? '#ffffff' : 'var(--text-subtle)',
+                  }}>
+                  {n}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {isScanning ? (
-          <button onClick={stop}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90"
-            style={{ background: '#dc2626' }}>
-            <Square size={13} fill="currentColor" /> {t('wcagScanner.stop')}
-          </button>
-        ) : (
-          <button onClick={scan} disabled={!url.trim()}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
-            style={{ background: ACCENT }}>
-            <ScanLine size={15} /> {t('wcagScanner.scan')}
-          </button>
-        )}
-      </div>
-
-      {/* Status line */}
-      {(isScanning || pages.length > 0) && (
-        <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-subtle)' }}>
-          {isScanning && <Loader2 size={14} className="animate-spin" style={{ color: ACCENT }} />}
-          <span>{t('wcagScanner.scanned', { count: pages.length })}</span>
-          {status === 'done' && totals.total === 0 && (
-            <span className="flex items-center gap-1" style={{ color: '#10b981' }}>
-              <CheckCircle2 size={14} /> {t('wcagScanner.clean')}
-            </span>
+          {isScanning ? (
+            <button onClick={stop}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90"
+              style={{ background: '#dc2626' }}>
+              <Square size={13} fill="currentColor" /> {t('wcagScanner.stop')}
+            </button>
+          ) : (
+            <button onClick={scan} disabled={!url.trim()}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
+              style={{ background: ACCENT }}>
+              <ScanLine size={15} /> {t('wcagScanner.scan')}
+            </button>
           )}
         </div>
-      )}
+      </div>
 
       {errorMsg && (
         <p className="text-sm flex items-center gap-1.5" style={{ color: '#ef4444' }}>
@@ -275,21 +338,64 @@ export function WcagScanner() {
         </p>
       )}
 
-      {/* Summary */}
-      {totals.total > 0 && (
-        <div className="grid grid-cols-4 gap-3">
-          {IMPACT_ORDER.map(imp => (
-            <div key={imp} className="rounded-xl border p-3 flex flex-col items-center"
-              style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
-              <span className="text-2xl font-bold tabular-nums" style={{ color: IMPACT_COLOR[imp] }}>
-                {totals.counts[imp]}
-              </span>
-              <span className="text-xs capitalize mt-0.5" style={{ color: 'var(--text-subtle)' }}>
-                {t(`wcagScanner.impact.${imp}`)}
-              </span>
+      {/* Empty state — shown until the first scan starts */}
+      {status === 'idle' && pages.length === 0 && !errorMsg && (
+        <div className="rounded-2xl border p-6 sm:p-8" style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-5">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl" style={{ background: 'rgba(20,184,166,0.12)' }}>
+              <Accessibility size={22} style={{ color: ACCENT }} />
             </div>
-          ))}
+            <div>
+              <h2 className="fs-lg font-display font-bold" style={{ color: 'var(--text)' }}>
+                {t('wcagScanner.emptyTitle')}
+              </h2>
+              <p className="text-sm mt-1 max-w-md" style={{ color: 'var(--text-subtle)' }}>
+                {t('wcagScanner.emptyBody')}
+              </p>
+            </div>
+          </div>
         </div>
+      )}
+
+      {/* Result hero — score + severity breakdown, updates live while scanning */}
+      {pages.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="rounded-2xl border p-5 sm:p-6"
+          style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
+        >
+          <div className="flex flex-col sm:flex-row sm:items-center gap-5">
+            <div className="flex items-center gap-4 shrink-0">
+              {totals.total === 0 ? (
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl" style={{ background: 'rgba(16,185,129,0.12)' }}>
+                  <CheckCircle2 size={26} style={{ color: '#10b981' }} />
+                </div>
+              ) : (
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl tabular-nums"
+                  style={{ background: `${IMPACT_COLOR.critical}14` }}>
+                  <span className="fs-lg font-display font-extrabold" style={{ color: 'var(--text)' }}>{totals.total}</span>
+                </div>
+              )}
+              <div>
+                <p className="fs-lg font-display font-bold flex items-center gap-2" style={{ color: 'var(--text)' }}>
+                  {totals.total === 0 ? t('wcagScanner.clean') : t('wcagScanner.issues', { count: totals.total })}
+                  {isScanning && <Loader2 size={15} className="animate-spin" style={{ color: ACCENT }} />}
+                </p>
+                <p className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
+                  {t('wcagScanner.scanned', { count: pages.length })}
+                </p>
+              </div>
+            </div>
+
+            {totals.total > 0 && (
+              <div className="flex-1 sm:pl-5 sm:border-l min-w-0" style={{ borderColor: 'var(--border)' }}>
+                <SeverityBar counts={totals.counts} total={totals.total} labels={impactLabels} />
+              </div>
+            )}
+          </div>
+        </motion.div>
       )}
 
       {/* Per-page results */}
@@ -297,13 +403,21 @@ export function WcagScanner() {
         {pages.map(p => {
           const count = p.violations.reduce((s, v) => s + v.nodeCount, 0)
           const isOpen = openPage === p.url
+          const worst = worstImpact(p)
           return (
             <div key={p.url} className="rounded-xl border overflow-hidden"
               style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
               <button onClick={() => setOpenPage(isOpen ? null : p.url)}
                 className="w-full flex items-center justify-between gap-3 px-4 py-3 text-left">
-                <span className="text-sm truncate" style={{ color: 'var(--text)' }}>
-                  {p.url.replace(/^https?:\/\//, '')}
+                <span className="flex items-center gap-2.5 min-w-0">
+                  <span
+                    className="h-2 w-2 rounded-full shrink-0"
+                    style={{ background: p.error ? '#ef4444' : worst ? IMPACT_COLOR[worst] : '#10b981' }}
+                    aria-hidden="true"
+                  />
+                  <span className="text-sm truncate" style={{ color: 'var(--text)' }}>
+                    {p.url.replace(/^https?:\/\//, '')}
+                  </span>
                 </span>
                 <div className="flex items-center gap-3 shrink-0">
                   {p.error ? (
@@ -316,7 +430,7 @@ export function WcagScanner() {
                     </span>
                   ) : (
                     <span className="text-xs font-semibold px-2 py-0.5 rounded-full"
-                      style={{ background: 'rgba(220,38,38,0.12)', color: '#dc2626' }}>
+                      style={{ background: `${IMPACT_COLOR[worst ?? 'minor']}1f`, color: IMPACT_COLOR[worst ?? 'minor'] }}>
                       {t('wcagScanner.issues', { count })}
                     </span>
                   )}
@@ -325,50 +439,60 @@ export function WcagScanner() {
                 </div>
               </button>
 
-              {isOpen && (
-                <div className="px-4 pb-4 space-y-3 border-t pt-3" style={{ borderColor: 'var(--border)' }}>
-                  {p.error && (
-                    <p className="text-sm" style={{ color: '#ef4444' }}>{p.error}</p>
-                  )}
-                  {!p.error && p.violations.length === 0 && (
-                    <p className="text-sm" style={{ color: '#10b981' }}>{t('wcagScanner.pageClean')}</p>
-                  )}
-                  {[...p.violations]
-                    .sort((a, b) => IMPACT_ORDER.indexOf((a.impact ?? 'minor') as Impact) - IMPACT_ORDER.indexOf((b.impact ?? 'minor') as Impact))
-                    .map(v => (
-                      <div key={v.id} className="rounded-lg border p-3"
-                        style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}>
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="min-w-0">
-                            <div className="flex items-center gap-2 flex-wrap">
-                              <span className="text-xs font-bold uppercase px-1.5 py-0.5 rounded"
-                                style={{ background: `${IMPACT_COLOR[v.impact ?? 'minor']}22`, color: IMPACT_COLOR[v.impact ?? 'minor'] }}>
-                                {v.impact ?? 'minor'}
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2, ease: 'easeInOut' }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-4 pb-4 space-y-3 border-t pt-3" style={{ borderColor: 'var(--border)' }}>
+                      {p.error && (
+                        <p className="text-sm" style={{ color: '#ef4444' }}>{p.error}</p>
+                      )}
+                      {!p.error && p.violations.length === 0 && (
+                        <p className="text-sm" style={{ color: '#10b981' }}>{t('wcagScanner.pageClean')}</p>
+                      )}
+                      {[...p.violations]
+                        .sort((a, b) => IMPACT_ORDER.indexOf((a.impact ?? 'minor') as Impact) - IMPACT_ORDER.indexOf((b.impact ?? 'minor') as Impact))
+                        .map(v => (
+                          <div key={v.id} className="rounded-lg border border-l-[3px] p-3"
+                            style={{ background: 'var(--surface-card)', borderColor: 'var(--border)', borderLeftColor: IMPACT_COLOR[(v.impact ?? 'minor') as Impact] }}>
+                            <div className="flex items-start justify-between gap-2">
+                              <div className="min-w-0">
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  <span className="text-xs font-bold uppercase px-1.5 py-0.5 rounded"
+                                    style={{ background: `${IMPACT_COLOR[(v.impact ?? 'minor') as Impact]}22`, color: IMPACT_COLOR[(v.impact ?? 'minor') as Impact] }}>
+                                    {v.impact ?? 'minor'}
+                                  </span>
+                                  <span className="text-sm font-medium" style={{ color: 'var(--text)' }}>{v.help}</span>
+                                </div>
+                                <p className="text-xs mt-1" style={{ color: 'var(--text-subtle)' }}>{v.description}</p>
+                              </div>
+                              <span className="text-xs tabular-nums shrink-0" style={{ color: 'var(--text-subtle)' }}>
+                                ×{v.nodeCount}
                               </span>
-                              <span className="text-sm font-medium" style={{ color: 'var(--text)' }}>{v.help}</span>
                             </div>
-                            <p className="text-xs mt-1" style={{ color: 'var(--text-subtle)' }}>{v.description}</p>
+                            <div className="flex items-center gap-3 mt-2">
+                              <a href={v.helpUrl} target="_blank" rel="noopener noreferrer"
+                                className="text-xs flex items-center gap-1 hover:underline" style={{ color: ACCENT }}>
+                                {t('wcagScanner.howToFix')} <ExternalLink size={11} />
+                              </a>
+                            </div>
+                            {v.nodes[0] && (
+                              <pre className="text-xs mt-2 p-2 rounded overflow-x-auto"
+                                style={{ background: 'var(--surface)', color: 'var(--text-muted)' }}>
+                                {v.nodes[0].html}
+                              </pre>
+                            )}
                           </div>
-                          <span className="text-xs tabular-nums shrink-0" style={{ color: 'var(--text-subtle)' }}>
-                            ×{v.nodeCount}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-3 mt-2">
-                          <a href={v.helpUrl} target="_blank" rel="noopener noreferrer"
-                            className="text-xs flex items-center gap-1 hover:underline" style={{ color: ACCENT }}>
-                            {t('wcagScanner.howToFix')} <ExternalLink size={11} />
-                          </a>
-                        </div>
-                        {v.nodes[0] && (
-                          <pre className="text-xs mt-2 p-2 rounded overflow-x-auto"
-                            style={{ background: 'var(--surface)', color: 'var(--text-muted)' }}>
-                            {v.nodes[0].html}
-                          </pre>
-                        )}
-                      </div>
-                    ))}
-                </div>
-              )}
+                        ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           )
         })}
@@ -410,19 +534,24 @@ export function WcagScanner() {
           {history.map(h => {
             const isOpen = openHistory === h.id
             return (
-            <div key={h.id} className="rounded-xl border overflow-hidden"
+            <div key={h.id} className="rounded-xl border overflow-hidden transition-colors"
               style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
               <div className="flex items-center justify-between gap-3 px-4 py-2.5">
                 <button onClick={() => setOpenHistory(isOpen ? null : h.id)}
                   className="flex items-center gap-2 min-w-0 flex-1 text-left">
                   <ChevronDown size={15} className="shrink-0 transition-transform duration-200"
                     style={{ color: 'var(--text-subtle)', transform: isOpen ? 'rotate(180deg)' : 'none' }} />
+                  <span
+                    className="h-2 w-2 rounded-full shrink-0"
+                    style={{ background: h.totalIssues === 0 ? '#10b981' : IMPACT_COLOR.critical }}
+                    aria-hidden="true"
+                  />
                   <div className="min-w-0">
                     <div className="text-sm truncate" style={{ color: 'var(--text)' }}>
                       {h.url.replace(/^https?:\/\//, '')}
                     </div>
                     <div className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
-                      {new Date(h.timestamp).toLocaleString()} · {t('wcagScanner.scanned', { count: h.pagesScanned })}
+                      {timeAgo(h.timestamp, i18n.language)} · {t('wcagScanner.scanned', { count: h.pagesScanned })}
                     </div>
                   </div>
                 </button>
@@ -449,12 +578,22 @@ export function WcagScanner() {
                   </button>
                 </div>
               </div>
-              {isOpen && (
-                <pre className="text-xs px-4 pb-4 pt-3 border-t overflow-x-auto whitespace-pre-wrap break-words"
-                  style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
-                  {buildSummary(h.pages, h.url)}
-                </pre>
-              )}
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2, ease: 'easeInOut' }}
+                    className="overflow-hidden"
+                  >
+                    <pre className="text-xs px-4 pb-4 pt-3 border-t overflow-x-auto whitespace-pre-wrap break-words"
+                      style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
+                      {buildSummary(h.pages, h.url)}
+                    </pre>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
             )
           })}

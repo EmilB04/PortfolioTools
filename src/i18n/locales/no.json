@@ -188,6 +188,8 @@
     "issues_other": "{{count}} problemer",
     "pageError": "Feilet",
     "pageClean": "Ingen tilgjengelighetsproblemer på denne siden.",
+    "emptyTitle": "Finn det som stopper brukerne dine",
+    "emptyBody": "Skriv inn en URL for å gjennomsøke nettstedet og sjekke hver side mot WCAG med axe-core.",
     "howToFix": "Slik fikser du det",
     "history": "Historikk",
     "clearHistory": "Tøm alt",

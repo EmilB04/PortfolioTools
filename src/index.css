@@ -219,3 +219,12 @@ html.light {
 @media (prefers-reduced-motion: reduce) {
   .haptic-pulse-active { animation: none; }
 }
+
+/* ── Indeterminate scan-progress sweep (WCAG scanner) ────────── */
+@keyframes scan-sweep {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(400%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-\[scan-sweep_1\.2s_ease-in-out_infinite\] { animation: none; }
+}
