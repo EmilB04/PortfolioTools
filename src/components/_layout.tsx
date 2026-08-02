@@ -3,7 +3,6 @@ import { Outlet } from 'react-router-dom'
 import { Menu } from 'lucide-react'
 import { Sidebar } from './nav/Sidebar'
 import { Footer } from './footer/Footer'
-import { ShootingStars } from './ShootingStars'
 import HeaderSection from './header/HeaderSection'
 
 function getInitialCollapsed(): boolean {
@@ -23,9 +22,7 @@ export function Layout() {
   }
 
   return (
-    <div className="h-screen flex overflow-hidden" style={{ background: 'var(--bg)' }}>
-      <ShootingStars />
-
+    <div className="h-screen flex overflow-hidden">
       {/* Mobile backdrop */}
       {mobileOpen && (
         <div
@@ -35,7 +32,7 @@ export function Layout() {
       )}
 
       {/* Sidebar — desktop: in flow, mobile: fixed overlay */}
-      <div className="relative z-10 hidden lg:block shrink-0">
+      <div className="hidden lg:block shrink-0">
         <Sidebar collapsed={collapsed} onToggle={toggleCollapsed} />
       </div>
       <div className={`fixed inset-y-0 left-0 z-50 lg:hidden transition-transform duration-200 ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
@@ -43,10 +40,10 @@ export function Layout() {
       </div>
 
       {/* Main content — scrollable column */}
-      <div className="relative z-10 flex-1 flex flex-col min-w-0 overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <header
-          className="shrink-0 h-14 flex items-center justify-between gap-2 px-4 sm:px-6 backdrop-blur-xl"
-          style={{ background: 'var(--surface)' }}
+          className="relative z-20 shrink-0 h-14 flex items-center justify-between gap-2 border-b px-4 sm:px-6 backdrop-blur-xl"
+          style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
         >
           <button
             className="lg:hidden p-2 rounded-lg transition-colors"
