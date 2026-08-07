@@ -16,6 +16,9 @@ const EC_LEVELS: { value: EcLevel; recovery: string }[] = [
 
 const SIZE_OPTIONS = [256, 512, 1024]
 
+// White-on-fill needs a slightly deeper violet to clear AA.
+const ACCENT_FILL = '#7c4ded'
+
 const DEFAULTS = {
   fg: '#1c1025',
   bg: '#ffffff',
@@ -155,7 +158,7 @@ export function QrGenerator() {
                   title={`${t('qrGenerator.recovery')} ${recovery}`}
                   className="flex-1 px-2 py-1.5 rounded-lg text-sm font-medium transition-all duration-150"
                   style={{
-                    background: ecLevel === value ? '#8b5cf6' : 'transparent',
+                    background: ecLevel === value ? ACCENT_FILL : 'transparent',
                     color: ecLevel === value ? '#ffffff' : 'var(--text-subtle)',
                   }}>
                   {value}
@@ -198,7 +201,7 @@ export function QrGenerator() {
                   <button key={s} onClick={() => setSize(s)}
                     className="flex-1 px-1 py-1.5 rounded-lg text-xs font-medium transition-all duration-150"
                     style={{
-                      background: size === s ? '#8b5cf6' : 'transparent',
+                      background: size === s ? ACCENT_FILL : 'transparent',
                       color: size === s ? '#ffffff' : 'var(--text-subtle)',
                     }}>
                     {s}

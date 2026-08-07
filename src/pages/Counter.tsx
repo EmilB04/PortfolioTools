@@ -8,9 +8,11 @@ import { haptic } from '../utils/haptics'
 
 type Mode = 'entered' | 'exited'
 
-const MODE_COLORS: Record<Mode, { color: string; bg: string; border: string }> = {
-  entered: { color: '#22c55e', bg: 'rgba(34,197,94,0.13)', border: 'rgba(34,197,94,0.4)' },
-  exited:  { color: '#f59e0b', bg: 'rgba(245,158,11,0.13)', border: 'rgba(245,158,11,0.4)' },
+// `color` is the vivid brand tone (text on tinted bg, dots, borders); `fill` is the
+// darker variant used wherever white text sits on top, so it clears WCAG AA.
+const MODE_COLORS: Record<Mode, { color: string; fill: string; bg: string; border: string }> = {
+  entered: { color: '#22c55e', fill: '#178841', bg: 'rgba(34,197,94,0.13)', border: 'rgba(34,197,94,0.4)' },
+  exited:  { color: '#f59e0b', fill: '#a46a07', bg: 'rgba(245,158,11,0.13)', border: 'rgba(245,158,11,0.4)' },
 }
 
 type ConfirmState = {
@@ -111,7 +113,7 @@ export function Counter() {
           return (
             <button key={m} onClick={e => { haptic('light', e.currentTarget); setMode(m) }}
               className="flex-1 flex items-center justify-center gap-2 px-3 py-3 rounded-xl text-sm font-semibold transition-all duration-150"
-              style={{ background: active ? c.color : 'transparent', color: active ? '#ffffff' : 'var(--text-subtle)' }}>
+              style={{ background: active ? c.fill : 'transparent', color: active ? '#ffffff' : 'var(--text-subtle)' }}>
               <Icon size={16} />
               {m === 'entered' ? t('counter.entered') : t('counter.exited')}
             </button>
@@ -179,7 +181,7 @@ export function Counter() {
         </button>
         <button onClick={e => increment(e.currentTarget)} aria-label={t('counter.entered')}
           className="w-36 h-36 rounded-full flex items-center justify-center text-white shadow-lg transition-transform active:scale-95"
-          style={{ background: modeColors.color }}>
+          style={{ background: modeColors.fill }}>
           <Plus size={56} />
         </button>
       </div>

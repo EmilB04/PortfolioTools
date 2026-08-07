@@ -61,14 +61,14 @@ function Waveform({
           ) : (
             <span className="h-1.5 w-1.5 rounded-full bg-gray-300 dark:bg-gray-600" />
           )}
-          <span className={`text-xs font-semibold uppercase tracking-wider ${isActive ? '' : 'text-gray-400 dark:text-gray-600'}`}
-            style={{ color: isActive ? color : undefined }}>
+          <span className="text-xs font-semibold uppercase tracking-wider"
+            style={{ color: isActive ? color : 'var(--text-subtle)' }}>
             {label}
           </span>
         </div>
-        <span className={`text-xs font-mono font-semibold tabular-nums ${latest !== null ? '' : 'text-gray-300 dark:text-gray-700'}`}
-          style={{ color: latest !== null ? color : undefined }}>
-          {latest !== null ? `${latest.toFixed(1)}` : '--'}<span className="text-gray-400 font-normal"> Mbps</span>
+        <span className="text-xs font-mono font-semibold tabular-nums"
+          style={{ color: latest !== null ? color : 'var(--text-subtle)' }}>
+          {latest !== null ? `${latest.toFixed(1)}` : '--'}<span className="font-normal" style={{ color: 'var(--text-subtle)' }}> Mbps</span>
         </span>
       </div>
 
@@ -171,13 +171,13 @@ export function SpeedTest() {
                 <div className="p-2 rounded-lg shrink-0 transition-colors duration-200"
                   style={{
                     background: selected ? 'var(--accent)' : 'var(--surface-card)',
-                    color: selected ? '#ffffff' : 'var(--text-subtle)',
+                    color: selected ? 'var(--accent-on)' : 'var(--text-subtle)',
                   }}>
                   <Icon size={18} />
                 </div>
                 <div className="min-w-0">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-sm font-semibold" style={{ color: selected ? 'var(--accent)' : 'var(--text)' }}>
+                    <span className="text-sm font-semibold" style={{ color: selected ? 'var(--accent-text)' : 'var(--text)' }}>
                       {title}
                     </span>
                   </div>
@@ -200,7 +200,7 @@ export function SpeedTest() {
         ) : (
           <button onClick={handleStart}
             className="flex items-center justify-center gap-2 flex-1 px-5 py-3 rounded-xl text-white text-sm font-semibold transition-all duration-150 hover:opacity-90"
-            style={{ background: 'var(--accent)' }}>
+            style={{ background: 'var(--accent)', color: 'var(--accent-on)' }}>
             <Zap size={15} />{phase === 'complete' ? t('speedTest.retest') : t('speedTest.start')}
           </button>
         )}
@@ -217,7 +217,7 @@ export function SpeedTest() {
                 className="px-3 py-1 rounded-lg text-sm font-medium transition-all duration-150"
                 style={{
                   background: limitMs === ms ? 'var(--accent)' : 'var(--surface-card)',
-                  color: limitMs === ms ? '#ffffff' : 'var(--text-muted)',
+                  color: limitMs === ms ? 'var(--accent-on)' : 'var(--text-muted)',
                   borderColor: 'var(--border)',
                 }}>
                 {label}
@@ -355,7 +355,7 @@ export function SpeedTest() {
               ].map(({ label, value, unit, color }) => (
                 <div key={label} className="flex flex-col items-center gap-0.5">
                   <span className="text-xl font-bold tabular-nums" style={{ color }}>{value}</span>
-                  <span className="text-xs text-gray-400 font-normal">{unit}</span>
+                  <span className="text-xs font-normal" style={{ color: 'var(--text-subtle)' }}>{unit}</span>
                   <span className="text-xs text-gray-500 dark:text-gray-400 text-center leading-tight mt-0.5">{label}</span>
                 </div>
               ))}

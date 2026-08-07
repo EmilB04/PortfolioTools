@@ -6,7 +6,8 @@
     "speedTest": "Speed Test",
     "qrGenerator": "QR Generator",
     "wcagScanner": "WCAG Scanner",
-    "counter": "Counter"
+    "counter": "Counter",
+    "snapdown": "Snapdown"
   },
   "theme": {
     "light": "Light",
@@ -53,10 +54,16 @@
       "avgSpeed": "Avg. download today",
       "avgDownload": "Avg. download",
       "avgUpload": "Avg. upload",
-      "testsRun": "Tests today"
+      "testsRun": "Tests today",
+      "altFromOcr": "Alt text from OCR"
     }
   },
   "tools": {
+    "snapdown": {
+      "name": "Snapdown",
+      "description": "Paste a screenshot, annotate it, redact secrets — copy it out as markdown-ready image. Nothing leaves your browser.",
+      "badge": "Screenshot → markdown"
+    },
     "fileConverter": {
       "name": "File Converter",
       "description": "Convert images (PNG, JPEG, WebP, GIF, BMP, SVG) and data files (JSON, CSV, TSV) — all in your browser.",
@@ -223,5 +230,59 @@
     "confirmEditBody": "Change {{label}} from {{from}} to {{to}}. Only do this to fix an incorrect total.",
     "confirmResetTitle": "Reset all counts?",
     "confirmResetBody": "This sets both Entered and Exited back to 0. This cannot be undone."
+  },
+  "snapdown": {
+    "title": "Snapdown",
+    "subtitle": "Screenshot → annotated markdown · browser-only, no uploads",
+    "dropTitle": "Paste, drop or click to add a screenshot",
+    "dropHint": "Press Ctrl+V anywhere on this page to paste straight from Print Screen. Your image never leaves the browser.",
+    "tool": {
+      "crop": "Crop",
+      "arrow": "Arrow",
+      "box": "Box",
+      "blur": "Redact",
+      "text": "Text label",
+      "pin": "Numbered pin"
+    },
+    "hint": {
+      "crop": "Drag to keep only that region",
+      "arrow": "Drag from tail to head",
+      "box": "Drag to outline a region",
+      "blur": "Drag over anything secret — pixels are destroyed, not hidden",
+      "text": "Type a label above, then click to place it",
+      "pin": "Click to drop the next numbered marker"
+    },
+    "blur": {
+      "light": "Light",
+      "medium": "Medium",
+      "heavy": "Heavy"
+    },
+    "resetCrop": "Reset crop",
+    "labelPlaceholder": "Label text, then click the canvas…",
+    "undo": "Undo (Ctrl+Z)",
+    "clear": "Clear annotations",
+    "altLabel": "Alt text",
+    "altPlaceholder": "Describe the screenshot…",
+    "altFallback": "screenshot",
+    "ocrSuggest": "Suggest from image",
+    "ocrLoading": "Loading OCR engine — first run downloads ~2 MB from a CDN…",
+    "filenameLabel": "Filename in markdown",
+    "embedLabel": "Embed image as base64 data URI",
+    "embedWarn": "Data URI is ~{{kb}} KB of text. GitHub and GitLab strip these — use Copy image there instead.",
+    "markdownLabel": "Markdown",
+    "copyImage": "Copy image",
+    "copyMarkdown": "Copy markdown",
+    "downloadPng": "Download PNG",
+    "copied": "Copied!",
+    "pasteTip": "Paste the copied image into GitHub, GitLab or Slack and it uploads the file and writes the URL for you.",
+    "errNotImage": "That file is not an image.",
+    "errDecode": "Could not decode that image.",
+    "errClipboard": "Clipboard access was blocked by the browser.",
+    "errNoLabel": "Type the label text first, then click the canvas.",
+    "errNoText": "No readable text found in the image.",
+    "errOcr": "OCR failed to run. Check your connection and try again.",
+    "ocrPrivacy": "Your image is never uploaded. OCR runs locally, but the first run downloads its model from a public CDN (jsDelivr).",
+    "removeImage": "Remove image",
+    "removeConfirm": "Discard annotations?"
   }
 }

@@ -7,6 +7,7 @@ import { SpeedTest } from './pages/SpeedTest'
 import { QrGenerator } from './pages/QrGenerator'
 import { WcagScanner } from './pages/WcagScanner'
 import { Counter } from './pages/Counter'
+import { Snapdown } from './pages/Snapdown'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="qr-generator" element={<QrGenerator />} />
           <Route path="wcag-scanner" element={<WcagScanner />} />
           <Route path="counter" element={<Counter />} />
+          <Route path="snapdown" element={<Snapdown />} />
         </Route>
       </Routes>
     </BrowserRouter>
