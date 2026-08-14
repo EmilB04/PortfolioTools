@@ -16,7 +16,7 @@ export function Layout() {
   function toggleCollapsed() {
     setCollapsed(prev => {
       const next = !prev
-      try { localStorage.setItem('sidebar-collapsed', String(next)) } catch { }
+      try { localStorage.setItem('sidebar-collapsed', String(next)) } catch { /* storage unavailable — non-fatal */ }
       return next
     })
   }

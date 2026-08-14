@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
-import { useTheme } from './ThemeContext'
+import { useTheme } from './useTheme'
 import { useCookieConsent } from './useCookieConsent'
 import { readPreference, writePreference } from '../lib/cookieConsent'
 import { ACCENT_PRESETS, ACCENT_STORAGE_KEY, AccentContext, DEFAULT_ACCENT } from './accent-context'

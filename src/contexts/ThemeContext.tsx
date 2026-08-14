@@ -1,32 +1,20 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { readPreference, writePreference } from '../lib/cookieConsent';
 import { useCookieConsent } from './useCookieConsent';
-
-type Theme = 'light' | 'dark' | 'system';
-type ResolvedTheme = 'light' | 'dark';
-
-interface ThemeContextValue {
-  theme: Theme;
-  resolvedTheme: ResolvedTheme;
-  setTheme: (theme: Theme) => void;
-  toggleTheme: () => void;
-}
-
-const STORAGE_KEY = 'theme';
+import { THEME_STORAGE_KEY, ThemeContext } from './theme-context';
+import type { ResolvedTheme, Theme } from './theme-context';
 
 const getSystemTheme = (): ResolvedTheme =>
   window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 
 const getInitialTheme = (): Theme => {
-  const stored = readPreference(STORAGE_KEY);
+  const stored = readPreference(THEME_STORAGE_KEY);
   if (stored === 'light' || stored === 'dark' || stored === 'system') return stored;
   return 'system';
 };
 
 const resolveTheme = (theme: Theme): ResolvedTheme =>
   theme === 'system' ? getSystemTheme() : theme;
-
-const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const { consent } = useCookieConsent();
@@ -35,7 +23,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (consent === 'accepted') {
-      writePreference(STORAGE_KEY, theme);
+      writePreference(THEME_STORAGE_KEY, theme);
     }
     setResolvedTheme(resolveTheme(theme));
 
@@ -61,10 +49,4 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       {children}
     </ThemeContext.Provider>
   );
-}
-
-export function useTheme(): ThemeContextValue {
-  const ctx = useContext(ThemeContext);
-  if (!ctx) throw new Error('useTheme must be used inside ThemeProvider');
-  return ctx;
 }

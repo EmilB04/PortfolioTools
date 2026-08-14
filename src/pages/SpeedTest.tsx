@@ -6,7 +6,7 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip,
 } from 'recharts'
 import { useSpeedTest, type TestPhase } from '../hooks/useSpeedTest'
-import { useTheme } from '../contexts/ThemeContext'
+import { useTheme } from '../contexts/useTheme'
 
 type Mode = 'continuous' | 'max'
 

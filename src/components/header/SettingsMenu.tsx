@@ -4,7 +4,7 @@ import { FiSettings } from 'react-icons/fi'
 import { SUPPORTED_LANGUAGES } from '../../lib/i18n.ts'
 import { ACCENT_PRESETS, type AccentColor } from '../../contexts/accent-context'
 import { useAccent } from '../../contexts/useAccent'
-import { useTheme } from '../../contexts/ThemeContext'
+import { useTheme } from '../../contexts/useTheme'
 import { useCookieConsent } from '../../contexts/useCookieConsent'
 import { writePreference } from '../../lib/cookieConsent'
 
