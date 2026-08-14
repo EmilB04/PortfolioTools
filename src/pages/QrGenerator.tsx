@@ -108,7 +108,7 @@ export function QrGenerator() {
   const canCopy = typeof navigator !== 'undefined' && !!navigator.clipboard?.write && typeof ClipboardItem !== 'undefined'
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
+    <div className="page-container page-container-medium space-y-6">
 
       {/* Header */}
       <div className="flex items-center gap-3">

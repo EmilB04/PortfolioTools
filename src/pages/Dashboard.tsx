@@ -151,7 +151,7 @@ export function Dashboard() {
   const hero = tools[featured]
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6 sm:space-y-8">
+    <div className="page-container page-container-wide space-y-6 sm:space-y-8">
 
       {/* Hero card */}
       <div
@@ -241,7 +241,7 @@ export function Dashboard() {
         <h2 className="fs-xs font-mono font-medium uppercase tracking-[0.2em] mb-4" style={{ color: 'var(--text-subtle)' }}>
           {t('dashboard.tools')}
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
           {tools.map((tool) => (
             <ToolCard key={tool.href} {...tool} />
           ))}

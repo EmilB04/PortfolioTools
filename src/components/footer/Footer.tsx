@@ -36,9 +36,13 @@ export function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="px-4 sm:px-6 lg:px-8 pb-6 pt-4">
+    // Horizontal padding mirrors the <main> gutter so the card lines up with page content.
+    <footer
+      className="pb-6 pt-4"
+      style={{ paddingInline: 'var(--gap-page)' }}
+    >
       <div
-        className="max-w-5xl mx-auto rounded-2xl border backdrop-blur-sm px-5 py-4 flex flex-wrap items-center justify-between gap-3"
+        className="page-container page-container-wide rounded-2xl border backdrop-blur-sm px-5 py-4 flex flex-wrap items-center justify-between gap-3"
         style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
       >
         <p className="text-xs" style={{ color: 'var(--text-subtle)' }}>

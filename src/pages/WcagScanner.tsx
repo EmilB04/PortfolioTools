@@ -260,7 +260,7 @@ export function WcagScanner() {
   const clearAll = useCallback(() => setHistory(clearScans()), [])
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
+    <div className="page-container page-container-wide space-y-6">
 
       {/* Header */}
       <div className="flex items-center gap-3">
