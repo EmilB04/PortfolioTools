@@ -29,7 +29,7 @@ export function ToolCard({ title, description, badge, icon, stats, href, accentC
       className={`group relative flex flex-col rounded-2xl border overflow-hidden transition-all duration-200 ${
         comingSoon ? 'cursor-default opacity-50' : ''
       }`}
-      style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
+      style={{ background: 'var(--surface)', borderColor: 'var(--border)', '--tool': accentColor } as React.CSSProperties}
       onMouseEnter={!comingSoon ? e => {
         (e.currentTarget as HTMLElement).style.borderColor = accentColor + '50'
         ;(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'
@@ -49,8 +49,8 @@ export function ToolCard({ title, description, badge, icon, stats, href, accentC
             {icon}
           </div>
           <span
-            className="text-[11px] font-semibold px-2.5 py-1 rounded-full tracking-wide shrink-0"
-            style={{ backgroundColor: accentBg, color: accentColor }}
+            className="tool-text text-[11px] font-semibold px-2.5 py-1 rounded-full tracking-wide shrink-0"
+            style={{ backgroundColor: accentBg }}
           >
             {badge}
           </span>
@@ -89,10 +89,10 @@ export function ToolCard({ title, description, badge, icon, stats, href, accentC
           </span>
         ) : (
           <>
-            <span className="text-[13px] font-medium" style={{ color: accentColor }}>
+            <span className="tool-text text-[13px] font-medium">
               {t('dashboard.openTool')}
             </span>
-            <ArrowRight size={14} style={{ color: accentColor }} className="transition-transform duration-150 group-hover:translate-x-0.5" />
+            <ArrowRight size={14} className="tool-text transition-transform duration-150 group-hover:translate-x-0.5" />
           </>
         )}
       </div>

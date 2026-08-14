@@ -39,7 +39,7 @@ export default function CookieConsentBanner() {
                             <button
                                 type="button"
                                 onClick={accept}
-                                className="rounded-xl bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-white transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
+                                className="rounded-xl bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-[var(--accent-on)] transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
                             >
                                 {t('cookieConsent.accept')}
                             </button>

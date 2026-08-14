@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FileInput, FileArchive, Gauge, QrCode, Accessibility, DoorOpen, ArrowRight } from 'lucide-react'
+import { FileInput, FileArchive, Gauge, QrCode, Accessibility, DoorOpen, ImageDown, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ToolCard } from '../components/ToolCard'
 import { todayStats } from '../utils/speedStorage'
@@ -48,6 +48,20 @@ export function Dashboard() {
       stats: [
         { label: t('dashboard.stats.testsRun'), value: hasData ? String(stats.testsRun) : '—' },
         { label: t('dashboard.stats.avgSpeed'), value: hasData ? dlDisplay : '—' },
+      ],
+    },
+    {
+      title: t('tools.snapdown.name'),
+      description: t('tools.snapdown.description'),
+      badge: t('tools.snapdown.badge'),
+      href: '/snapdown',
+      accentColor: '#f59e0b',
+      accentBg: 'rgba(245,158,11,0.12)',
+      icon: <ImageDown size={20} color="#f59e0b" />,
+      comingSoon: false,
+      stats: [
+        { label: 'Crop · arrow · box · blur', value: '0 uploads' },
+        { label: t('dashboard.stats.altFromOcr'), value: 'OCR' },
       ],
     },
     {
@@ -149,8 +163,8 @@ export function Dashboard() {
             {/* Rotating featured tool */}
             <div className="space-y-3 max-w-lg min-h-[15rem] sm:min-h-[13rem]">
               <div
-                className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border text-xs font-semibold transition-colors duration-500"
-                style={{ borderColor: hero.accentColor, background: hero.accentBg, color: hero.accentColor }}
+                className="tool-text inline-flex items-center gap-2 px-2.5 py-1 rounded-full border text-xs font-semibold transition-colors duration-500"
+                style={{ borderColor: hero.accentColor, background: hero.accentBg, '--tool': hero.accentColor } as React.CSSProperties}
               >
                 <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: hero.accentColor }} />
                 {hero.badge}
@@ -177,8 +191,8 @@ export function Dashboard() {
                   </p>
                   <Link
                     to={hero.href}
-                    className="inline-flex items-center gap-2 mt-1 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-150 hover:-translate-y-0.5"
-                    style={{ background: hero.accentColor }}
+                    className="tool-fill inline-flex items-center gap-2 mt-1 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-150 hover:-translate-y-0.5"
+                    style={{ '--tool': hero.accentColor } as React.CSSProperties}
                     onMouseEnter={e => (e.currentTarget.style.opacity = '0.9')}
                     onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
                   >

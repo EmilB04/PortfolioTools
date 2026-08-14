@@ -6,7 +6,8 @@
     "speedTest": "Hastighetstest",
     "qrGenerator": "QR-generator",
     "wcagScanner": "WCAG-skanner",
-    "counter": "Teller"
+    "counter": "Teller",
+    "snapdown": "Snapdown"
   },
   "theme": {
     "light": "Lys",
@@ -53,10 +54,16 @@
       "avgSpeed": "Snitt nedlasting i dag",
       "avgDownload": "Snitt nedlasting",
       "avgUpload": "Snitt opplasting",
-      "testsRun": "Tester i dag"
+      "testsRun": "Tester i dag",
+      "altFromOcr": "Alt-tekst fra OCR"
     }
   },
   "tools": {
+    "snapdown": {
+      "name": "Snapdown",
+      "description": "Lim inn et skjermbilde, marker det, sladd hemmeligheter — kopier det ut som markdown-klart bilde. Ingenting forlater nettleseren.",
+      "badge": "Skjermbilde → markdown"
+    },
     "fileConverter": {
       "name": "Filkonverterer",
       "description": "Konverter bilder (PNG, JPEG, WebP, GIF, BMP, SVG) og datafiler (JSON, CSV, TSV) — direkte i nettleseren.",
@@ -223,5 +230,59 @@
     "confirmEditBody": "Endre {{label}} fra {{from}} til {{to}}. Gjør dette kun for å rette et feil totaltall.",
     "confirmResetTitle": "Nullstille all telling?",
     "confirmResetBody": "Dette setter både Inne og Ute tilbake til 0. Dette kan ikke angres."
+  },
+  "snapdown": {
+    "title": "Snapdown",
+    "subtitle": "Skjermbilde → markert markdown · kun i nettleseren, ingen opplasting",
+    "dropTitle": "Lim inn, slipp eller klikk for å legge til et skjermbilde",
+    "dropHint": "Trykk Ctrl+V hvor som helst på siden for å lime inn rett fra Print Screen. Bildet forlater aldri nettleseren.",
+    "tool": {
+      "crop": "Beskjær",
+      "arrow": "Pil",
+      "box": "Ramme",
+      "blur": "Sladd",
+      "text": "Tekstetikett",
+      "pin": "Nummerert markør"
+    },
+    "hint": {
+      "crop": "Dra for å beholde kun det området",
+      "arrow": "Dra fra hale til spiss",
+      "box": "Dra for å ramme inn et område",
+      "blur": "Dra over alt hemmelig — pikslene ødelegges, ikke bare skjules",
+      "text": "Skriv en etikett over, klikk så for å plassere den",
+      "pin": "Klikk for å slippe neste nummererte markør"
+    },
+    "blur": {
+      "light": "Lett",
+      "medium": "Middels",
+      "heavy": "Kraftig"
+    },
+    "resetCrop": "Tilbakestill beskjæring",
+    "labelPlaceholder": "Etikettekst, klikk så på lerretet…",
+    "undo": "Angre (Ctrl+Z)",
+    "clear": "Fjern markeringer",
+    "altLabel": "Alt-tekst",
+    "altPlaceholder": "Beskriv skjermbildet…",
+    "altFallback": "skjermbilde",
+    "ocrSuggest": "Foreslå fra bildet",
+    "ocrLoading": "Laster OCR-motor — første kjøring laster ned ca. 2 MB fra et CDN…",
+    "filenameLabel": "Filnavn i markdown",
+    "embedLabel": "Bygg inn bildet som base64 data-URI",
+    "embedWarn": "Data-URI-en er ca. {{kb}} KB tekst. GitHub og GitLab fjerner disse — bruk Kopier bilde der i stedet.",
+    "markdownLabel": "Markdown",
+    "copyImage": "Kopier bilde",
+    "copyMarkdown": "Kopier markdown",
+    "downloadPng": "Last ned PNG",
+    "copied": "Kopiert!",
+    "pasteTip": "Lim det kopierte bildet inn i GitHub, GitLab eller Slack, så laster de opp filen og skriver URL-en for deg.",
+    "errNotImage": "Den filen er ikke et bilde.",
+    "errDecode": "Klarte ikke å dekode bildet.",
+    "errClipboard": "Nettleseren blokkerte tilgang til utklippstavlen.",
+    "errNoLabel": "Skriv etiketteksten først, klikk så på lerretet.",
+    "errNoText": "Fant ingen lesbar tekst i bildet.",
+    "errOcr": "OCR klarte ikke å kjøre. Sjekk tilkoblingen og prøv igjen.",
+    "ocrPrivacy": "Bildet ditt lastes aldri opp. OCR kjører lokalt, men første kjøring laster ned modellen fra et offentlig CDN (jsDelivr).",
+    "removeImage": "Fjern bilde",
+    "removeConfirm": "Forkast markeringer?"
   }
 }

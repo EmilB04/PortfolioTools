@@ -12,6 +12,8 @@ import {
 } from '../utils/wcagStorage'
 
 const ACCENT = '#14b8a6'
+// White-on-fill needs a darker teal to clear AA on light backgrounds.
+const ACCENT_FILL = '#0e8478'
 // Same-origin Cloudflare Pages Function. Override with VITE_WCAG_WORKER_URL for local dev.
 const SCAN_URL = (import.meta.env.VITE_WCAG_WORKER_URL as string | undefined) || '/api/wcag-scan'
 
@@ -307,7 +309,7 @@ export function WcagScanner() {
                 <button key={n} onClick={() => setMaxPages(n)} disabled={isScanning}
                   className="px-2.5 py-1 rounded-lg text-sm font-medium transition-all duration-150 disabled:cursor-not-allowed"
                   style={{
-                    background: maxPages === n ? ACCENT : 'transparent',
+                    background: maxPages === n ? ACCENT_FILL : 'transparent',
                     color: maxPages === n ? '#ffffff' : 'var(--text-subtle)',
                   }}>
                   {n}
@@ -325,7 +327,7 @@ export function WcagScanner() {
           ) : (
             <button onClick={scan} disabled={!url.trim()}
               className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
-              style={{ background: ACCENT }}>
+              style={{ background: ACCENT_FILL }}>
               <ScanLine size={15} /> {t('wcagScanner.scan')}
             </button>
           )}

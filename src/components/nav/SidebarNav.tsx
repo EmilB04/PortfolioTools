@@ -27,7 +27,7 @@ export function SidebarNav({ collapsed, isMobileDrawer, mobileClose }: SidebarNa
           }
           style={({ isActive }) => ({
             background: isActive ? 'var(--accent-bg)' : undefined,
-            color: isActive ? 'var(--accent)' : 'var(--text-subtle)',
+            color: isActive ? 'var(--accent-text)' : 'var(--text-subtle)',
           })}
         >
           {({ isActive }) => (

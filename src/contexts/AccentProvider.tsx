@@ -5,6 +5,7 @@ import { useCookieConsent } from './useCookieConsent'
 import { readPreference, writePreference } from '../lib/cookieConsent'
 import { ACCENT_PRESETS, ACCENT_STORAGE_KEY, AccentContext, DEFAULT_ACCENT } from './accent-context'
 import type { AccentColor } from './accent-context'
+import { readableOn } from '../lib/contrast'
 
 function getInitialAccent(): AccentColor {
     const stored = readPreference(ACCENT_STORAGE_KEY) as AccentColor | null
@@ -19,7 +20,12 @@ export function AccentProvider({ children }: { children: ReactNode }) {
 
     useEffect(() => {
         const preset = ACCENT_PRESETS[accent] ?? ACCENT_PRESETS[DEFAULT_ACCENT]
-        document.documentElement.style.setProperty('--accent', resolvedTheme === 'dark' ? preset.dark : preset.light)
+        const value = resolvedTheme === 'dark' ? preset.dark : preset.light
+        const root = document.documentElement
+        root.style.setProperty('--accent', value)
+        // Foreground for text sitting on an --accent fill. Flips to ink for the
+        // bright accents (lime, amber, cyan…) that white text cannot clear AA on.
+        root.style.setProperty('--accent-on', readableOn(value))
 
         if (consent === 'accepted') {
             writePreference(ACCENT_STORAGE_KEY, accent)
