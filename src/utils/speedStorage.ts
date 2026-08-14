@@ -21,7 +21,7 @@ export function saveResult(r: StoredResult) {
     const prev = loadResults()
     const next = [...prev, r].slice(-MAX)
     localStorage.setItem(KEY, JSON.stringify(next))
-  } catch {}
+  } catch { /* storage unavailable (private mode / quota) — non-fatal */ }
 }
 
 function todayStart() {

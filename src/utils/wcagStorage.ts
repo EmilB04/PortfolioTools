@@ -37,7 +37,7 @@ export function loadScans(): WcagScanEntry[] {
 function persist(entries: WcagScanEntry[]) {
   try {
     localStorage.setItem(KEY, JSON.stringify(entries.slice(0, MAX)))
-  } catch {}
+  } catch { /* storage unavailable (private mode / quota) — non-fatal */ }
 }
 
 // Prepends the entry (newest first) and returns the updated list.

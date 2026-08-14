@@ -22,6 +22,13 @@
   /* Fluid spacing rhythm */
   --gap-page: clamp(1rem, 0.6rem + 1.8vw, 2rem);
   --pad-card: clamp(1.15rem, 0.9rem + 1.1vw, 1.75rem);
+
+  /* Content measures — see the .page-container* components below. One knob per
+   * width tier so every page widens together instead of drifting apart. */
+  --content-wide:    88rem; /* dense, multi-pane tools: tables, diffs, dashboards */
+  --content-default: 74rem; /* the standard two-column tool layout */
+  --content-medium:  60rem; /* single column with a preview or side panel */
+  --content-narrow:  34rem; /* focused, mostly-text or single-control tools */
 }
 
 /* ── Design tokens (dark-first, plum-ink chassis shared with PortfolioPortal) ──
@@ -136,6 +143,27 @@ html {
 
 html.light {
   background-color: #faf8fc;
+}
+
+/* ── Page containers ────────────────────────────────────────────
+ * Every page wraps its content in `.page-container` plus at most one width
+ * modifier, so the app has a single place to retune how much of a large display
+ * the tools are allowed to use. Text-heavy panels keep a comfortable measure by
+ * capping the *column* (`.prose-measure`), not the page.
+ */
+@layer components {
+  .page-container {
+    width: 100%;
+    margin-inline: auto;
+    max-width: var(--page-w, var(--content-default));
+  }
+
+  .page-container-wide   { --page-w: var(--content-wide); }
+  .page-container-medium { --page-w: var(--content-medium); }
+  .page-container-narrow { --page-w: var(--content-narrow); }
+
+  /* ~70 characters at the body size — use on paragraphs inside a wide page. */
+  .prose-measure { max-width: 68ch; }
 }
 
 /* ── Dropdown / settings-menu components (shared language with PortfolioPortal) ── */

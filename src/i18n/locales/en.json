@@ -7,7 +7,28 @@
     "qrGenerator": "QR Generator",
     "wcagScanner": "WCAG Scanner",
     "counter": "Counter",
-    "snapdown": "Snapdown"
+    "snapdown": "Snapdown",
+    "closeMenu": "Close menu",
+    "ariaLabel": "Tool navigation",
+    "jsonTools": "JSON Tools",
+    "jwtDecoder": "JWT Decoder",
+    "encoder": "Encoder / Decoder",
+    "hashGenerator": "Hash Generator",
+    "idGenerator": "ID Generator",
+    "regexTester": "Regex Tester",
+    "cronExplainer": "Cron Explainer",
+    "timestampConverter": "Timestamp Converter",
+    "subnetCalculator": "Subnet Calculator",
+    "passwordGenerator": "Password Generator",
+    "categories": {
+      "overview": "Overview",
+      "developer": "Developer",
+      "time": "Time",
+      "network": "Network",
+      "files": "Files",
+      "web": "Web",
+      "utilities": "Utilities"
+    }
   },
   "theme": {
     "light": "Light",
@@ -62,37 +83,189 @@
     "snapdown": {
       "name": "Snapdown",
       "description": "Paste a screenshot, annotate it, redact secrets — copy it out as markdown-ready image. Nothing leaves your browser.",
-      "badge": "Screenshot → markdown"
+      "badge": "Screenshot → markdown",
+      "stats": {
+        "aLabel": "Alt text",
+        "aValue": "From OCR",
+        "bLabel": "Runs",
+        "bValue": "In your browser"
+      }
     },
     "fileConverter": {
       "name": "File Converter",
       "description": "Convert images (PNG, JPEG, WebP, GIF, BMP, SVG) and data files (JSON, CSV, TSV) — all in your browser.",
-      "badge": "10+ formats"
+      "badge": "10+ formats",
+      "stats": {
+        "aLabel": "Formats supported",
+        "aValue": "10+",
+        "bLabel": "Runs",
+        "bValue": "In your browser"
+      }
     },
     "fileCompress": {
       "name": "File Compress",
       "description": "Compress images (JPEG, PNG, WebP, GIF, BMP, SVG) with quality control, or Gzip any file — all in your browser.",
-      "badge": "Images + Gzip"
+      "badge": "Images + Gzip",
+      "stats": {
+        "aLabel": "Formats supported",
+        "aValue": "Images + Gzip",
+        "bLabel": "Runs",
+        "bValue": "In your browser"
+      }
     },
     "speedTest": {
       "name": "Speed Test",
       "description": "Measure your real-time download, upload and latency. Continuous monitoring or one-shot max speed.",
-      "badge": "Real-time"
+      "badge": "Real-time",
+      "stats": {
+        "aLabel": "Tests today",
+        "aValue": "—",
+        "bLabel": "Avg. download today",
+        "bValue": "—"
+      }
     },
     "qrGenerator": {
       "name": "QR Generator",
       "description": "Create QR codes for links, text or Wi-Fi with custom colors. Export PNG or SVG — all in your browser.",
-      "badge": "PNG + SVG"
+      "badge": "PNG + SVG",
+      "stats": {
+        "aLabel": "Export formats",
+        "aValue": "PNG + SVG",
+        "bLabel": "Runs",
+        "bValue": "In your browser"
+      }
     },
     "wcagScanner": {
       "name": "WCAG Scanner",
       "description": "Crawl a whole site and audit every page for WCAG accessibility issues with axe-core.",
-      "badge": "axe-core"
+      "badge": "axe-core",
+      "stats": {
+        "aLabel": "Engine",
+        "aValue": "axe-core",
+        "bLabel": "Crawl",
+        "bValue": "Whole site"
+      }
     },
     "counter": {
       "name": "Counter",
       "description": "Track people entering and exiting a venue with a simple manual tally. Saved on this device.",
-      "badge": "Manual tally"
+      "badge": "Manual tally",
+      "stats": {
+        "aLabel": "Entered",
+        "aValue": "0",
+        "bLabel": "Exited",
+        "bValue": "0"
+      }
+    },
+    "jsonTools": {
+      "name": "JSON Tools",
+      "description": "Format, validate and query JSON with a live JSONPath explorer — pretty-print, minify or sort keys, all in your browser.",
+      "badge": "JSONPath built-in",
+      "stats": {
+        "aLabel": "Formatting modes",
+        "aValue": "3",
+        "bLabel": "Query language",
+        "bValue": "JSONPath"
+      }
+    },
+    "jwtDecoder": {
+      "name": "JWT Decoder",
+      "description": "Decode a JWT's header and payload, inspect standard claims and check expiry — the token never leaves your browser.",
+      "badge": "Client-side only",
+      "stats": {
+        "aLabel": "Claims decoded",
+        "aValue": "Header + payload",
+        "bLabel": "Expiry check",
+        "bValue": "Automatic"
+      }
+    },
+    "encoder": {
+      "name": "Encoder / Decoder",
+      "description": "Convert text between Base64, Base64URL, URL encoding, HTML entities and hex — swap direction with one click.",
+      "badge": "5 schemes",
+      "stats": {
+        "aLabel": "Encoding schemes",
+        "aValue": "5",
+        "bLabel": "Direction",
+        "bValue": "Encode ⇄ Decode"
+      }
+    },
+    "hashGenerator": {
+      "name": "Hash Generator",
+      "description": "Generate SHA-1, SHA-256, SHA-384 and SHA-512 digests from text or a file, in hex or Base64 — computed locally with WebCrypto.",
+      "badge": "WebCrypto",
+      "stats": {
+        "aLabel": "Algorithms",
+        "aValue": "4",
+        "bLabel": "Sources",
+        "bValue": "Text or file"
+      }
+    },
+    "idGenerator": {
+      "name": "ID Generator",
+      "description": "Bulk-generate UUIDv4, UUIDv7, ULID, Nano ID or short codes, with embedded timestamps decoded where available.",
+      "badge": "5 ID formats",
+      "stats": {
+        "aLabel": "ID kinds",
+        "aValue": "5",
+        "bLabel": "Batch size",
+        "bValue": "Up to 500"
+      }
+    },
+    "regexTester": {
+      "name": "Regex Tester",
+      "description": "Test regular expressions against sample text with live match highlighting, capture groups and a replace preview.",
+      "badge": "Live matching",
+      "stats": {
+        "aLabel": "Flags supported",
+        "aValue": "g·i·m·s·u·y",
+        "bLabel": "Replace preview",
+        "bValue": "Live"
+      }
+    },
+    "cronExplainer": {
+      "name": "Cron Explainer",
+      "description": "Turn a cron expression into a plain-language schedule and preview its next runs, in your local time zone.",
+      "badge": "Plain-language",
+      "stats": {
+        "aLabel": "Next runs shown",
+        "aValue": "8",
+        "bLabel": "Macros supported",
+        "bValue": "@daily, @weekly…"
+      }
+    },
+    "timestampConverter": {
+      "name": "Timestamp Converter",
+      "description": "Convert between Unix epoch, ISO 8601 and human-readable dates across time zones, with a live relative-time readout.",
+      "badge": "Any time zone",
+      "stats": {
+        "aLabel": "Formats",
+        "aValue": "Epoch · ISO · Local",
+        "bLabel": "Live clock",
+        "bValue": "Updates every second"
+      }
+    },
+    "subnetCalculator": {
+      "name": "Subnet Calculator",
+      "description": "Break down a CIDR block into network, broadcast and usable host ranges, check whether an address falls inside it, and split it into smaller subnets.",
+      "badge": "IPv4 · CIDR",
+      "stats": {
+        "aLabel": "Address lookup",
+        "aValue": "Instant",
+        "bLabel": "Split into subnets",
+        "bValue": "Up to 128"
+      }
+    },
+    "passwordGenerator": {
+      "name": "Password Generator",
+      "description": "Generate strong random passwords or memorable passphrases, with live entropy, strength and estimated crack-time.",
+      "badge": "Entropy scored",
+      "stats": {
+        "aLabel": "Modes",
+        "aValue": "Password · Passphrase",
+        "bLabel": "Strength meter",
+        "bValue": "Live entropy"
+      }
     }
   },
   "footer": {
@@ -284,5 +457,397 @@
     "ocrPrivacy": "Your image is never uploaded. OCR runs locally, but the first run downloads its model from a public CDN (jsDelivr).",
     "removeImage": "Remove image",
     "removeConfirm": "Discard annotations?"
+  },
+  "toolCommon": {
+    "copy": "Copy",
+    "copied": "Copied!",
+    "copyFailed": "Copy failed",
+    "localOnly": "Runs entirely in your browser — nothing is uploaded.",
+    "sample": "Load sample",
+    "clear": "Clear"
+  },
+  "jsonTools": {
+    "inputTitle": "Input",
+    "inputLabel": "JSON",
+    "inputPlaceholder": "Paste or type JSON…",
+    "parseErrorAt": "Line {{line}}, column {{column}}: {{message}}",
+    "parseError": "{{message}}",
+    "stats": {
+      "nodes": "Nodes",
+      "depth": "Max depth",
+      "size": "Size",
+      "minified": "Minified size"
+    },
+    "outputTitle": "Output",
+    "shapeLabel": "Shape",
+    "shapePretty": "Pretty",
+    "shapeMinified": "Minified",
+    "shapeSorted": "Sorted keys",
+    "indentLabel": "Indent",
+    "indentSpaces": "{{count}} space",
+    "indentSpaces_other": "{{count}} spaces",
+    "indentTab": "Tab",
+    "outputLabel": "Formatted JSON",
+    "outputPlaceholder": "Formatted output appears here",
+    "queryTitle": "JSONPath Query",
+    "queryLabel": "Path",
+    "queryHint": "Supports $.a.b, [n], [*], [a:b] slices and $..name descent. Filters like [?(...)] aren't supported.",
+    "queryError": {
+      "root": "A JSONPath expression must start with $.",
+      "syntax": "Couldn't parse that path.",
+      "filter": "Filter expressions like [?(...)] aren't supported."
+    },
+    "matchCount": "{{count}} match",
+    "matchCount_other": "{{count}} matches",
+    "queryResult": "Result"
+  },
+  "jwtDecoder": {
+    "privacyNote": "Decoding happens entirely in your browser — the token is never sent anywhere.",
+    "inputTitle": "Token",
+    "inputLabel": "JWT",
+    "inputHint": "Paste a full token, with or without the \"Bearer \" prefix.",
+    "errors": {
+      "empty": "Paste a token to decode it.",
+      "segments": "A JWT needs exactly three dot-separated segments.",
+      "header": "Couldn't decode the header segment.",
+      "payload": "Couldn't decode the payload segment."
+    },
+    "noClaims": "No claims in this segment.",
+    "claims": {
+      "iss": "Issuer (iss)",
+      "sub": "Subject (sub)",
+      "aud": "Audience (aud)",
+      "exp": "Expires (exp)",
+      "nbf": "Not before (nbf)",
+      "iat": "Issued at (iat)",
+      "jti": "Token ID (jti)",
+      "azp": "Authorized party (azp)",
+      "scope": "Scope",
+      "typ": "Type (typ)",
+      "alg": "Algorithm (alg)",
+      "kid": "Key ID (kid)",
+      "nonce": "Nonce",
+      "email": "Email",
+      "name": "Name",
+      "roles": "Roles"
+    },
+    "signatureWarning": "This only decodes the token — it doesn't verify the signature. Never trust these claims without verifying them against the issuer's key.",
+    "validity": {
+      "valid": "Valid until {{date}}",
+      "expired": "Expired {{date}}",
+      "notYetValid": "Not valid until {{date}}",
+      "noExpiry": "No expiry claim"
+    },
+    "headerTitle": "Header",
+    "payloadTitle": "Payload",
+    "rawTitle": "Raw",
+    "headerJson": "Header JSON",
+    "payloadJson": "Payload JSON",
+    "signatureLabel": "Signature"
+  },
+  "encoder": {
+    "settingsTitle": "Settings",
+    "schemeLabel": "Scheme",
+    "schemes": {
+      "base64": "Base64",
+      "base64url": "Base64URL",
+      "url": "URL",
+      "html": "HTML entities",
+      "hex": "Hex"
+    },
+    "directionLabel": "Direction",
+    "encode": "Encode",
+    "decode": "Decode",
+    "schemeHints": {
+      "base64": "Standard Base64 (RFC 4648) — uses + and / with = padding.",
+      "base64url": "URL-safe Base64 — uses - and _ instead of + and /, no padding.",
+      "url": "Percent-encoding for URLs and query strings (encodeURIComponent).",
+      "html": "Escapes characters like < > & \" ' as HTML entities.",
+      "hex": "Each byte as two hexadecimal digits."
+    },
+    "inputTitle": "Input",
+    "swap": "Swap",
+    "plainLabel": "Plain text",
+    "encodedLabel": "Encoded text",
+    "inputPlaceholder": "Type or paste text…",
+    "errors": {
+      "encode": "Couldn't encode this text as {{scheme}}.",
+      "decode": "That doesn't look like valid {{scheme}}."
+    },
+    "outputPlaceholder": "Result appears here",
+    "stats": {
+      "inputChars": "Input characters",
+      "inputBytes": "Input bytes",
+      "outputChars": "Output characters",
+      "outputBytes": "Output bytes"
+    }
+  },
+  "hashGenerator": {
+    "privacyNote": "Hashing runs locally with the browser's WebCrypto API — nothing is uploaded.",
+    "errors": {
+      "digest": "Couldn't compute the hash.",
+      "tooLarge": "That file is larger than 256 MB — pick a smaller one.",
+      "read": "Couldn't read that file."
+    },
+    "inputTitle": "Source",
+    "sourceLabel": "Source",
+    "sourceText": "Text",
+    "sourceFile": "File",
+    "textLabel": "Text",
+    "textHint": "Hashed as UTF-8.",
+    "textPlaceholder": "Type or paste text…",
+    "chooseFile": "Choose a file or drop it here",
+    "fileHint": "Up to 256 MB",
+    "resultTitle": "Digests",
+    "formatLabel": "Format",
+    "formatHex": "Hex",
+    "formatBase64": "Base64",
+    "working": "Hashing…",
+    "empty": "Enter text or choose a file to see its hashes.",
+    "copyAlgo": "Copy {{algo}}",
+    "sha1Note": "SHA-1 is no longer collision-resistant — prefer SHA-256 or stronger wherever security matters."
+  },
+  "idGenerator": {
+    "privacyNote": "Every ID is generated locally with crypto.getRandomValues — nothing is sent anywhere.",
+    "settingsTitle": "Settings",
+    "regenerate": "Regenerate",
+    "kindLabel": "ID type",
+    "kinds": {
+      "uuidv4": "UUIDv4",
+      "uuidv7": "UUIDv7",
+      "ulid": "ULID",
+      "nanoid": "Nano ID",
+      "short": "Short code"
+    },
+    "kindHints": {
+      "uuidv4": "128-bit random UUID (RFC 9562) — the general-purpose default.",
+      "uuidv7": "128-bit UUID with a sortable millisecond timestamp prefix — good for database keys.",
+      "ulid": "26-character Crockford base32 ID, sortable by creation time.",
+      "nanoid": "21-character URL-safe ID with more entropy per character than a UUID.",
+      "short": "8-character unambiguous code (no 0/O/1/I) — good for support tickets and invite codes."
+    },
+    "countLabel": "Count",
+    "countHint": "Up to {{max}} at once.",
+    "uppercase": "Uppercase",
+    "embeddedTime": "Embedded timestamp: {{date}}",
+    "resultTitle": "Generated",
+    "copyAll": "Copy all",
+    "firstLabel": "First ID",
+    "listLabel": "{{count}} ID",
+    "listLabel_other": "{{count}} IDs"
+  },
+  "regexTester": {
+    "patternTitle": "Pattern",
+    "patternLabel": "Regular expression",
+    "patternHint": "JavaScript regex syntax, without the surrounding slashes.",
+    "flagsLabel": "Flags",
+    "flags": {
+      "global": "Global — find all matches, not just the first",
+      "ignoreCase": "Ignore case",
+      "multiline": "Multiline — ^ and $ match line boundaries",
+      "dotAll": "Dot all — . also matches newlines",
+      "unicode": "Unicode — enables full Unicode matching",
+      "sticky": "Sticky — match only at lastIndex"
+    },
+    "invalidPattern": "Invalid pattern: {{message}}",
+    "subjectTitle": "Test string",
+    "subjectLabel": "Subject",
+    "subjectPlaceholder": "Paste text to test the pattern against…",
+    "truncated": "Only the first {{max}} characters are tested.",
+    "matchesTitle": "Matches",
+    "stats": {
+      "matches": "Matches",
+      "groups": "Capture groups"
+    },
+    "highlightLabel": "Highlighted matches",
+    "table": {
+      "index": "Index",
+      "match": "Match",
+      "groups": "Groups"
+    },
+    "noMatches": "No matches yet.",
+    "replaceTitle": "Replace",
+    "replaceLabel": "Replacement",
+    "replaceHint": "Use $1, $2… for capture groups and $<name> for named groups.",
+    "replaceResult": "Result"
+  },
+  "cronExplainer": {
+    "inputTitle": "Expression",
+    "expressionLabel": "Cron expression",
+    "expressionHint": "Standard 5-field cron syntax (minute hour day month weekday), or a macro like @daily.",
+    "errors": {
+      "empty": "Enter a cron expression.",
+      "fieldCount": "A cron expression needs exactly 5 space-separated fields — found {{token}}.",
+      "range": "\"{{token}}\" is out of range for the {{field}} field.",
+      "syntax": "Couldn't parse \"{{token}}\" in the {{field}} field."
+    },
+    "meaningTitle": "What it means",
+    "macroExpands": "{{macro}} expands to {{expression}}",
+    "fieldsTitle": "Fields",
+    "allValues": "every value",
+    "fields": {
+      "minute": "Minute",
+      "hour": "Hour",
+      "dayOfMonth": "Day of month",
+      "month": "Month",
+      "dayOfWeek": "Day of week"
+    },
+    "nextRunsTitle": "Next runs",
+    "neverRuns": "This schedule never runs within the next 5 years.",
+    "next": "Next",
+    "thenNth": "then #{{n}}",
+    "timezoneNote": "Times shown in {{zone}}.",
+    "joiner": ", ",
+    "describe": {
+      "everyMinute": "Runs every minute",
+      "everyNMinutes": "Runs every {{n}} minutes",
+      "everyMinuteOfHours": "Runs every minute during hours {{hours}}",
+      "hourlyAtMinute": "Runs hourly at minute {{minute}}",
+      "hourlyAtMinutes": "Runs hourly at minutes {{minutes}}",
+      "everyNHoursAtMinute": "Runs every {{n}} hours at minute {{minute}}",
+      "atTimes": "Runs at {{times}}",
+      "everyNDaysOfMonth": "every {{n}} days of the month",
+      "onDaysOfMonth": "on days {{days}} of the month",
+      "onWeekdays": "on {{days}}",
+      "inMonths": "in {{months}}",
+      "dayUnionNote": "(day-of-month or day-of-week — either match triggers a run)"
+    }
+  },
+  "timestampConverter": {
+    "inputTitle": "Input",
+    "useNow": "Use now",
+    "inputLabel": "Timestamp or date",
+    "inputHint": "Accepts a Unix epoch (seconds, milliseconds or microseconds) or any date string.",
+    "zoneLabel": "Time zone",
+    "zoneHint": "Applied to the \"In zone\" and full-date rows below.",
+    "invalid": "Couldn't parse that as a timestamp or date.",
+    "detected": {
+      "seconds": "Detected as Unix seconds.",
+      "milliseconds": "Detected as Unix milliseconds.",
+      "microseconds": "Detected as Unix microseconds.",
+      "text": "Detected as a date string."
+    },
+    "liveTitle": "Right now",
+    "nowSeconds": "Epoch seconds",
+    "nowMillis": "Epoch milliseconds",
+    "nowIso": "UTC time",
+    "localZone": "Local zone",
+    "resultTitle": "Converted",
+    "rows": {
+      "iso": "ISO 8601",
+      "epochSeconds": "Epoch (seconds)",
+      "epochMillis": "Epoch (milliseconds)",
+      "utc": "UTC",
+      "local": "Local time",
+      "inZone": "In {{zone}}",
+      "relative": "Relative",
+      "weekday": "Weekday",
+      "isoWeek": "ISO week",
+      "dayOfYear": "Day of year"
+    },
+    "zoneUnsupported": "This time zone isn't supported by your browser."
+  },
+  "subnetCalculator": {
+    "inputTitle": "Network",
+    "inputLabel": "CIDR block",
+    "inputHint": "An IPv4 address with a prefix, e.g. 10.20.30.0/24.",
+    "errors": {
+      "empty": "Enter a CIDR block.",
+      "address": "That's not a valid IPv4 address.",
+      "prefix": "The prefix must be between 0 and 32.",
+      "format": "Expected an address and prefix, like 192.168.1.0/24."
+    },
+    "summaryTitle": "Summary",
+    "stats": {
+      "network": "Network",
+      "netmask": "Netmask",
+      "usable": "Usable hosts",
+      "total": "Total addresses"
+    },
+    "rows": {
+      "address": "Address",
+      "prefix": "Prefix",
+      "netmask": "Netmask",
+      "wildcard": "Wildcard mask",
+      "binaryMask": "Binary mask",
+      "network": "Network address",
+      "broadcast": "Broadcast address",
+      "hostRange": "Usable host range",
+      "class": "Class",
+      "scope": "Scope"
+    },
+    "classValue": "Class {{letter}}",
+    "private": "Private",
+    "public": "Public",
+    "pointToPointNote": "A /31 or /32 has no usable host range in the traditional sense — /31 is a point-to-point link (RFC 3021) and /32 is a single host.",
+    "containsTitle": "Contains address?",
+    "containsLabel": "IPv4 address",
+    "containsHint": "Check whether an address falls inside this subnet.",
+    "inRange": "Inside {{cidr}}",
+    "outOfRange": "Outside {{cidr}}",
+    "splitTitle": "Split subnet",
+    "splitLabel": "Split into",
+    "splitHint": "Shows up to {{limit}} resulting subnets.",
+    "splitNone": "Don't split",
+    "splitCount": "{{count}} subnet",
+    "splitCount_other": "{{count}} subnets",
+    "table": {
+      "subnet": "Subnet",
+      "range": "Range"
+    }
+  },
+  "passwordGenerator": {
+    "privacyNote": "Generated locally with the Web Crypto RNG — never sent anywhere, never stored.",
+    "resultTitle": "Password",
+    "regenerate": "Regenerate",
+    "errors": {
+      "noCharsets": "Select at least one character set."
+    },
+    "strengthLabel": "Strength",
+    "strength": {
+      "weak": "Weak",
+      "fair": "Fair",
+      "strong": "Strong",
+      "excellent": "Excellent"
+    },
+    "stats": {
+      "entropy": "Entropy",
+      "pool": "Pool size",
+      "crackTime": "Est. crack time"
+    },
+    "crackAssumption": "Assumes 10 billion guesses per second — a fast offline attack against a stolen hash.",
+    "settingsTitle": "Settings",
+    "modeLabel": "Mode",
+    "modePassword": "Password",
+    "modePassphrase": "Passphrase",
+    "lengthLabel": "Length: {{length}}",
+    "charsetsLabel": "Character sets",
+    "charsets": {
+      "lower": "Lowercase (a-z)",
+      "upper": "Uppercase (A-Z)",
+      "digits": "Digits (0-9)",
+      "symbols": "Symbols (!@#…)"
+    },
+    "excludeAmbiguous": "Exclude ambiguous characters (l, 1, O, 0, …)",
+    "wordsLabel": "Number of words",
+    "wordsHint": "Chosen from a {{size}}-word list.",
+    "separatorLabel": "Separator",
+    "separators": {
+      "hyphen": "Hyphen (-)",
+      "dot": "Dot (.)",
+      "underscore": "Underscore (_)",
+      "space": "Space"
+    },
+    "capitalise": "Capitalise words",
+    "appendNumber": "Append a number",
+    "crack": {
+      "instant": "Instantly",
+      "years": "{{value}} years",
+      "days": "{{value}} days",
+      "hours": "{{value}} hours",
+      "minutes": "{{value}} minutes",
+      "seconds": "{{value}} seconds",
+      "eons": "{{value}} years — longer than the age of the universe"
+    }
   }
 }
