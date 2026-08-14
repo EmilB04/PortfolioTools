@@ -1,11 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FileInput, FileArchive, Gauge, QrCode, Accessibility, DoorOpen, ImageDown, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ToolCard } from '../components/ToolCard'
 import { todayStats } from '../utils/speedStorage'
 import { loadCounterState } from '../utils/counterStorage'
+import { CATEGORY_ORDER, DASHBOARD_TOOLS } from '../tools/registry'
+import type { ToolCategory } from '../tools/registry'
 
 const ROTATE_MS = 6000
 
@@ -35,106 +37,41 @@ export function Dashboard() {
   const [featured, setFeatured] = useState(0)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
-  const tools = [
-    {
-      title: t('tools.speedTest.name'),
-      description: t('tools.speedTest.description'),
-      badge: t('tools.speedTest.badge'),
-      href: '/speed-test',
-      accentColor: '#f1376e',
-      accentBg: 'rgba(241,55,110,0.12)',
-      icon: <Gauge size={20} color="#f1376e" />,
-      comingSoon: false,
-      stats: [
-        { label: t('dashboard.stats.testsRun'), value: hasData ? String(stats.testsRun) : '—' },
-        { label: t('dashboard.stats.avgSpeed'), value: hasData ? dlDisplay : '—' },
-      ],
-    },
-    {
-      title: t('tools.snapdown.name'),
-      description: t('tools.snapdown.description'),
-      badge: t('tools.snapdown.badge'),
-      href: '/snapdown',
-      accentColor: '#f59e0b',
-      accentBg: 'rgba(245,158,11,0.12)',
-      icon: <ImageDown size={20} color="#f59e0b" />,
-      comingSoon: false,
-      stats: [
-        { label: 'Crop · arrow · box · blur', value: '0 uploads' },
-        { label: t('dashboard.stats.altFromOcr'), value: 'OCR' },
-      ],
-    },
-    {
-      title: t('tools.fileConverter.name'),
-      description: t('tools.fileConverter.description'),
-      badge: t('tools.fileConverter.badge'),
-      href: '/file-converter',
-      accentColor: '#f97316',
-      accentBg: 'rgba(249,115,22,0.12)',
-      icon: <FileInput size={20} color="#f97316" />,
-      comingSoon: false,
-      stats: [
-        { label: t('dashboard.stats.formatsSupported'), value: '10+' },
-        { label: 'Images · JSON · CSV · TSV', value: '0 uploads' },
-      ],
-    },
-    {
-      title: t('tools.fileCompress.name'),
-      description: t('tools.fileCompress.description'),
-      badge: t('tools.fileCompress.badge'),
-      href: '/file-compress',
-      accentColor: '#10b981',
-      accentBg: 'rgba(16,185,129,0.12)',
-      icon: <FileArchive size={20} color="#10b981" />,
-      comingSoon: false,
-      stats: [
-        { label: 'Images · Any file', value: 'Gzip' },
-        { label: 'Max quality loss', value: '0%' },
-      ],
-    },
-    {
-      title: t('tools.qrGenerator.name'),
-      description: t('tools.qrGenerator.description'),
-      badge: t('tools.qrGenerator.badge'),
-      href: '/qr-generator',
-      accentColor: '#8b5cf6',
-      accentBg: 'rgba(139,92,246,0.12)',
-      icon: <QrCode size={20} color="#8b5cf6" />,
-      comingSoon: false,
-      stats: [
-        { label: 'PNG · SVG export', value: '0 uploads' },
-        { label: 'Custom colors', value: 'L/M/Q/H' },
-      ],
-    },
-    {
-      title: t('tools.wcagScanner.name'),
-      description: t('tools.wcagScanner.description'),
-      badge: t('tools.wcagScanner.badge'),
-      href: '/wcag-scanner',
-      accentColor: '#14b8a6',
-      accentBg: 'rgba(20,184,166,0.12)',
-      icon: <Accessibility size={20} color="#14b8a6" />,
-      comingSoon: false,
-      stats: [
-        { label: 'Crawls all pages', value: 'axe-core' },
-        { label: 'WCAG 2 · A/AA/AAA', value: 'Live' },
-      ],
-    },
-    {
-      title: t('tools.counter.name'),
-      description: t('tools.counter.description'),
-      badge: t('tools.counter.badge'),
-      href: '/counter',
-      accentColor: '#3b82f6',
-      accentBg: 'rgba(59,130,246,0.12)',
-      icon: <DoorOpen size={20} color="#3b82f6" />,
-      comingSoon: false,
-      stats: [
-        { label: t('counter.entered'), value: String(counterState.entered) },
-        { label: t('counter.exited'), value: String(counterState.exited) },
-      ],
-    },
-  ]
+  /**
+   * Cards come straight from the tool registry, so a new tool shows up here and in
+   * the sidebar from one entry. Only the handful of tools with live device data
+   * override their stat values.
+   */
+  const liveStats: Record<string, [string, string]> = useMemo(
+    () => ({
+      speedTest: [hasData ? String(stats.testsRun) : '—', hasData ? dlDisplay : '—'],
+      counter: [String(counterState.entered), String(counterState.exited)],
+    }),
+    [hasData, stats.testsRun, dlDisplay, counterState.entered, counterState.exited],
+  )
+
+  const tools = useMemo(
+    () =>
+      DASHBOARD_TOOLS.map(tool => {
+        const overrides = liveStats[tool.key]
+        return {
+          key: tool.key,
+          category: tool.category,
+          title: t(`tools.${tool.key}.name`),
+          description: t(`tools.${tool.key}.description`),
+          badge: t(`tools.${tool.key}.badge`),
+          href: tool.to,
+          accentColor: tool.color,
+          accentBg: `${tool.color}1f`,
+          icon: <tool.icon size={20} color={tool.color} />,
+          stats: [
+            { label: t(`tools.${tool.key}.stats.aLabel`), value: overrides?.[0] ?? t(`tools.${tool.key}.stats.aValue`) },
+            { label: t(`tools.${tool.key}.stats.bLabel`), value: overrides?.[1] ?? t(`tools.${tool.key}.stats.bValue`) },
+          ],
+        }
+      }),
+    [t, liveStats],
+  )
 
   const startTimer = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current)
@@ -150,6 +87,10 @@ export function Dashboard() {
 
   const hero = tools[featured]
 
+  const grouped = CATEGORY_ORDER
+    .map(category => ({ category, items: tools.filter(tool => tool.category === category) }))
+    .filter(group => group.items.length > 0)
+
   return (
     <div className="page-container page-container-wide space-y-6 sm:space-y-8">
 
@@ -161,7 +102,7 @@ export function Dashboard() {
         <div className="p-5 sm:p-8 md:p-10">
           <div className="flex flex-col gap-6 md:gap-8">
             {/* Rotating featured tool */}
-            <div className="space-y-3 max-w-lg min-h-[15rem] sm:min-h-[13rem]">
+            <div className="space-y-3 max-w-2xl min-h-[15rem] sm:min-h-[13rem]">
               <div
                 className="tool-text inline-flex items-center gap-2 px-2.5 py-1 rounded-full border text-xs font-semibold transition-colors duration-500"
                 style={{ borderColor: hero.accentColor, background: hero.accentBg, '--tool': hero.accentColor } as React.CSSProperties}
@@ -186,7 +127,7 @@ export function Dashboard() {
                       {hero.title}
                     </h1>
                   </div>
-                  <p className="fs-base leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                  <p className="fs-base leading-relaxed prose-measure" style={{ color: 'var(--text-muted)' }}>
                     {hero.description}
                   </p>
                   <Link
@@ -203,12 +144,13 @@ export function Dashboard() {
               </AnimatePresence>
 
               {/* Rotation dots */}
-              <div className="flex items-center gap-2 pt-1">
+              <div className="flex flex-wrap items-center gap-2 pt-1">
                 {tools.map((tool, i) => (
                   <button
                     key={tool.href}
                     onClick={() => goTo(i)}
                     aria-label={tool.title}
+                    aria-current={i === featured ? 'true' : undefined}
                     className="h-1.5 rounded-full transition-all duration-300"
                     style={{
                       width: i === featured ? 20 : 6,
@@ -225,10 +167,7 @@ export function Dashboard() {
               style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}
             >
               <StatPill label={t('dashboard.stats.testsRun')} value={hasData ? String(stats.testsRun) : '—'} dim={!hasData} />
-              <div className="flex flex-col gap-0.5 min-w-0">
-                <div className="w-px h-full absolute" />
-                <StatPill label={t('dashboard.stats.avgDownload')} value={dlDisplay} dim={!hasData} />
-              </div>
+              <StatPill label={t('dashboard.stats.avgDownload')} value={dlDisplay} dim={!hasData} />
               <StatPill label={t('dashboard.stats.avgUpload')} value={ulDisplay} dim={!hasData} />
             </div>
           </div>
@@ -236,17 +175,23 @@ export function Dashboard() {
         <div className="h-px w-full" style={{ background: `linear-gradient(90deg, transparent, var(--accent-border), transparent)` }} />
       </div>
 
-      {/* Tool cards */}
-      <div>
-        <h2 className="fs-xs font-mono font-medium uppercase tracking-[0.2em] mb-4" style={{ color: 'var(--text-subtle)' }}>
-          {t('dashboard.tools')}
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-          {tools.map((tool) => (
-            <ToolCard key={tool.href} {...tool} />
-          ))}
-        </div>
-      </div>
+      {/* Tool cards, grouped the same way the sidebar is */}
+      {grouped.map(group => (
+        <section key={group.category} aria-labelledby={`dash-${group.category}`}>
+          <h2
+            id={`dash-${group.category}`}
+            className="fs-xs font-mono font-medium uppercase tracking-[0.2em] mb-4"
+            style={{ color: 'var(--text-subtle)' }}
+          >
+            {t(`nav.categories.${group.category as ToolCategory}`)}
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
+            {group.items.map(tool => (
+              <ToolCard key={tool.href} {...tool} />
+            ))}
+          </div>
+        </section>
+      ))}
     </div>
   )
 }
