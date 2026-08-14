@@ -215,7 +215,7 @@
     "regexTester": {
       "name": "Regex-tester",
       "description": "Test regulære uttrykk mot eksempeltekst med levende markering av treff, fangstgrupper og forhåndsvisning av erstatning.",
-      "badge": "Live matching",
+      "badge": "Treff i sanntid",
       "stats": {
         "aLabel": "Støttede flagg",
         "aValue": "g·i·m·s·u·y",
