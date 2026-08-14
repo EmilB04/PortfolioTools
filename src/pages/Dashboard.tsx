@@ -187,7 +187,17 @@ export function Dashboard() {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
             {group.items.map(tool => (
-              <ToolCard key={tool.href} {...tool} />
+              <ToolCard
+                key={tool.key}
+                title={tool.title}
+                description={tool.description}
+                badge={tool.badge}
+                href={tool.href}
+                icon={tool.icon}
+                stats={tool.stats}
+                accentColor={tool.accentColor}
+                accentBg={tool.accentBg}
+              />
             ))}
           </div>
         </section>

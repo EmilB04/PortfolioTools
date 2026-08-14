@@ -14,7 +14,7 @@ export interface CronField {
   values: number[]
   /** True when the field was written as `*` (or a full range). */
   isEvery: boolean
-  /** Set when the field is a single `*/n` or `a-b/n` step. */
+  /** Set when the field is a single step, written as every-n or as a range with a step. */
   step: number | null
   raw: string
 }

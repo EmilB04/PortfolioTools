@@ -145,14 +145,14 @@ export function queryJsonPath(root: Json, path: string): Json[] {
 
 /** Depth-first count of every value in the document, for the "nodes" statistic. */
 export function countNodes(value: Json): number {
-  if (Array.isArray(value)) return 1 + value.reduce((sum, v) => sum + countNodes(v), 0)
-  if (isRecord(value)) return 1 + Object.values(value).reduce((sum, v) => sum + countNodes(v), 0)
+  if (Array.isArray(value)) return 1 + value.reduce<number>((sum, v) => sum + countNodes(v), 0)
+  if (isRecord(value)) return 1 + Object.values(value).reduce<number>((sum, v) => sum + countNodes(v), 0)
   return 1
 }
 
 export function maxDepth(value: Json): number {
-  if (Array.isArray(value)) return 1 + value.reduce((d, v) => Math.max(d, maxDepth(v)), 0)
-  if (isRecord(value)) return 1 + Object.values(value).reduce((d, v) => Math.max(d, maxDepth(v)), 0)
+  if (Array.isArray(value)) return 1 + value.reduce<number>((d, v) => Math.max(d, maxDepth(v)), 0)
+  if (isRecord(value)) return 1 + Object.values(value).reduce<number>((d, v) => Math.max(d, maxDepth(v)), 0)
   return 0
 }
 
