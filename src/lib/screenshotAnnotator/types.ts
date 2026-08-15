@@ -1,4 +1,4 @@
-// Snapdown — annotation model.
+// Screenshot Annotator — annotation model.
 //
 // All geometry is stored in *source image pixel space* (after crop, with the
 // crop rect's top-left as origin). The display canvas is scaled with CSS only,

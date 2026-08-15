@@ -4,10 +4,10 @@ import {
   Crop, MoveUpRight, Square, Droplet, Type, Hash,
   Copy, Check, Download, Undo2, Trash2, ScanText, ImageDown, ClipboardPaste, X,
 } from 'lucide-react'
-import type { Rect, Shape, ToolId } from '../lib/snapdown/types'
-import { newId, normalizeRect } from '../lib/snapdown/types'
-import { drawCropOverlay, drawShape, renderScene } from '../lib/snapdown/render'
-import { suggestAlt } from '../lib/snapdown/ocr'
+import type { Rect, Shape, ToolId } from '../lib/screenshotAnnotator/types'
+import { newId, normalizeRect } from '../lib/screenshotAnnotator/types'
+import { drawCropOverlay, drawShape, renderScene } from '../lib/screenshotAnnotator/render'
+import { suggestAlt } from '../lib/screenshotAnnotator/ocr'
 
 // ── Constants ────────────────────────────────────────────────────────────────────
 
@@ -64,7 +64,7 @@ function escapeAlt(alt: string) {
 
 // ── Component ──────────────────────────────────────────────────────────────────────
 
-export function Snapdown() {
+export function ScreenshotAnnotator() {
   const { t } = useTranslation()
 
   const [img, setImg]       = useState<HTMLImageElement | null>(null)
@@ -110,7 +110,7 @@ export function Snapdown() {
 
   const loadFile = useCallback((file: File) => {
     if (!file.type.startsWith('image/')) {
-      setError(t('snapdown.errNotImage'))
+      setError(t('screenshotAnnotator.errNotImage'))
       return
     }
     const url = URL.createObjectURL(file)
@@ -127,7 +127,7 @@ export function Snapdown() {
     }
     image.onerror = () => {
       URL.revokeObjectURL(url)
-      setError(t('snapdown.errDecode'))
+      setError(t('screenshotAnnotator.errDecode'))
     }
     image.src = url
   }, [t])
@@ -226,7 +226,7 @@ export function Snapdown() {
       pushHistory()
       if (tool === 'text') {
         if (!label.trim()) {
-          setError(t('snapdown.errNoLabel'))
+          setError(t('screenshotAnnotator.errNoLabel'))
           return
         }
         setShapes(s => [...s, { id: newId(), type: 'text', x, y, text: label.trim(), color, size: textSize }])
@@ -282,7 +282,7 @@ export function Snapdown() {
       setCopied('image')
       setTimeout(() => setCopied(null), 1600)
     } catch {
-      setError(t('snapdown.errClipboard'))
+      setError(t('screenshotAnnotator.errClipboard'))
     }
   }, [toBlob, t])
 
@@ -311,7 +311,7 @@ export function Snapdown() {
 
   const markdown = useMemo(() => {
     const target = dataUri ? (encoded || '…') : (filename || 'screenshot.png')
-    return `![${escapeAlt(alt) || t('snapdown.altFallback')}](${target})`
+    return `![${escapeAlt(alt) || t('screenshotAnnotator.altFallback')}](${target})`
   }, [alt, filename, dataUri, encoded, t])
 
   const copyMarkdown = useCallback(async () => {
@@ -320,7 +320,7 @@ export function Snapdown() {
       setCopied('md')
       setTimeout(() => setCopied(null), 1600)
     } catch {
-      setError(t('snapdown.errClipboard'))
+      setError(t('screenshotAnnotator.errClipboard'))
     }
   }, [markdown, t])
 
@@ -332,9 +332,9 @@ export function Snapdown() {
     try {
       const suggestion = await suggestAlt(canvas, p => setOcrPct(Math.round(p * 100)))
       if (suggestion) setAlt(suggestion)
-      else setError(t('snapdown.errNoText'))
+      else setError(t('screenshotAnnotator.errNoText'))
     } catch {
-      setError(t('snapdown.errOcr'))
+      setError(t('screenshotAnnotator.errOcr'))
     } finally {
       setOcrBusy(false)
     }
@@ -376,12 +376,12 @@ export function Snapdown() {
           style={{ background: 'rgba(245,158,11,0.12)', borderColor: 'rgba(245,158,11,0.35)' }}>
           <ImageDown size={20} style={{ color: ACCENT }} />
         </div>
-        <div>
+        <div className="min-w-0 flex-1">
           <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
-            {t('snapdown.title')}
+            {t('screenshotAnnotator.title')}
           </h1>
           <p className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
-            {t('snapdown.subtitle')}
+            {t('screenshotAnnotator.subtitle')}
           </p>
         </div>
       </div>
@@ -406,10 +406,10 @@ export function Snapdown() {
         >
           <ClipboardPaste size={36} style={{ color: ACCENT, opacity: 0.8 }} />
           <p className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
-            {t('snapdown.dropTitle')}
+            {t('screenshotAnnotator.dropTitle')}
           </p>
           <p className="text-xs text-center max-w-sm" style={{ color: 'var(--text-subtle)' }}>
-            {t('snapdown.dropHint')}
+            {t('screenshotAnnotator.dropHint')}
           </p>
           <input
             ref={fileRef}
@@ -429,8 +429,8 @@ export function Snapdown() {
                 style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
                 {TOOLS.map(({ id, icon: Icon }) => (
                   <button key={id} onClick={() => { setTool(id); setError(null) }}
-                    title={t(`snapdown.tool.${id}`)}
-                    aria-label={t(`snapdown.tool.${id}`)}
+                    title={t(`screenshotAnnotator.tool.${id}`)}
+                    aria-label={t(`screenshotAnnotator.tool.${id}`)}
                     aria-pressed={tool === id}
                     className="px-2.5 py-2 rounded-lg transition-all duration-150"
                     style={{
@@ -460,13 +460,13 @@ export function Snapdown() {
               </div>
 
               <button onClick={undo} disabled={!history.length}
-                title={t('snapdown.undo')}
+                title={t('screenshotAnnotator.undo')}
                 className="px-2.5 py-2 rounded-xl border transition-opacity hover:opacity-70 disabled:opacity-35 disabled:cursor-not-allowed"
                 style={{ background: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
                 <Undo2 size={16} />
               </button>
               <button onClick={clearShapes} disabled={!shapes.length}
-                title={t('snapdown.clear')}
+                title={t('screenshotAnnotator.clear')}
                 className="px-2.5 py-2 rounded-xl border transition-opacity hover:opacity-70 disabled:opacity-35 disabled:cursor-not-allowed"
                 style={{ background: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
                 <Trash2 size={16} />
@@ -480,8 +480,8 @@ export function Snapdown() {
                 <input
                   value={label}
                   onChange={e => setLabel(e.target.value)}
-                  placeholder={t('snapdown.labelPlaceholder')}
-                  aria-label={t('snapdown.labelPlaceholder')}
+                  placeholder={t('screenshotAnnotator.labelPlaceholder')}
+                  aria-label={t('screenshotAnnotator.labelPlaceholder')}
                   className="w-full rounded-xl border px-3 py-2 text-sm outline-none"
                   style={{ background: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text)' }}
                 />
@@ -496,7 +496,7 @@ export function Snapdown() {
                         background: strength === i ? ACCENT : 'transparent',
                         color: strength === i ? '#ffffff' : 'var(--text-subtle)',
                       }}>
-                      {t(`snapdown.blur.${s.key}`)}
+                      {t(`screenshotAnnotator.blur.${s.key}`)}
                     </button>
                   ))}
                 </div>
@@ -505,7 +505,7 @@ export function Snapdown() {
                 <button onClick={resetCrop}
                   className="text-xs px-3 py-1.5 rounded-lg border transition-opacity hover:opacity-70"
                   style={{ background: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
-                  {t('snapdown.resetCrop')}
+                  {t('screenshotAnnotator.resetCrop')}
                 </button>
               )}
             </div>
@@ -524,7 +524,7 @@ export function Snapdown() {
             </div>
 
             <p className="text-xs" style={{ color: 'var(--text-subtle)' }}>
-              {t(`snapdown.hint.${tool}`)} · {Math.round(crop.w)}×{Math.round(crop.h)}px
+              {t(`screenshotAnnotator.hint.${tool}`)} · {Math.round(crop.w)}×{Math.round(crop.h)}px
             </p>
           </div>
 
@@ -532,59 +532,59 @@ export function Snapdown() {
           <div className="space-y-4">
             <div className="space-y-2">
               <label className="text-xs font-medium flex items-center justify-between" style={{ color: 'var(--text-subtle)' }}>
-                {t('snapdown.altLabel')}
+                {t('screenshotAnnotator.altLabel')}
                 <button onClick={runOcr} disabled={ocrBusy}
                   className="inline-flex items-center gap-1 text-xs font-medium transition-opacity hover:opacity-70 disabled:opacity-50"
                   style={{ color: ACCENT }}>
                   <ScanText size={12} />
-                  {ocrBusy ? `${ocrPct}%` : t('snapdown.ocrSuggest')}
+                  {ocrBusy ? `${ocrPct}%` : t('screenshotAnnotator.ocrSuggest')}
                 </button>
               </label>
               <input
                 value={alt}
                 onChange={e => setAlt(e.target.value)}
-                placeholder={t('snapdown.altPlaceholder')}
-                aria-label={t('snapdown.altLabel')}
+                placeholder={t('screenshotAnnotator.altPlaceholder')}
+                aria-label={t('screenshotAnnotator.altLabel')}
                 className="w-full rounded-xl border px-3 py-2 text-sm outline-none"
                 style={{ background: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text)' }}
               />
               <p className="text-xs leading-relaxed" style={{ color: 'var(--text-subtle)' }}>
-                {ocrBusy ? t('snapdown.ocrLoading') : t('snapdown.ocrPrivacy')}
+                {ocrBusy ? t('screenshotAnnotator.ocrLoading') : t('screenshotAnnotator.ocrPrivacy')}
               </p>
             </div>
 
             <div className="space-y-2">
               <label className="text-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
-                {t('snapdown.filenameLabel')}
+                {t('screenshotAnnotator.filenameLabel')}
               </label>
               <input
                 value={filename}
                 onChange={e => setFilename(e.target.value)}
                 disabled={dataUri}
-                aria-label={t('snapdown.filenameLabel')}
+                aria-label={t('screenshotAnnotator.filenameLabel')}
                 className="w-full rounded-xl border px-3 py-2 text-sm font-mono outline-none disabled:opacity-45"
                 style={{ background: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text)' }}
               />
               <label className="flex items-center gap-2 text-xs cursor-pointer" style={{ color: 'var(--text-subtle)' }}>
                 <input type="checkbox" checked={dataUri} onChange={e => setDataUri(e.target.checked)}
                   style={{ accentColor: ACCENT }} />
-                {t('snapdown.embedLabel')}
+                {t('screenshotAnnotator.embedLabel')}
               </label>
               {dataUri && encodedBytes > DATA_URI_WARN_BYTES && (
                 <p className="text-xs" style={{ color: '#f59e0b' }}>
-                  ⚠ {t('snapdown.embedWarn', { kb: Math.round(encodedBytes / 1024) })}
+                  ⚠ {t('screenshotAnnotator.embedWarn', { kb: Math.round(encodedBytes / 1024) })}
                 </p>
               )}
             </div>
 
             <div className="space-y-2">
               <label className="text-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
-                {t('snapdown.markdownLabel')}
+                {t('screenshotAnnotator.markdownLabel')}
               </label>
               <pre className="rounded-xl border px-3 py-2 text-xs font-mono overflow-x-auto whitespace-pre-wrap break-all max-h-28"
                 style={{ background: 'var(--surface-card)', borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
                 {dataUri && encoded
-                  ? `![${escapeAlt(alt) || t('snapdown.altFallback')}](data:image/png;base64,…)`
+                  ? `![${escapeAlt(alt) || t('screenshotAnnotator.altFallback')}](data:image/png;base64,…)`
                   : markdown}
               </pre>
             </div>
@@ -595,16 +595,16 @@ export function Snapdown() {
                   className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90"
                   style={{ background: ACCENT }}>
                   {copied === 'image'
-                    ? <><Check size={14} /> {t('snapdown.copied')}</>
-                    : <><Copy size={14} /> {t('snapdown.copyImage')}</>}
+                    ? <><Check size={14} /> {t('screenshotAnnotator.copied')}</>
+                    : <><Copy size={14} /> {t('screenshotAnnotator.copyImage')}</>}
                 </button>
               )}
               <button onClick={copyMarkdown}
                 className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold border transition-opacity hover:opacity-80"
                 style={{ borderColor: ACCENT, color: ACCENT, background: 'transparent' }}>
                 {copied === 'md'
-                  ? <><Check size={14} /> {t('snapdown.copied')}</>
-                  : <><Copy size={14} /> {t('snapdown.copyMarkdown')}</>}
+                  ? <><Check size={14} /> {t('screenshotAnnotator.copied')}</>
+                  : <><Copy size={14} /> {t('screenshotAnnotator.copyMarkdown')}</>}
               </button>
               <button onClick={downloadPng}
                 className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-sm font-medium border transition-opacity hover:opacity-80"
@@ -613,7 +613,7 @@ export function Snapdown() {
                   color: SUCCESS,
                   background: 'rgba(16,185,129,0.08)',
                 }}>
-                <Download size={14} /> {t('snapdown.downloadPng')}
+                <Download size={14} /> {t('screenshotAnnotator.downloadPng')}
               </button>
               {/* Idle reads as destructive; armed escalates to a solid fill. */}
               <button onClick={removeImage}
@@ -624,12 +624,12 @@ export function Snapdown() {
                   background: confirmRemove ? DANGER : 'rgba(239,68,68,0.08)',
                 }}>
                 <X size={14} />
-                {confirmRemove ? t('snapdown.removeConfirm') : t('snapdown.removeImage')}
+                {confirmRemove ? t('screenshotAnnotator.removeConfirm') : t('screenshotAnnotator.removeImage')}
               </button>
             </div>
 
             <p className="text-xs leading-relaxed" style={{ color: 'var(--text-subtle)' }}>
-              {t('snapdown.pasteTip')}
+              {t('screenshotAnnotator.pasteTip')}
             </p>
           </div>
         </div>

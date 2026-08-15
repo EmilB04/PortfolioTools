@@ -8,7 +8,7 @@
     "qrReader": "QR Reader",
     "wcagScanner": "WCAG Scanner",
     "counter": "Counter",
-    "snapdown": "Snapdown",
+    "screenshotAnnotator": "Screenshot Annotator",
     "closeMenu": "Close menu",
     "ariaLabel": "Tool navigation",
     "jsonTools": "JSON Tools",
@@ -82,8 +82,8 @@
     }
   },
   "tools": {
-    "snapdown": {
-      "name": "Snapdown",
+    "screenshotAnnotator": {
+      "name": "Screenshot Annotator",
       "description": "Paste a screenshot, annotate it, redact secrets — copy it out as markdown-ready image. Nothing leaves your browser.",
       "badge": "Screenshot → markdown",
       "stats": {
@@ -454,8 +454,8 @@
     "confirmResetTitle": "Reset all counts?",
     "confirmResetBody": "This sets both Entered and Exited back to 0. This cannot be undone."
   },
-  "snapdown": {
-    "title": "Snapdown",
+  "screenshotAnnotator": {
+    "title": "Screenshot Annotator",
     "subtitle": "Screenshot → annotated markdown · browser-only, no uploads",
     "dropTitle": "Paste, drop or click to add a screenshot",
     "dropHint": "Press Ctrl+V anywhere on this page to paste straight from Print Screen. Your image never leaves the browser.",

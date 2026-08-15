@@ -77,7 +77,7 @@ export const TOOLS: ToolDefinition[] = [
   { key: 'subnetCalculator', to: '/subnet', icon: Network, category: 'network', color: '#2dd4bf' },
   { key: 'speedTest', to: '/speed-test', icon: Gauge, category: 'network', color: '#f1376e' },
 
-  { key: 'snapdown', to: '/snapdown', icon: ImageDown, category: 'files', color: '#f59e0b' },
+  { key: 'screenshotAnnotator', to: '/screenshot-annotator', icon: ImageDown, category: 'files', color: '#f59e0b' },
   { key: 'fileConverter', to: '/file-converter', icon: FileInput, category: 'files', color: '#f97316' },
   { key: 'fileCompress', to: '/file-compress', icon: FileArchive, category: 'files', color: '#10b981' },
 

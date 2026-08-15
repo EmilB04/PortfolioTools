@@ -8,7 +8,7 @@
     "qrReader": "QR-leser",
     "wcagScanner": "WCAG-skanner",
     "counter": "Teller",
-    "snapdown": "Snapdown",
+    "screenshotAnnotator": "Skjermbildeannotering",
     "closeMenu": "Lukk meny",
     "ariaLabel": "Verktøynavigasjon",
     "jsonTools": "JSON-verktøy",
@@ -82,8 +82,8 @@
     }
   },
   "tools": {
-    "snapdown": {
-      "name": "Snapdown",
+    "screenshotAnnotator": {
+      "name": "Skjermbildeannotering",
       "description": "Lim inn et skjermbilde, marker det, sladd hemmeligheter — kopier det ut som markdown-klart bilde. Ingenting forlater nettleseren.",
       "badge": "Skjermbilde → markdown",
       "stats": {
@@ -454,8 +454,8 @@
     "confirmResetTitle": "Nullstille all telling?",
     "confirmResetBody": "Dette setter både Inne og Ute tilbake til 0. Dette kan ikke angres."
   },
-  "snapdown": {
-    "title": "Snapdown",
+  "screenshotAnnotator": {
+    "title": "Skjermbildeannotering",
     "subtitle": "Skjermbilde → markert markdown · kun i nettleseren, ingen opplasting",
     "dropTitle": "Lim inn, slipp eller klikk for å legge til et skjermbilde",
     "dropHint": "Trykk Ctrl+V hvor som helst på siden for å lime inn rett fra Print Screen. Bildet forlater aldri nettleseren.",

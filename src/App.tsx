@@ -8,7 +8,7 @@ import { QrGenerator } from './pages/QrGenerator'
 import { QrReader } from './pages/QrReader'
 import { WcagScanner } from './pages/WcagScanner'
 import { Counter } from './pages/Counter'
-import { Snapdown } from './pages/Snapdown'
+import { ScreenshotAnnotator } from './pages/ScreenshotAnnotator'
 import { JsonTools } from './pages/JsonTools'
 import { JwtDecoder } from './pages/JwtDecoder'
 import { EncoderDecoder } from './pages/EncoderDecoder'
@@ -47,7 +47,7 @@ function App() {
           <Route path="speed-test" element={<SpeedTest />} />
 
           {/* Files & media */}
-          <Route path="snapdown" element={<Snapdown />} />
+          <Route path="screenshot-annotator" element={<ScreenshotAnnotator />} />
           <Route path="file-converter" element={<FileConverter />} />
           <Route path="file-compress" element={<FileCompress />} />
 
