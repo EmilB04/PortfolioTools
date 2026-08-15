@@ -47,6 +47,11 @@ export function IdGenerator() {
       color={TOOL.color}
       title={t('tools.idGenerator.name')}
       subtitle={t('tools.idGenerator.description')}
+      info={{
+        input: t('tools.idGenerator.info.input'),
+        process: t('tools.idGenerator.info.process'),
+        output: t('tools.idGenerator.info.output'),
+      }}
       privacyNote={t('idGenerator.privacyNote')}
     >
       <Panel

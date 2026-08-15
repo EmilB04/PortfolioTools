@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Gauge, Activity, Zap, Square, Timer } from 'lucide-react'
 import {
@@ -7,6 +7,10 @@ import {
 } from 'recharts'
 import { useSpeedTest, type TestPhase } from '../hooks/useSpeedTest'
 import { useTheme } from '../contexts/useTheme'
+import { InfoButton, InfoPanel } from '../components/tools/ToolUI'
+import { TOOLS_BY_KEY } from '../tools/registry'
+
+const TOOL = TOOLS_BY_KEY.speedTest
 
 type Mode = 'continuous' | 'max'
 
@@ -104,6 +108,8 @@ function phaseKey(phase: TestPhase): string {
 export function SpeedTest() {
   const { t } = useTranslation()
   const { resolvedTheme } = useTheme()
+  const [showInfo, setShowInfo] = useState(false)
+  const infoId = useId()
   const [mode, setMode] = useState<Mode>('continuous')
   const [limitMs, setLimitMs] = useState<number | null>(null)
   const { phase, current, dlSamples, ulSamples, history, start, stop, isRunning } = useSpeedTest()
@@ -144,11 +150,22 @@ export function SpeedTest() {
         <div className="p-2.5 rounded-xl border" style={{ background: 'var(--accent-bg)', borderColor: 'var(--accent-border)' }}>
           <Gauge size={20} style={{ color: 'var(--accent)' }} />
         </div>
-        <div>
+        <div className="min-w-0 flex-1">
           <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>{t('speedTest.title')}</h1>
+          <InfoButton show={showInfo} onToggle={() => setShowInfo(v => !v)} color={TOOL.color} controls={infoId} />
           <p className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>Cloudflare · {t(`speedTest.mode${mode === 'continuous' ? 'Continuous' : 'Max'}`)}</p>
         </div>
       </div>
+
+      {showInfo && (
+        <InfoPanel
+          id={infoId}
+          input={t('tools.speedTest.info.input')}
+          process={t('tools.speedTest.info.process')}
+          output={t('tools.speedTest.info.output')}
+          color={TOOL.color}
+        />
+      )}
 
       {/* Mode selector — segmented cards */}
       <div className="grid grid-cols-2 gap-3" role="radiogroup" aria-label={t('speedTest.modeLabel')}>

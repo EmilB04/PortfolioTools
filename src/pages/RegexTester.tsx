@@ -118,6 +118,11 @@ export function RegexTester() {
       width="wide"
       title={t('tools.regexTester.name')}
       subtitle={t('tools.regexTester.description')}
+      info={{
+        input: t('tools.regexTester.info.input'),
+        process: t('tools.regexTester.info.process'),
+        output: t('tools.regexTester.info.output'),
+      }}
       privacyNote={t('toolCommon.localOnly')}
     >
       <Panel

@@ -81,6 +81,11 @@ export function JwtDecoder() {
       width="wide"
       title={t('tools.jwtDecoder.name')}
       subtitle={t('tools.jwtDecoder.description')}
+      info={{
+        input: t('tools.jwtDecoder.info.input'),
+        process: t('tools.jwtDecoder.info.process'),
+        output: t('tools.jwtDecoder.info.output'),
+      }}
       privacyNote={t('jwtDecoder.privacyNote')}
     >
       <Panel

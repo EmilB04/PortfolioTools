@@ -63,6 +63,11 @@ export function SubnetCalculator() {
       width="wide"
       title={t('tools.subnetCalculator.name')}
       subtitle={t('tools.subnetCalculator.description')}
+      info={{
+        input: t('tools.subnetCalculator.info.input'),
+        process: t('tools.subnetCalculator.info.process'),
+        output: t('tools.subnetCalculator.info.output'),
+      }}
     >
       <Panel title={t('subnetCalculator.inputTitle')}>
         <div className="space-y-4">

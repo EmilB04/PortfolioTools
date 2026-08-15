@@ -63,6 +63,11 @@ export function CronExplainer() {
       color={TOOL.color}
       title={t('tools.cronExplainer.name')}
       subtitle={t('tools.cronExplainer.description')}
+      info={{
+        input: t('tools.cronExplainer.info.input'),
+        process: t('tools.cronExplainer.info.process'),
+        output: t('tools.cronExplainer.info.output'),
+      }}
     >
       <Panel title={t('cronExplainer.inputTitle')}>
         <div className="space-y-4">

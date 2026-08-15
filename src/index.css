@@ -240,6 +240,19 @@ html.light {
   }
   .accent-glow { box-shadow: 0 0 24px var(--glow); }
 
+  /* Tool grid cards: border/lift driven by the per-card --tool var, so the JS
+   * layer never has to touch style.borderColor/transform on hover. */
+  .tool-card {
+    transition: border-color 200ms ease, transform 200ms ease, background-color 200ms ease;
+  }
+  .tool-card:hover, .tool-card:focus-visible {
+    border-color: color-mix(in srgb, var(--tool) 50%, transparent);
+    transform: translateY(-2px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tool-card:hover, .tool-card:focus-visible { transform: none; }
+  }
+
   /* Fluid type utilities */
   .font-display { font-family: var(--font-display); }
   .font-mono    { font-family: var(--font-mono); }

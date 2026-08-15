@@ -52,6 +52,11 @@ export function EncoderDecoder() {
       color={TOOL.color}
       title={t('tools.encoder.name')}
       subtitle={t('tools.encoder.description')}
+      info={{
+        input: t('tools.encoder.info.input'),
+        process: t('tools.encoder.info.process'),
+        output: t('tools.encoder.info.output'),
+      }}
       privacyNote={t('toolCommon.localOnly')}
     >
       <Panel title={t('encoder.settingsTitle')}>

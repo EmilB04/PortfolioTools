@@ -1,7 +1,7 @@
-import { useId, useRef } from 'react'
+import { useId, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AlertTriangle, Check, Copy, ShieldCheck } from 'lucide-react'
+import { AlertTriangle, Check, ChevronDown, Copy, Info, ShieldCheck } from 'lucide-react'
 import { useCopy } from '../../hooks/useCopy'
 
 /* ────────────────────────────────────────────────────────────────────────────
@@ -12,6 +12,100 @@ import { useCopy } from '../../hooks/useCopy'
  * `.tool-fill` utilities, which already handle the light-theme contrast shift.
  * ──────────────────────────────────────────────────────────────────────────── */
 
+/** Info toggle for a header's input → process → output breakdown. Pair with `InfoPanel`.
+ *  Carries a visible label (not icon-only) so its purpose reads without a tooltip. */
+export function InfoButton({
+  show,
+  onToggle,
+  color,
+  controls,
+}: {
+  show: boolean
+  onToggle: () => void
+  /** Per-tool brand tone; falls back to the neutral text color when omitted. */
+  color?: string
+  /** id of the element this button expands/collapses, for aria-controls. */
+  controls?: string
+}) {
+  const { t } = useTranslation()
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-expanded={show}
+      aria-controls={controls}
+      title={show ? t('toolCommon.hideInfo') : t('toolCommon.showInfo')}
+      className="tool-text mt-1.5 inline-flex shrink-0 items-center gap-1.5 self-start rounded-full border px-3 py-1.5 fs-xs font-bold transition-all duration-150 hover:-translate-y-0.5"
+      style={{
+        borderColor: show ? color : `${color}70`,
+        background: show ? `${color}2e` : `${color}17`,
+        boxShadow: show ? `0 0 0 3px ${color}26` : undefined,
+        '--tool': color,
+      } as React.CSSProperties}
+    >
+      <Info size={15} aria-hidden="true" />
+      {t('toolCommon.howItWorks')}
+      <ChevronDown size={13} className="transition-transform duration-200" style={{ transform: show ? 'rotate(180deg)' : undefined }} aria-hidden="true" />
+    </button>
+  )
+}
+
+/** The expanded input → process → output breakdown shown when `InfoButton` is toggled on. */
+export function InfoPanel({
+  id,
+  input,
+  process,
+  output,
+  color,
+}: {
+  id?: string
+  input: string
+  process: string
+  output: string
+  color?: string
+}) {
+  const { t } = useTranslation()
+  const steps = [
+    { label: t('toolCommon.stepInput'), text: input },
+    { label: t('toolCommon.stepProcess'), text: process },
+    { label: t('toolCommon.stepOutput'), text: output },
+  ]
+
+  return (
+    <div
+      id={id}
+      className="flex flex-col gap-3 rounded-xl border p-3 sm:flex-row sm:gap-0 sm:p-4"
+      style={{
+        background: color ? `${color}0f` : 'var(--surface-card)',
+        borderColor: color ? `${color}40` : 'var(--border)',
+        '--tool': color,
+      } as React.CSSProperties}
+    >
+      {steps.map((step, i) => (
+        <div
+          key={step.label}
+          className={`flex items-start gap-2.5 sm:flex-1 sm:px-4 sm:first:pl-0 sm:last:pr-0 ${
+            i > 0 ? 'border-t pt-3 sm:border-t-0 sm:border-l sm:pt-0' : ''
+          }`}
+          style={{ borderColor: color ? `${color}40` : 'var(--border)' }}
+        >
+          <span
+            className="tool-text flex h-5 w-5 shrink-0 items-center justify-center rounded-full border fs-xs font-mono font-semibold"
+            style={{ borderColor: color ?? 'var(--border-strong)', background: color ? `${color}1f` : 'transparent' }}
+            aria-hidden="true"
+          >
+            {i + 1}
+          </span>
+          <div className="min-w-0">
+            <p className="tool-text fs-xs font-semibold uppercase tracking-wide">{step.label}</p>
+            <p className="fs-xs mt-0.5" style={{ color: 'var(--text)' }}>{step.text}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 /** Page wrapper: brand header + a stack of panels. */
 export function ToolShell({
   icon,
@@ -20,6 +114,7 @@ export function ToolShell({
   subtitle,
   width = 'default',
   privacyNote,
+  info,
   children,
 }: {
   icon: ReactNode
@@ -29,8 +124,13 @@ export function ToolShell({
   width?: 'wide' | 'default' | 'medium' | 'narrow'
   /** Reassurance line for tools that handle secrets. */
   privacyNote?: string
+  /** Input → process → output breakdown, shown behind the info toggle in the header. */
+  info?: { input: string; process: string; output: string }
   children: ReactNode
 }) {
+  const [showInfo, setShowInfo] = useState(false)
+  const infoId = useId()
+
   const widthClass =
     width === 'wide' ? 'page-container-wide'
     : width === 'medium' ? 'page-container-medium'
@@ -49,15 +149,20 @@ export function ToolShell({
         >
           <span className="tool-text flex">{icon}</span>
         </div>
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <h1 className="fs-xl font-display font-bold tracking-tight" style={{ color: 'var(--text)' }}>
             {title}
           </h1>
+          {info && (
+            <InfoButton show={showInfo} onToggle={() => setShowInfo(v => !v)} color={color} controls={infoId} />
+          )}
           <p className="fs-sm mt-0.5 prose-measure" style={{ color: 'var(--text-subtle)' }}>
             {subtitle}
           </p>
         </div>
       </div>
+
+      {info && showInfo && <InfoPanel id={infoId} {...info} color={color} />}
 
       {privacyNote && (
         <p

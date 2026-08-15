@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Pause, Play, Search, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ToolCard } from '../components/ToolCard'
 import { todayStats } from '../utils/speedStorage'
@@ -10,6 +10,18 @@ import { CATEGORY_ORDER, DASHBOARD_TOOLS } from '../tools/registry'
 import type { ToolCategory } from '../tools/registry'
 
 const ROTATE_MS = 6000
+
+type CategoryFilter = ToolCategory | 'all'
+
+function matchesQuery(tool: { title: string; description: string; badge: string }, query: string): boolean {
+  if (!query) return true
+  const q = query.trim().toLowerCase()
+  return (
+    tool.title.toLowerCase().includes(q) ||
+    tool.description.toLowerCase().includes(q) ||
+    tool.badge.toLowerCase().includes(q)
+  )
+}
 
 function StatPill({ label, value, dim }: { label: string; value: string; dim?: boolean }) {
   return (
@@ -35,7 +47,18 @@ export function Dashboard() {
   const hasData = stats.testsRun > 0
 
   const [featured, setFeatured] = useState(0)
+  const [hovering, setHovering] = useState(false)
+  const [userPaused, setUserPaused] = useState(false)
+  const [reducedMotion, setReducedMotion] = useState(false)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setReducedMotion(mq.matches)
+    const handleChange = (e: MediaQueryListEvent) => setReducedMotion(e.matches)
+    mq.addEventListener('change', handleChange)
+    return () => mq.removeEventListener('change', handleChange)
+  }, [])
 
   /**
    * Cards come straight from the tool registry, so a new tool shows up here and in
@@ -73,10 +96,13 @@ export function Dashboard() {
     [t, liveStats],
   )
 
+  const autoRotating = !hovering && !userPaused && !reducedMotion
+
   const startTimer = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current)
+    if (!autoRotating) return
     timerRef.current = setInterval(() => setFeatured(i => (i + 1) % tools.length), ROTATE_MS)
-  }, [tools.length])
+  }, [tools.length, autoRotating])
 
   useEffect(() => {
     startTimer()
@@ -87,17 +113,55 @@ export function Dashboard() {
 
   const hero = tools[featured]
 
+  const [query, setQuery] = useState('')
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all')
+
+  const presentCategories = useMemo(
+    () => CATEGORY_ORDER.filter(category => tools.some(tool => tool.category === category)),
+    [tools],
+  )
+
+  const filteredTools = useMemo(
+    () =>
+      tools.filter(
+        tool => (categoryFilter === 'all' || tool.category === categoryFilter) && matchesQuery(tool, query),
+      ),
+    [tools, categoryFilter, query],
+  )
+
+  const isFiltering = query.trim().length > 0 || categoryFilter !== 'all'
+
   const grouped = CATEGORY_ORDER
-    .map(category => ({ category, items: tools.filter(tool => tool.category === category) }))
+    .map(category => ({ category, items: filteredTools.filter(tool => tool.category === category) }))
     .filter(group => group.items.length > 0)
 
   return (
     <div className="page-container page-container-wide space-y-6 sm:space-y-8">
 
+      {/* Page header */}
+      <div className="space-y-1">
+        <span
+          className="fs-xs font-mono font-medium uppercase tracking-[0.2em]"
+          style={{ color: 'var(--text-subtle)' }}
+        >
+          {t('dashboard.tools')}
+        </span>
+        <h1 className="fs-2xl font-display font-extrabold tracking-tight" style={{ color: 'var(--text)' }}>
+          {t('dashboard.title')}
+        </h1>
+        <p className="fs-sm prose-measure" style={{ color: 'var(--text-muted)' }}>
+          {t('dashboard.subtitle')}
+        </p>
+      </div>
+
       {/* Hero card */}
       <div
         className="rounded-2xl border overflow-hidden"
         style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
+        onMouseEnter={() => setHovering(true)}
+        onMouseLeave={() => setHovering(false)}
+        onFocus={() => setHovering(true)}
+        onBlur={() => setHovering(false)}
       >
         <div className="p-5 sm:p-8 md:p-10">
           <div className="flex flex-col gap-6 md:gap-8">
@@ -123,9 +187,9 @@ export function Dashboard() {
                     <span className="p-2 rounded-xl shrink-0" style={{ background: hero.accentBg }}>
                       {hero.icon}
                     </span>
-                    <h1 className="fs-3xl font-display font-extrabold tracking-tight" style={{ color: 'var(--text)' }}>
+                    <h2 className="fs-3xl font-display font-extrabold tracking-tight" style={{ color: 'var(--text)' }}>
                       {hero.title}
-                    </h1>
+                    </h2>
                   </div>
                   <p className="fs-base leading-relaxed prose-measure" style={{ color: 'var(--text-muted)' }}>
                     {hero.description}
@@ -143,7 +207,7 @@ export function Dashboard() {
                 </motion.div>
               </AnimatePresence>
 
-              {/* Rotation dots */}
+              {/* Rotation dots + pause toggle */}
               <div className="flex flex-wrap items-center gap-2 pt-1">
                 {tools.map((tool, i) => (
                   <button
@@ -158,6 +222,18 @@ export function Dashboard() {
                     }}
                   />
                 ))}
+                {!reducedMotion && (
+                  <button
+                    type="button"
+                    onClick={() => setUserPaused(p => !p)}
+                    aria-label={t(userPaused ? 'dashboard.resume' : 'dashboard.pause')}
+                    aria-pressed={userPaused}
+                    className="ml-1 p-1 rounded-md transition-opacity hover:opacity-70"
+                    style={{ color: 'var(--text-subtle)' }}
+                  >
+                    {userPaused ? <Play size={12} /> : <Pause size={12} />}
+                  </button>
+                )}
               </div>
             </div>
 
@@ -175,33 +251,111 @@ export function Dashboard() {
         <div className="h-px w-full" style={{ background: `linear-gradient(90deg, transparent, var(--accent-border), transparent)` }} />
       </div>
 
-      {/* Tool cards, grouped the same way the sidebar is */}
-      {grouped.map(group => (
-        <section key={group.category} aria-labelledby={`dash-${group.category}`}>
-          <h2
-            id={`dash-${group.category}`}
-            className="fs-xs font-mono font-medium uppercase tracking-[0.2em] mb-4"
-            style={{ color: 'var(--text-subtle)' }}
-          >
-            {t(`nav.categories.${group.category as ToolCategory}`)}
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-            {group.items.map(tool => (
-              <ToolCard
-                key={tool.key}
-                title={tool.title}
-                description={tool.description}
-                badge={tool.badge}
-                href={tool.href}
-                icon={tool.icon}
-                stats={tool.stats}
-                accentColor={tool.accentColor}
-                accentBg={tool.accentBg}
-              />
+      {/* Search + category filter */}
+      <div className="space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+          <div className="relative flex-1 sm:max-w-xs">
+            <Search
+              size={16}
+              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"
+              style={{ color: 'var(--text-subtle)' }}
+            />
+            <label htmlFor="tool-search" className="sr-only">{t('dashboard.search.placeholder')}</label>
+            <input
+              id="tool-search"
+              type="search"
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+              placeholder={t('dashboard.search.placeholder')}
+              className="w-full rounded-xl border pl-9 pr-9 py-2 fs-sm"
+              style={{ background: 'var(--surface-card)', borderColor: 'var(--border)', color: 'var(--text)' }}
+            />
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery('')}
+                aria-label={t('dashboard.search.clear')}
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-md"
+                style={{ color: 'var(--text-subtle)' }}
+              >
+                <X size={14} />
+              </button>
+            )}
+          </div>
+
+          <div className="flex flex-wrap gap-2" role="group" aria-label={t('nav.ariaLabel')}>
+            <button
+              type="button"
+              onClick={() => setCategoryFilter('all')}
+              aria-pressed={categoryFilter === 'all'}
+              className="tool-text fs-xs font-semibold px-3 py-1.5 rounded-full border transition-colors"
+              style={{
+                borderColor: categoryFilter === 'all' ? 'var(--accent-border)' : 'var(--border)',
+                background: categoryFilter === 'all' ? 'var(--accent-bg)' : 'transparent',
+                color: categoryFilter === 'all' ? 'var(--accent-text)' : 'var(--text-subtle)',
+              }}
+            >
+              {t('dashboard.filters.all')}
+            </button>
+            {presentCategories.map(category => (
+              <button
+                key={category}
+                type="button"
+                onClick={() => setCategoryFilter(category)}
+                aria-pressed={categoryFilter === category}
+                className="fs-xs font-semibold px-3 py-1.5 rounded-full border transition-colors"
+                style={{
+                  borderColor: categoryFilter === category ? 'var(--accent-border)' : 'var(--border)',
+                  background: categoryFilter === category ? 'var(--accent-bg)' : 'transparent',
+                  color: categoryFilter === category ? 'var(--accent-text)' : 'var(--text-subtle)',
+                }}
+              >
+                {t(`nav.categories.${category}`)}
+              </button>
             ))}
           </div>
-        </section>
-      ))}
+        </div>
+
+        <p className="fs-xs" aria-live="polite" style={{ color: 'var(--text-subtle)' }}>
+          {isFiltering
+            ? t('dashboard.search.resultsCount', { count: filteredTools.length })
+            : null}
+        </p>
+      </div>
+
+      {/* Tool cards, grouped the same way the sidebar is */}
+      {grouped.length === 0 ? (
+        <p className="fs-sm text-center py-12" style={{ color: 'var(--text-subtle)' }}>
+          {t('dashboard.search.noResults', { query })}
+        </p>
+      ) : (
+        grouped.map(group => (
+          <section key={group.category} aria-labelledby={`dash-${group.category}`}>
+            <h2
+              id={`dash-${group.category}`}
+              className="fs-xs font-mono font-medium uppercase tracking-[0.2em] mb-4"
+              style={{ color: 'var(--text-subtle)' }}
+            >
+              {t(`nav.categories.${group.category as ToolCategory}`)}
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+              {group.items.map(tool => (
+                <ToolCard
+                  key={tool.key}
+                  title={tool.title}
+                  description={tool.description}
+                  badge={tool.badge}
+                  href={tool.href}
+                  icon={tool.icon}
+                  stats={tool.stats}
+                  accentColor={tool.accentColor}
+                  accentBg={tool.accentBg}
+                />
+              ))}
+            </div>
+          </section>
+        ))
+      )}
     </div>
   )
 }
