@@ -22,7 +22,8 @@ import {
   generatePassword,
   strengthFor,
 } from '../lib/tools/password'
-import type { CharsetKey, StrengthLevel } from '../lib/tools/password'
+import type { CharsetKey } from '../lib/tools/password'
+import { STRENGTH_COLOR, formatCrackTime } from '../lib/tools/passwordFormat'
 import { TOOLS_BY_KEY } from '../tools/registry'
 
 const TOOL = TOOLS_BY_KEY.passwordGenerator
@@ -31,36 +32,12 @@ type Mode = 'password' | 'passphrase'
 
 const CHARSET_KEYS: CharsetKey[] = ['lower', 'upper', 'digits', 'symbols']
 
-const STRENGTH_COLOR: Record<StrengthLevel, string> = {
-  weak: '#ef4444',
-  fair: '#f59e0b',
-  strong: '#22c55e',
-  excellent: '#14b8a6',
-}
-
 const SEPARATORS = [
   { value: '-', key: 'hyphen' },
   { value: '.', key: 'dot' },
   { value: '_', key: 'underscore' },
   { value: ' ', key: 'space' },
 ] as const
-
-function formatDuration(seconds: number, t: (key: string, params?: Record<string, unknown>) => string): string {
-  if (seconds < 1) return t('passwordGenerator.crack.instant')
-  const units: [string, number][] = [
-    ['years', 31557600], ['days', 86400], ['hours', 3600], ['minutes', 60], ['seconds', 1],
-  ]
-  for (const [unit, size] of units) {
-    const value = seconds / size
-    if (value >= 1) {
-      if (unit === 'years' && value > 1e6) {
-        return t('passwordGenerator.crack.eons', { value: value.toExponential(1) })
-      }
-      return t(`passwordGenerator.crack.${unit}`, { value: Math.round(value).toLocaleString() })
-    }
-  }
-  return t('passwordGenerator.crack.instant')
-}
 
 export function PasswordGenerator() {
   const { t } = useTranslation()
@@ -159,7 +136,7 @@ export function PasswordGenerator() {
             />
             <StatTile
               label={t('passwordGenerator.stats.crackTime')}
-              value={formatDuration(crackTimeSeconds(bits), t)}
+              value={formatCrackTime(crackTimeSeconds(bits), t)}
             />
           </div>
           <p className="fs-xs prose-measure" style={{ color: 'var(--text-muted)' }}>
