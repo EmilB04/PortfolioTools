@@ -1,4 +1,4 @@
-// Snapdown — optional OCR for alt-text suggestions.
+// Screenshot Annotator — optional OCR for alt-text suggestions.
 //
 // tesseract.js pulls ~2 MB of wasm + traineddata, so it is imported dynamically
 // and only when the user asks for a suggestion. The worker is kept alive across

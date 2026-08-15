@@ -26,18 +26,10 @@ export function ToolCard({ title, description, badge, icon, stats, href, accentC
     <Link
       to={comingSoon ? '#' : href}
       onClick={comingSoon ? (e) => e.preventDefault() : undefined}
-      className={`group relative flex flex-col rounded-2xl border overflow-hidden transition-all duration-200 ${
+      className={`tool-card group relative flex flex-col rounded-2xl border overflow-hidden ${
         comingSoon ? 'cursor-default opacity-50' : ''
       }`}
       style={{ background: 'var(--surface)', borderColor: 'var(--border)', '--tool': accentColor } as React.CSSProperties}
-      onMouseEnter={!comingSoon ? e => {
-        (e.currentTarget as HTMLElement).style.borderColor = accentColor + '50'
-        ;(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'
-      } : undefined}
-      onMouseLeave={!comingSoon ? e => {
-        (e.currentTarget as HTMLElement).style.borderColor = 'var(--border)'
-        ;(e.currentTarget as HTMLElement).style.transform = 'translateY(0)'
-      } : undefined}
     >
       {/* Top accent line */}
       <div className="h-px w-full" style={{ background: `linear-gradient(90deg, transparent, ${accentColor}${comingSoon ? '30' : '70'}, transparent)` }} />

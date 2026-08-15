@@ -85,6 +85,11 @@ export function JsonTools() {
       width="wide"
       title={t('tools.jsonTools.name')}
       subtitle={t('tools.jsonTools.description')}
+      info={{
+        input: t('tools.jsonTools.info.input'),
+        process: t('tools.jsonTools.info.process'),
+        output: t('tools.jsonTools.info.output'),
+      }}
       privacyNote={t('toolCommon.localOnly')}
     >
       <div className="grid gap-4 lg:grid-cols-2">

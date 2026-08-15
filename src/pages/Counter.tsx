@@ -1,10 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DoorOpen, LogIn, LogOut, Plus, Minus, Pencil, RotateCcw, Smartphone } from 'lucide-react'
 import { loadCounterState, saveCounterState } from '../utils/counterStorage'
 import { haptic } from '../utils/haptics'
+import { InfoButton, InfoPanel } from '../components/tools/ToolUI'
 
 // ── Constants ────────────────────────────────────────────────────────────────────
+
+const ACCENT = '#3b82f6'
 
 type Mode = 'entered' | 'exited'
 
@@ -26,6 +29,8 @@ type ConfirmState = {
 
 export function Counter() {
   const { t } = useTranslation()
+  const [showInfo, setShowInfo] = useState(false)
+  const infoId = useId()
   const [mode, setMode] = useState<Mode>('entered')
   const [counts, setCounts] = useState(() => loadCounterState())
   const [editing, setEditing] = useState(false)
@@ -94,15 +99,26 @@ export function Counter() {
           style={{ background: 'rgba(59,130,246,0.12)', borderColor: 'rgba(59,130,246,0.35)' }}>
           <DoorOpen size={20} style={{ color: '#3b82f6' }} />
         </div>
-        <div>
+        <div className="min-w-0 flex-1">
           <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
             {t('counter.title')}
           </h1>
+          <InfoButton show={showInfo} onToggle={() => setShowInfo(v => !v)} color={ACCENT} controls={infoId} />
           <p className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
             {t('counter.subtitle')}
           </p>
         </div>
       </div>
+
+      {showInfo && (
+        <InfoPanel
+          id={infoId}
+          input={t('tools.counter.info.input')}
+          process={t('tools.counter.info.process')}
+          output={t('tools.counter.info.output')}
+          color={ACCENT}
+        />
+      )}
 
       {/* Mode switch */}
       <div className="flex gap-1 p-1 rounded-2xl border" style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>

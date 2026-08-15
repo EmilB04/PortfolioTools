@@ -116,6 +116,11 @@ export function TimestampConverter() {
       color={TOOL.color}
       title={t('tools.timestampConverter.name')}
       subtitle={t('tools.timestampConverter.description')}
+      info={{
+        input: t('tools.timestampConverter.info.input'),
+        process: t('tools.timestampConverter.info.process'),
+        output: t('tools.timestampConverter.info.output'),
+      }}
     >
       <Panel
         title={t('timestampConverter.inputTitle')}

@@ -15,7 +15,9 @@ import {
   Network,
   QrCode,
   Regex,
+  ScanQrCode,
   ShieldCheck,
+  ShieldQuestion,
   Tags,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
@@ -75,14 +77,16 @@ export const TOOLS: ToolDefinition[] = [
   { key: 'subnetCalculator', to: '/subnet', icon: Network, category: 'network', color: '#2dd4bf' },
   { key: 'speedTest', to: '/speed-test', icon: Gauge, category: 'network', color: '#f1376e' },
 
-  { key: 'snapdown', to: '/snapdown', icon: ImageDown, category: 'files', color: '#f59e0b' },
+  { key: 'screenshotAnnotator', to: '/screenshot-annotator', icon: ImageDown, category: 'files', color: '#f59e0b' },
   { key: 'fileConverter', to: '/file-converter', icon: FileInput, category: 'files', color: '#f97316' },
   { key: 'fileCompress', to: '/file-compress', icon: FileArchive, category: 'files', color: '#10b981' },
 
   { key: 'qrGenerator', to: '/qr-generator', icon: QrCode, category: 'web', color: '#8b5cf6' },
+  { key: 'qrReader', to: '/qr-reader', icon: ScanQrCode, category: 'web', color: '#22c55e' },
   { key: 'wcagScanner', to: '/wcag-scanner', icon: Accessibility, category: 'web', color: '#14b8a6' },
 
   { key: 'passwordGenerator', to: '/password-generator', icon: ShieldCheck, category: 'utilities', color: '#c084fc' },
+  { key: 'passwordChecker', to: '/password-checker', icon: ShieldQuestion, category: 'utilities', color: '#e879f9' },
   { key: 'counter', to: '/counter', icon: DoorOpen, category: 'utilities', color: '#3b82f6' },
 ]
 

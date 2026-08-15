@@ -1,6 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FileInput, Upload, ArrowRight, Download, X, Loader2 } from 'lucide-react'
+import { InfoButton, InfoPanel } from '../components/tools/ToolUI'
+
+const ACCENT = '#f97316'
 
 // ── Runtime capability detection ───────────────────────────────────────────────
 
@@ -216,6 +219,8 @@ type ConvState =
 
 export function FileConverter() {
   const { t } = useTranslation()
+  const [showInfo, setShowInfo] = useState(false)
+  const infoId = useId()
   const [conv, setConv] = useState<ConvState>({ kind: 'idle' })
   const [dragging, setDragging] = useState(false)
   const [hovering, setHovering] = useState(false)
@@ -356,15 +361,26 @@ export function FileConverter() {
           style={{ background: 'rgba(249,115,22,0.12)', borderColor: 'rgba(249,115,22,0.35)' }}>
           <FileInput size={20} style={{ color: '#f97316' }} />
         </div>
-        <div>
+        <div className="min-w-0 flex-1">
           <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
             {t('fileConverter.title')}
           </h1>
+          <InfoButton show={showInfo} onToggle={() => setShowInfo(v => !v)} color={ACCENT} controls={infoId} />
           <p className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
             Images · JSON · CSV · TSV{AVIF_SUPPORTED ? ' · AVIF' : ''} · browser-only, no uploads
           </p>
         </div>
       </div>
+
+      {showInfo && (
+        <InfoPanel
+          id={infoId}
+          input={t('tools.fileConverter.info.input')}
+          process={t('tools.fileConverter.info.process')}
+          output={t('tools.fileConverter.info.output')}
+          color={ACCENT}
+        />
+      )}
 
       {/* Drop zone */}
       {conv.kind === 'idle' && (

@@ -1,9 +1,12 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { QrCode, Download, Copy, Check, RotateCcw } from 'lucide-react'
 import QRCode from 'qrcode'
+import { InfoButton, InfoPanel } from '../components/tools/ToolUI'
 
 // ── Constants ────────────────────────────────────────────────────────────────────
+
+const ACCENT = '#8b5cf6'
 
 type EcLevel = 'L' | 'M' | 'Q' | 'H'
 
@@ -31,6 +34,8 @@ const DEFAULTS = {
 
 export function QrGenerator() {
   const { t } = useTranslation()
+  const [showInfo, setShowInfo] = useState(false)
+  const infoId = useId()
   const [text, setText]       = useState('')
   const [fg, setFg]           = useState(DEFAULTS.fg)
   const [bg, setBg]           = useState(DEFAULTS.bg)
@@ -116,15 +121,26 @@ export function QrGenerator() {
           style={{ background: 'rgba(139,92,246,0.12)', borderColor: 'rgba(139,92,246,0.35)' }}>
           <QrCode size={20} style={{ color: '#8b5cf6' }} />
         </div>
-        <div>
+        <div className="min-w-0 flex-1">
           <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
             {t('qrGenerator.title')}
           </h1>
+          <InfoButton show={showInfo} onToggle={() => setShowInfo(v => !v)} color={ACCENT} controls={infoId} />
           <p className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
             {t('qrGenerator.subtitle')}
           </p>
         </div>
       </div>
+
+      {showInfo && (
+        <InfoPanel
+          id={infoId}
+          input={t('tools.qrGenerator.info.input')}
+          process={t('tools.qrGenerator.info.process')}
+          output={t('tools.qrGenerator.info.output')}
+          color={ACCENT}
+        />
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6">
 

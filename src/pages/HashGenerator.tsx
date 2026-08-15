@@ -124,6 +124,11 @@ export function HashGenerator() {
       color={TOOL.color}
       title={t('tools.hashGenerator.name')}
       subtitle={t('tools.hashGenerator.description')}
+      info={{
+        input: t('tools.hashGenerator.info.input'),
+        process: t('tools.hashGenerator.info.process'),
+        output: t('tools.hashGenerator.info.output'),
+      }}
       privacyNote={t('hashGenerator.privacyNote')}
     >
       <Panel

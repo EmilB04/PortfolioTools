@@ -1,4 +1,4 @@
-// Snapdown — canvas rendering.
+// Screenshot Annotator — canvas rendering.
 //
 // The canvas is always sized to the cropped source resolution, so what gets
 // exported is exactly what gets drawn here. Shapes render in insertion order,

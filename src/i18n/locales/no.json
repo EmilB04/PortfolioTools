@@ -5,9 +5,10 @@
     "fileCompress": "Filkomprimering",
     "speedTest": "Hastighetstest",
     "qrGenerator": "QR-generator",
+    "qrReader": "QR-leser",
     "wcagScanner": "WCAG-skanner",
     "counter": "Teller",
-    "snapdown": "Snapdown",
+    "screenshotAnnotator": "Skjermbildeannotering",
     "closeMenu": "Lukk meny",
     "ariaLabel": "Verktøynavigasjon",
     "jsonTools": "JSON-verktøy",
@@ -20,6 +21,7 @@
     "timestampConverter": "Tidsstempel-konverterer",
     "subnetCalculator": "Subnett-kalkulator",
     "passwordGenerator": "Passordgenerator",
+    "passwordChecker": "Passordsjekker",
     "categories": {
       "overview": "Oversikt",
       "developer": "Utvikler",
@@ -80,8 +82,8 @@
     }
   },
   "tools": {
-    "snapdown": {
-      "name": "Snapdown",
+    "screenshotAnnotator": {
+      "name": "Skjermbildeannotering",
       "description": "Lim inn et skjermbilde, marker det, sladd hemmeligheter — kopier det ut som markdown-klart bilde. Ingenting forlater nettleseren.",
       "badge": "Skjermbilde → markdown",
       "stats": {
@@ -133,6 +135,22 @@
         "aValue": "PNG + SVG",
         "bLabel": "Kjører",
         "bValue": "I nettleseren din"
+      }
+    },
+    "qrReader": {
+      "name": "QR-leser",
+      "description": "Last opp et bilde av en QR-kode og avkod den umiddelbart — alt i nettleseren.",
+      "badge": "Avkoder lokalt",
+      "stats": {
+        "aLabel": "Inndata",
+        "aValue": "Last opp eller dra og slipp",
+        "bLabel": "Kjører",
+        "bValue": "I nettleseren din"
+      },
+      "info": {
+        "input": "Et bilde eller skjermbilde av en QR-kode",
+        "process": "Dekod dataene i koden",
+        "output": "URL-en eller teksten den inneholder"
       }
     },
     "wcagScanner": {
@@ -266,6 +284,22 @@
         "bLabel": "Styrkemåler",
         "bValue": "Live entropi"
       }
+    },
+    "passwordChecker": {
+      "name": "Passordsjekker",
+      "description": "Skriv inn et passord og få en umiddelbar styrkevurdering: entropi, knekketid og en mønstersjekkliste — ingenting forlater nettleseren din.",
+      "badge": "Mønsterbevisst",
+      "stats": {
+        "aLabel": "Sjekker",
+        "aValue": "8 mønsterregler",
+        "bLabel": "Kjører",
+        "bValue": "I nettleseren din"
+      },
+      "info": {
+        "input": "Et passord du skriver inn",
+        "process": "Beregn entropi og sjekk vanlige mønstre",
+        "output": "Styrkevurdering og estimert knekketid"
+      }
     }
   },
   "footer": {
@@ -354,6 +388,22 @@
     "copied": "Kopiert!",
     "reset": "Nullstill"
   },
+  "qrReader": {
+    "privacyNote": "Avkodet lokalt i nettleseren din — bildet lastes aldri opp noe sted.",
+    "imageTitle": "Bilde",
+    "clear": "Tøm",
+    "dropTitle": "Slipp et QR-kode-bilde her",
+    "dropHint": "Eller klikk for å bla gjennom. PNG, JPG, WebP og andre vanlige bildeformater fungerer.",
+    "previewAlt": "Opplastet QR-kode",
+    "decoding": "Avkoder …",
+    "errors": {
+      "noQr": "Fant ingen QR-kode i det bildet. Prøv et tydeligere bilde eller en tettere beskjæring.",
+      "badFile": "Den filen er ikke et bilde."
+    },
+    "resultTitle": "Avkodet innhold",
+    "decodedLabel": "Innhold",
+    "openLink": "Åpne lenke"
+  },
   "wcagScanner": {
     "title": "WCAG-skanner",
     "subtitle": "Gjennomsøk nettsted · sjekk hver side med axe-core",
@@ -404,8 +454,8 @@
     "confirmResetTitle": "Nullstille all telling?",
     "confirmResetBody": "Dette setter både Inne og Ute tilbake til 0. Dette kan ikke angres."
   },
-  "snapdown": {
-    "title": "Snapdown",
+  "screenshotAnnotator": {
+    "title": "Skjermbildeannotering",
     "subtitle": "Skjermbilde → markert markdown · kun i nettleseren, ingen opplasting",
     "dropTitle": "Lim inn, slipp eller klikk for å legge til et skjermbilde",
     "dropHint": "Trykk Ctrl+V hvor som helst på siden for å lime inn rett fra Print Screen. Bildet forlater aldri nettleseren.",
@@ -848,6 +898,30 @@
       "minutes": "{{value}} minutter",
       "seconds": "{{value}} sekunder",
       "eons": "{{value}} år — lenger enn universets alder"
+    }
+  },
+  "passwordChecker": {
+    "privacyNote": "Sjekket lokalt med samme matematikk som generatoren — sendes aldri noe sted og lagres ikke.",
+    "inputTitle": "Passord",
+    "placeholder": "Skriv inn et passord for å sjekke det…",
+    "show": "Vis passord",
+    "hide": "Skjul passord",
+    "strengthLabel": "Styrke",
+    "stats": {
+      "entropy": "Entropi",
+      "length": "Lengde",
+      "crackTime": "Anslått knekketid"
+    },
+    "checksTitle": "Sjekkliste",
+    "checks": {
+      "length": "Minst 12 tegn",
+      "lower": "Inneholder en liten bokstav",
+      "upper": "Inneholder en stor bokstav",
+      "digit": "Inneholder et tall",
+      "symbol": "Inneholder et symbol",
+      "noCommon": "Ikke et kjent, vanlig passord",
+      "noRepeat": "Ingen gjentatte tegn på rad (aaa)",
+      "noSequential": "Ingen sekvenser på rad (abc, 123, qwe)"
     }
   }
 }

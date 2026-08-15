@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useId, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -10,6 +10,7 @@ import {
   loadScans, saveScan, deleteScan, clearScans,
   type PageResult, type WcagScanEntry,
 } from '../utils/wcagStorage'
+import { InfoButton, InfoPanel } from '../components/tools/ToolUI'
 
 const ACCENT = '#14b8a6'
 // White-on-fill needs a darker teal to clear AA on light backgrounds.
@@ -123,6 +124,8 @@ function SeverityBar({ counts, total, labels }: { counts: Record<Impact, number>
 
 export function WcagScanner() {
   const { t, i18n } = useTranslation()
+  const [showInfo, setShowInfo] = useState(false)
+  const infoId = useId()
   const [url, setUrl]           = useState('')
   const [maxPages, setMaxPages] = useState(10)
   const [pages, setPages]       = useState<PageResult[]>([])
@@ -268,15 +271,26 @@ export function WcagScanner() {
           style={{ background: 'rgba(20,184,166,0.12)', borderColor: 'rgba(20,184,166,0.35)' }}>
           <Accessibility size={20} style={{ color: ACCENT }} />
         </div>
-        <div>
+        <div className="min-w-0 flex-1">
           <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
             {t('wcagScanner.title')}
           </h1>
+          <InfoButton show={showInfo} onToggle={() => setShowInfo(v => !v)} color={ACCENT} controls={infoId} />
           <p className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
             {t('wcagScanner.subtitle')}
           </p>
         </div>
       </div>
+
+      {showInfo && (
+        <InfoPanel
+          id={infoId}
+          input={t('tools.wcagScanner.info.input')}
+          process={t('tools.wcagScanner.info.process')}
+          output={t('tools.wcagScanner.info.output')}
+          color={ACCENT}
+        />
+      )}
 
       {/* Control card */}
       <div className="relative overflow-hidden rounded-2xl border p-4 space-y-3"

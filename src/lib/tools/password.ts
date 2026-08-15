@@ -25,9 +25,11 @@ export function buildAlphabet(sets: CharsetKey[], excludeAmbiguous: boolean): st
 }
 
 function randomIndex(bound: number): number {
-  // Reject the tail of the byte range that does not divide evenly into `bound`.
-  const limit = Math.floor(256 / bound) * bound
-  const buf = new Uint8Array(1)
+  // Reject the tail of the 32-bit range that does not divide evenly into `bound`.
+  // A single byte only covers 0-255, which underflows to a zero limit (and an
+  // infinite loop) for any bound above 256 — e.g. the 810-word passphrase list.
+  const limit = Math.floor(0x100000000 / bound) * bound
+  const buf = new Uint32Array(1)
   for (;;) {
     crypto.getRandomValues(buf)
     if (buf[0] < limit) return buf[0] % bound

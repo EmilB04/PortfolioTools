@@ -5,9 +5,10 @@ import { FileConverter } from './pages/FileConverter'
 import { FileCompress } from './pages/FileCompress'
 import { SpeedTest } from './pages/SpeedTest'
 import { QrGenerator } from './pages/QrGenerator'
+import { QrReader } from './pages/QrReader'
 import { WcagScanner } from './pages/WcagScanner'
 import { Counter } from './pages/Counter'
-import { Snapdown } from './pages/Snapdown'
+import { ScreenshotAnnotator } from './pages/ScreenshotAnnotator'
 import { JsonTools } from './pages/JsonTools'
 import { JwtDecoder } from './pages/JwtDecoder'
 import { EncoderDecoder } from './pages/EncoderDecoder'
@@ -18,6 +19,7 @@ import { CronExplainer } from './pages/CronExplainer'
 import { TimestampConverter } from './pages/TimestampConverter'
 import { SubnetCalculator } from './pages/SubnetCalculator'
 import { PasswordGenerator } from './pages/PasswordGenerator'
+import { PasswordChecker } from './pages/PasswordChecker'
 
 // Paths must stay in sync with `src/tools/registry.ts`, which drives the sidebar
 // and the dashboard cards.
@@ -45,16 +47,18 @@ function App() {
           <Route path="speed-test" element={<SpeedTest />} />
 
           {/* Files & media */}
-          <Route path="snapdown" element={<Snapdown />} />
+          <Route path="screenshot-annotator" element={<ScreenshotAnnotator />} />
           <Route path="file-converter" element={<FileConverter />} />
           <Route path="file-compress" element={<FileCompress />} />
 
           {/* Web */}
           <Route path="qr-generator" element={<QrGenerator />} />
+          <Route path="qr-reader" element={<QrReader />} />
           <Route path="wcag-scanner" element={<WcagScanner />} />
 
           {/* Utilities */}
           <Route path="password-generator" element={<PasswordGenerator />} />
+          <Route path="password-checker" element={<PasswordChecker />} />
           <Route path="counter" element={<Counter />} />
         </Route>
       </Routes>

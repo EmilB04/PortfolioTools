@@ -1,6 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FileArchive, Upload, Download, X, Loader2, Minimize2, Wand2 } from 'lucide-react'
+import { InfoButton, InfoPanel } from '../components/tools/ToolUI'
+
+const ACCENT = '#10b981'
 
 // ── Runtime detection ──────────────────────────────────────────────────────────
 
@@ -243,6 +246,8 @@ function SizeBar({ original, result }: { original: number; result: number }) {
 
 export function FileCompress() {
   const { t } = useTranslation()
+  const [showInfo, setShowInfo] = useState(false)
+  const infoId = useId()
   const [state, setState]             = useState<CompressState>({ kind: 'idle' })
   const [dragging, setDragging]       = useState(false)
   const [hovering, setHovering]       = useState(false)
@@ -407,15 +412,26 @@ export function FileCompress() {
           style={{ background: 'rgba(16,185,129,0.12)', borderColor: 'rgba(16,185,129,0.35)' }}>
           <FileArchive size={20} style={{ color: '#10b981' }} />
         </div>
-        <div>
+        <div className="min-w-0 flex-1">
           <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
             {t('fileCompress.title')}
           </h1>
+          <InfoButton show={showInfo} onToggle={() => setShowInfo(v => !v)} color={ACCENT} controls={infoId} />
           <p className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
             Images · Any file via Gzip · browser-only, no uploads
           </p>
         </div>
       </div>
+
+      {showInfo && (
+        <InfoPanel
+          id={infoId}
+          input={t('tools.fileCompress.info.input')}
+          process={t('tools.fileCompress.info.process')}
+          output={t('tools.fileCompress.info.output')}
+          color={ACCENT}
+        />
+      )}
 
       {/* Drop zone */}
       {state.kind === 'idle' && (
