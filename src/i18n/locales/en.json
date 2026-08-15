@@ -21,6 +21,7 @@
     "timestampConverter": "Timestamp Converter",
     "subnetCalculator": "Subnet Calculator",
     "passwordGenerator": "Password Generator",
+    "passwordChecker": "Password Checker",
     "categories": {
       "overview": "Overview",
       "developer": "Developer",
@@ -282,6 +283,22 @@
         "aValue": "Password · Passphrase",
         "bLabel": "Strength meter",
         "bValue": "Live entropy"
+      }
+    },
+    "passwordChecker": {
+      "name": "Password Checker",
+      "description": "Type a password and get an instant strength read: entropy, crack-time and a pattern checklist — nothing leaves your browser.",
+      "badge": "Pattern-aware",
+      "stats": {
+        "aLabel": "Checks",
+        "aValue": "8 pattern rules",
+        "bLabel": "Runs",
+        "bValue": "In your browser"
+      },
+      "info": {
+        "input": "A password you type",
+        "process": "Score entropy and check common patterns",
+        "output": "A strength rating and estimated crack time"
       }
     }
   },
@@ -881,6 +898,30 @@
       "minutes": "{{value}} minutes",
       "seconds": "{{value}} seconds",
       "eons": "{{value}} years — longer than the age of the universe"
+    }
+  },
+  "passwordChecker": {
+    "privacyNote": "Checked locally with the same math as the generator — never sent anywhere, never stored.",
+    "inputTitle": "Password",
+    "placeholder": "Type a password to check…",
+    "show": "Show password",
+    "hide": "Hide password",
+    "strengthLabel": "Strength",
+    "stats": {
+      "entropy": "Entropy",
+      "length": "Length",
+      "crackTime": "Est. crack time"
+    },
+    "checksTitle": "Checklist",
+    "checks": {
+      "length": "At least 12 characters",
+      "lower": "Contains a lowercase letter",
+      "upper": "Contains an uppercase letter",
+      "digit": "Contains a digit",
+      "symbol": "Contains a symbol",
+      "noCommon": "Not a known common password",
+      "noRepeat": "No repeated character runs (aaa)",
+      "noSequential": "No sequential runs (abc, 123, qwe)"
     }
   }
 }

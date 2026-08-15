@@ -19,6 +19,7 @@ import { CronExplainer } from './pages/CronExplainer'
 import { TimestampConverter } from './pages/TimestampConverter'
 import { SubnetCalculator } from './pages/SubnetCalculator'
 import { PasswordGenerator } from './pages/PasswordGenerator'
+import { PasswordChecker } from './pages/PasswordChecker'
 
 // Paths must stay in sync with `src/tools/registry.ts`, which drives the sidebar
 // and the dashboard cards.
@@ -57,6 +58,7 @@ function App() {
 
           {/* Utilities */}
           <Route path="password-generator" element={<PasswordGenerator />} />
+          <Route path="password-checker" element={<PasswordChecker />} />
           <Route path="counter" element={<Counter />} />
         </Route>
       </Routes>

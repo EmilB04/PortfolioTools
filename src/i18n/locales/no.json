@@ -21,6 +21,7 @@
     "timestampConverter": "Tidsstempel-konverterer",
     "subnetCalculator": "Subnett-kalkulator",
     "passwordGenerator": "Passordgenerator",
+    "passwordChecker": "Passordsjekker",
     "categories": {
       "overview": "Oversikt",
       "developer": "Utvikler",
@@ -282,6 +283,22 @@
         "aValue": "Passord · Passordfrase",
         "bLabel": "Styrkemåler",
         "bValue": "Live entropi"
+      }
+    },
+    "passwordChecker": {
+      "name": "Passordsjekker",
+      "description": "Skriv inn et passord og få en umiddelbar styrkevurdering: entropi, knekketid og en mønstersjekkliste — ingenting forlater nettleseren din.",
+      "badge": "Mønsterbevisst",
+      "stats": {
+        "aLabel": "Sjekker",
+        "aValue": "8 mønsterregler",
+        "bLabel": "Kjører",
+        "bValue": "I nettleseren din"
+      },
+      "info": {
+        "input": "Et passord du skriver inn",
+        "process": "Beregn entropi og sjekk vanlige mønstre",
+        "output": "Styrkevurdering og estimert knekketid"
       }
     }
   },
@@ -881,6 +898,30 @@
       "minutes": "{{value}} minutter",
       "seconds": "{{value}} sekunder",
       "eons": "{{value}} år — lenger enn universets alder"
+    }
+  },
+  "passwordChecker": {
+    "privacyNote": "Sjekket lokalt med samme matematikk som generatoren — sendes aldri noe sted og lagres ikke.",
+    "inputTitle": "Passord",
+    "placeholder": "Skriv inn et passord for å sjekke det…",
+    "show": "Vis passord",
+    "hide": "Skjul passord",
+    "strengthLabel": "Styrke",
+    "stats": {
+      "entropy": "Entropi",
+      "length": "Lengde",
+      "crackTime": "Anslått knekketid"
+    },
+    "checksTitle": "Sjekkliste",
+    "checks": {
+      "length": "Minst 12 tegn",
+      "lower": "Inneholder en liten bokstav",
+      "upper": "Inneholder en stor bokstav",
+      "digit": "Inneholder et tall",
+      "symbol": "Inneholder et symbol",
+      "noCommon": "Ikke et kjent, vanlig passord",
+      "noRepeat": "Ingen gjentatte tegn på rad (aaa)",
+      "noSequential": "Ingen sekvenser på rad (abc, 123, qwe)"
     }
   }
 }

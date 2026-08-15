@@ -17,6 +17,7 @@ import {
   Regex,
   ScanQrCode,
   ShieldCheck,
+  ShieldQuestion,
   Tags,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
@@ -85,6 +86,7 @@ export const TOOLS: ToolDefinition[] = [
   { key: 'wcagScanner', to: '/wcag-scanner', icon: Accessibility, category: 'web', color: '#14b8a6' },
 
   { key: 'passwordGenerator', to: '/password-generator', icon: ShieldCheck, category: 'utilities', color: '#c084fc' },
+  { key: 'passwordChecker', to: '/password-checker', icon: ShieldQuestion, category: 'utilities', color: '#e879f9' },
   { key: 'counter', to: '/counter', icon: DoorOpen, category: 'utilities', color: '#3b82f6' },
 ]
 
