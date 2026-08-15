@@ -15,6 +15,7 @@ import {
   Network,
   QrCode,
   Regex,
+  ScanQrCode,
   ShieldCheck,
   Tags,
 } from 'lucide-react'
@@ -80,6 +81,7 @@ export const TOOLS: ToolDefinition[] = [
   { key: 'fileCompress', to: '/file-compress', icon: FileArchive, category: 'files', color: '#10b981' },
 
   { key: 'qrGenerator', to: '/qr-generator', icon: QrCode, category: 'web', color: '#8b5cf6' },
+  { key: 'qrReader', to: '/qr-reader', icon: ScanQrCode, category: 'web', color: '#22c55e' },
   { key: 'wcagScanner', to: '/wcag-scanner', icon: Accessibility, category: 'web', color: '#14b8a6' },
 
   { key: 'passwordGenerator', to: '/password-generator', icon: ShieldCheck, category: 'utilities', color: '#c084fc' },

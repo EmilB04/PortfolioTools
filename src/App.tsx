@@ -5,6 +5,7 @@ import { FileConverter } from './pages/FileConverter'
 import { FileCompress } from './pages/FileCompress'
 import { SpeedTest } from './pages/SpeedTest'
 import { QrGenerator } from './pages/QrGenerator'
+import { QrReader } from './pages/QrReader'
 import { WcagScanner } from './pages/WcagScanner'
 import { Counter } from './pages/Counter'
 import { Snapdown } from './pages/Snapdown'
@@ -51,6 +52,7 @@ function App() {
 
           {/* Web */}
           <Route path="qr-generator" element={<QrGenerator />} />
+          <Route path="qr-reader" element={<QrReader />} />
           <Route path="wcag-scanner" element={<WcagScanner />} />
 
           {/* Utilities */}

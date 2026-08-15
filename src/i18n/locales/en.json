@@ -5,6 +5,7 @@
     "fileCompress": "File Compress",
     "speedTest": "Speed Test",
     "qrGenerator": "QR Generator",
+    "qrReader": "QR Reader",
     "wcagScanner": "WCAG Scanner",
     "counter": "Counter",
     "snapdown": "Snapdown",
@@ -133,6 +134,22 @@
         "aValue": "PNG + SVG",
         "bLabel": "Runs",
         "bValue": "In your browser"
+      }
+    },
+    "qrReader": {
+      "name": "QR Reader",
+      "description": "Upload an image of a QR code and decode it instantly — all in your browser.",
+      "badge": "Decodes locally",
+      "stats": {
+        "aLabel": "Input",
+        "aValue": "Upload or drag & drop",
+        "bLabel": "Runs",
+        "bValue": "In your browser"
+      },
+      "info": {
+        "input": "A photo or screenshot of a QR code",
+        "process": "Decode the embedded data",
+        "output": "The URL or text it contains"
       }
     },
     "wcagScanner": {
@@ -353,6 +370,22 @@
     "copyImage": "Copy image",
     "copied": "Copied!",
     "reset": "Reset"
+  },
+  "qrReader": {
+    "privacyNote": "Decoded locally in your browser — the image is never uploaded anywhere.",
+    "imageTitle": "Image",
+    "clear": "Clear",
+    "dropTitle": "Drop a QR code image here",
+    "dropHint": "Or click to browse. PNG, JPG, WebP and other common image formats work.",
+    "previewAlt": "Uploaded QR code",
+    "decoding": "Decoding…",
+    "errors": {
+      "noQr": "No QR code found in that image. Try a clearer photo or a tighter crop.",
+      "badFile": "That file isn't an image."
+    },
+    "resultTitle": "Decoded content",
+    "decodedLabel": "Content",
+    "openLink": "Open link"
   },
   "wcagScanner": {
     "title": "WCAG Scanner",
