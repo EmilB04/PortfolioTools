@@ -86,7 +86,7 @@ export function Counter() {
   }
 
   return (
-    <div className="max-w-md mx-auto space-y-5">
+    <div className="page-container page-container-narrow space-y-5">
 
       {/* Header */}
       <div className="flex items-center gap-3">

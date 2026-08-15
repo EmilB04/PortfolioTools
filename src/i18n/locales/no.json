@@ -7,7 +7,28 @@
     "qrGenerator": "QR-generator",
     "wcagScanner": "WCAG-skanner",
     "counter": "Teller",
-    "snapdown": "Snapdown"
+    "snapdown": "Snapdown",
+    "closeMenu": "Lukk meny",
+    "ariaLabel": "Verktøynavigasjon",
+    "jsonTools": "JSON-verktøy",
+    "jwtDecoder": "JWT-dekoder",
+    "encoder": "Koder / Dekoder",
+    "hashGenerator": "Hash-generator",
+    "idGenerator": "ID-generator",
+    "regexTester": "Regex-tester",
+    "cronExplainer": "Cron-forklaring",
+    "timestampConverter": "Tidsstempel-konverterer",
+    "subnetCalculator": "Subnett-kalkulator",
+    "passwordGenerator": "Passordgenerator",
+    "categories": {
+      "overview": "Oversikt",
+      "developer": "Utvikler",
+      "time": "Tid",
+      "network": "Nettverk",
+      "files": "Filer",
+      "web": "Web",
+      "utilities": "Diverse"
+    }
   },
   "theme": {
     "light": "Lys",
@@ -62,37 +83,189 @@
     "snapdown": {
       "name": "Snapdown",
       "description": "Lim inn et skjermbilde, marker det, sladd hemmeligheter — kopier det ut som markdown-klart bilde. Ingenting forlater nettleseren.",
-      "badge": "Skjermbilde → markdown"
+      "badge": "Skjermbilde → markdown",
+      "stats": {
+        "aLabel": "Alt-tekst",
+        "aValue": "Fra OCR",
+        "bLabel": "Kjører",
+        "bValue": "I nettleseren din"
+      }
     },
     "fileConverter": {
       "name": "Filkonverterer",
       "description": "Konverter bilder (PNG, JPEG, WebP, GIF, BMP, SVG) og datafiler (JSON, CSV, TSV) — direkte i nettleseren.",
-      "badge": "10+ formater"
+      "badge": "10+ formater",
+      "stats": {
+        "aLabel": "Formater støttet",
+        "aValue": "10+",
+        "bLabel": "Kjører",
+        "bValue": "I nettleseren din"
+      }
     },
     "fileCompress": {
       "name": "Filkomprimering",
       "description": "Komprimer bilder (JPEG, PNG, WebP, GIF, BMP, SVG) med kvalitetskontroll, eller Gzip hvilken som helst fil — direkte i nettleseren.",
-      "badge": "Bilder + Gzip"
+      "badge": "Bilder + Gzip",
+      "stats": {
+        "aLabel": "Formater støttet",
+        "aValue": "Bilder + Gzip",
+        "bLabel": "Kjører",
+        "bValue": "I nettleseren din"
+      }
     },
     "speedTest": {
       "name": "Hastighetstest",
       "description": "Mål nedlasting, opplasting og forsinkelse i sanntid. Kontinuerlig overvåking eller enkel makstest.",
-      "badge": "Sanntid"
+      "badge": "Sanntid",
+      "stats": {
+        "aLabel": "Tester i dag",
+        "aValue": "—",
+        "bLabel": "Snitt nedlasting i dag",
+        "bValue": "—"
+      }
     },
     "qrGenerator": {
       "name": "QR-generator",
       "description": "Lag QR-koder for lenker, tekst eller Wi-Fi med egne farger. Eksporter PNG eller SVG — alt i nettleseren.",
-      "badge": "PNG + SVG"
+      "badge": "PNG + SVG",
+      "stats": {
+        "aLabel": "Eksportformater",
+        "aValue": "PNG + SVG",
+        "bLabel": "Kjører",
+        "bValue": "I nettleseren din"
+      }
     },
     "wcagScanner": {
       "name": "WCAG-skanner",
       "description": "Gjennomsøk et helt nettsted og sjekk hver side for WCAG-tilgjengelighet med axe-core.",
-      "badge": "axe-core"
+      "badge": "axe-core",
+      "stats": {
+        "aLabel": "Motor",
+        "aValue": "axe-core",
+        "bLabel": "Gjennomsøk",
+        "bValue": "Hele nettstedet"
+      }
     },
     "counter": {
       "name": "Teller",
       "description": "Tell personer som kommer inn og går ut av et arrangement med en enkel manuell telling. Lagres på denne enheten.",
-      "badge": "Manuell telling"
+      "badge": "Manuell telling",
+      "stats": {
+        "aLabel": "Inne",
+        "aValue": "0",
+        "bLabel": "Ute",
+        "bValue": "0"
+      }
+    },
+    "jsonTools": {
+      "name": "JSON-verktøy",
+      "description": "Formater, valider og spør i JSON med en levende JSONPath-utforsker — vakkert formatert, minifisert eller sorterte nøkler, alt i nettleseren.",
+      "badge": "JSONPath innebygd",
+      "stats": {
+        "aLabel": "Formateringsmoduser",
+        "aValue": "3",
+        "bLabel": "Spørrespråk",
+        "bValue": "JSONPath"
+      }
+    },
+    "jwtDecoder": {
+      "name": "JWT-dekoder",
+      "description": "Dekod header og payload i et JWT, inspiser standard claims og sjekk utløpstid — tokenet forlater aldri nettleseren.",
+      "badge": "Kun i nettleseren",
+      "stats": {
+        "aLabel": "Claims dekodet",
+        "aValue": "Header + payload",
+        "bLabel": "Utløpssjekk",
+        "bValue": "Automatisk"
+      }
+    },
+    "encoder": {
+      "name": "Koder / Dekoder",
+      "description": "Konverter tekst mellom Base64, Base64URL, URL-koding, HTML-enheter og hex — bytt retning med ett klikk.",
+      "badge": "5 metoder",
+      "stats": {
+        "aLabel": "Kodingsmetoder",
+        "aValue": "5",
+        "bLabel": "Retning",
+        "bValue": "Kod ⇄ Dekod"
+      }
+    },
+    "hashGenerator": {
+      "name": "Hash-generator",
+      "description": "Generer SHA-1-, SHA-256-, SHA-384- og SHA-512-hasher fra tekst eller en fil, i hex eller Base64 — beregnet lokalt med WebCrypto.",
+      "badge": "WebCrypto",
+      "stats": {
+        "aLabel": "Algoritmer",
+        "aValue": "4",
+        "bLabel": "Kilder",
+        "bValue": "Tekst eller fil"
+      }
+    },
+    "idGenerator": {
+      "name": "ID-generator",
+      "description": "Generer UUIDv4, UUIDv7, ULID, Nano ID eller korte koder i bulk, med innebygde tidsstempler dekodet der det er mulig.",
+      "badge": "5 ID-formater",
+      "stats": {
+        "aLabel": "ID-typer",
+        "aValue": "5",
+        "bLabel": "Batchstørrelse",
+        "bValue": "Opptil 500"
+      }
+    },
+    "regexTester": {
+      "name": "Regex-tester",
+      "description": "Test regulære uttrykk mot eksempeltekst med levende markering av treff, fangstgrupper og forhåndsvisning av erstatning.",
+      "badge": "Treff i sanntid",
+      "stats": {
+        "aLabel": "Støttede flagg",
+        "aValue": "g·i·m·s·u·y",
+        "bLabel": "Erstatningsforhåndsvisning",
+        "bValue": "Live"
+      }
+    },
+    "cronExplainer": {
+      "name": "Cron-forklaring",
+      "description": "Gjør om et cron-uttrykk til en plan i klartekst og se de neste kjøringstidspunktene, i din lokale tidssone.",
+      "badge": "Klartekst",
+      "stats": {
+        "aLabel": "Viste kjøringer",
+        "aValue": "8",
+        "bLabel": "Støttede makroer",
+        "bValue": "@daily, @weekly…"
+      }
+    },
+    "timestampConverter": {
+      "name": "Tidsstempel-konverterer",
+      "description": "Konverter mellom Unix-epoke, ISO 8601 og lesbare datoer på tvers av tidssoner, med en levende relativ tidsvisning.",
+      "badge": "Alle tidssoner",
+      "stats": {
+        "aLabel": "Formater",
+        "aValue": "Epoke · ISO · Lokal",
+        "bLabel": "Live klokke",
+        "bValue": "Oppdateres hvert sekund"
+      }
+    },
+    "subnetCalculator": {
+      "name": "Subnett-kalkulator",
+      "description": "Bryt ned en CIDR-blokk i nettverk-, kringkastings- og brukbare vertsområder, sjekk om en adresse er innenfor, og del den opp i mindre subnett.",
+      "badge": "IPv4 · CIDR",
+      "stats": {
+        "aLabel": "Adressesøk",
+        "aValue": "Umiddelbart",
+        "bLabel": "Del i subnett",
+        "bValue": "Opptil 128"
+      }
+    },
+    "passwordGenerator": {
+      "name": "Passordgenerator",
+      "description": "Generer sterke, tilfeldige passord eller lett-å-huske passordfraser, med levende entropi, styrke og anslått knekketid.",
+      "badge": "Entropi-vurdert",
+      "stats": {
+        "aLabel": "Moduser",
+        "aValue": "Passord · Passordfrase",
+        "bLabel": "Styrkemåler",
+        "bValue": "Live entropi"
+      }
     }
   },
   "footer": {
@@ -284,5 +457,397 @@
     "ocrPrivacy": "Bildet ditt lastes aldri opp. OCR kjører lokalt, men første kjøring laster ned modellen fra et offentlig CDN (jsDelivr).",
     "removeImage": "Fjern bilde",
     "removeConfirm": "Forkast markeringer?"
+  },
+  "toolCommon": {
+    "copy": "Kopier",
+    "copied": "Kopiert!",
+    "copyFailed": "Kopiering feilet",
+    "localOnly": "Kjører helt i nettleseren din — ingenting lastes opp.",
+    "sample": "Last inn eksempel",
+    "clear": "Tøm"
+  },
+  "jsonTools": {
+    "inputTitle": "Inndata",
+    "inputLabel": "JSON",
+    "inputPlaceholder": "Lim inn eller skriv JSON…",
+    "parseErrorAt": "Linje {{line}}, kolonne {{column}}: {{message}}",
+    "parseError": "{{message}}",
+    "stats": {
+      "nodes": "Noder",
+      "depth": "Maks dybde",
+      "size": "Størrelse",
+      "minified": "Minifisert størrelse"
+    },
+    "outputTitle": "Utdata",
+    "shapeLabel": "Format",
+    "shapePretty": "Pen",
+    "shapeMinified": "Minifisert",
+    "shapeSorted": "Sorterte nøkler",
+    "indentLabel": "Innrykk",
+    "indentSpaces": "{{count}} mellomrom",
+    "indentSpaces_other": "{{count}} mellomrom",
+    "indentTab": "Tab",
+    "outputLabel": "Formatert JSON",
+    "outputPlaceholder": "Formatert resultat vises her",
+    "queryTitle": "JSONPath-spørring",
+    "queryLabel": "Sti",
+    "queryHint": "Støtter $.a.b, [n], [*], [a:b]-utsnitt og $..navn-nedstigning. Filter som [?(...)] støttes ikke.",
+    "queryError": {
+      "root": "Et JSONPath-uttrykk må starte med $.",
+      "syntax": "Klarte ikke å tolke den stien.",
+      "filter": "Filteruttrykk som [?(...)] støttes ikke."
+    },
+    "matchCount": "{{count}} treff",
+    "matchCount_other": "{{count}} treff",
+    "queryResult": "Resultat"
+  },
+  "jwtDecoder": {
+    "privacyNote": "Dekoding skjer helt i nettleseren din — tokenet sendes aldri noe sted.",
+    "inputTitle": "Token",
+    "inputLabel": "JWT",
+    "inputHint": "Lim inn et helt token, med eller uten «Bearer »-prefiks.",
+    "errors": {
+      "empty": "Lim inn et token for å dekode det.",
+      "segments": "Et JWT må ha nøyaktig tre segmenter adskilt med punktum.",
+      "header": "Klarte ikke å dekode header-segmentet.",
+      "payload": "Klarte ikke å dekode payload-segmentet."
+    },
+    "noClaims": "Ingen claims i dette segmentet.",
+    "claims": {
+      "iss": "Utsteder (iss)",
+      "sub": "Emne (sub)",
+      "aud": "Mottaker (aud)",
+      "exp": "Utløper (exp)",
+      "nbf": "Gyldig fra (nbf)",
+      "iat": "Utstedt (iat)",
+      "jti": "Token-ID (jti)",
+      "azp": "Autorisert part (azp)",
+      "scope": "Omfang",
+      "typ": "Type (typ)",
+      "alg": "Algoritme (alg)",
+      "kid": "Nøkkel-ID (kid)",
+      "nonce": "Nonce",
+      "email": "E-post",
+      "name": "Navn",
+      "roles": "Roller"
+    },
+    "signatureWarning": "Dette dekoder kun tokenet — signaturen verifiseres ikke. Ikke stol på disse claimsene før du har verifisert dem mot utstederens nøkkel.",
+    "validity": {
+      "valid": "Gyldig til {{date}}",
+      "expired": "Utløp {{date}}",
+      "notYetValid": "Ikke gyldig før {{date}}",
+      "noExpiry": "Ingen utløpsclaim"
+    },
+    "headerTitle": "Header",
+    "payloadTitle": "Payload",
+    "rawTitle": "Rådata",
+    "headerJson": "Header-JSON",
+    "payloadJson": "Payload-JSON",
+    "signatureLabel": "Signatur"
+  },
+  "encoder": {
+    "settingsTitle": "Innstillinger",
+    "schemeLabel": "Metode",
+    "schemes": {
+      "base64": "Base64",
+      "base64url": "Base64URL",
+      "url": "URL",
+      "html": "HTML-enheter",
+      "hex": "Hex"
+    },
+    "directionLabel": "Retning",
+    "encode": "Kod",
+    "decode": "Dekod",
+    "schemeHints": {
+      "base64": "Standard Base64 (RFC 4648) — bruker + og / med =-utfylling.",
+      "base64url": "URL-trygg Base64 — bruker - og _ i stedet for + og /, uten utfylling.",
+      "url": "Prosentkoding for URL-er og spørrestrenger (encodeURIComponent).",
+      "html": "Escaper tegn som < > & \" ' som HTML-enheter.",
+      "hex": "Hver byte som to heksadesimale siffer."
+    },
+    "inputTitle": "Inndata",
+    "swap": "Bytt",
+    "plainLabel": "Klartekst",
+    "encodedLabel": "Kodet tekst",
+    "inputPlaceholder": "Skriv eller lim inn tekst…",
+    "errors": {
+      "encode": "Klarte ikke å kode denne teksten som {{scheme}}.",
+      "decode": "Det ser ikke ut som gyldig {{scheme}}."
+    },
+    "outputPlaceholder": "Resultatet vises her",
+    "stats": {
+      "inputChars": "Tegn i inndata",
+      "inputBytes": "Byte i inndata",
+      "outputChars": "Tegn i utdata",
+      "outputBytes": "Byte i utdata"
+    }
+  },
+  "hashGenerator": {
+    "privacyNote": "Hashing skjer lokalt med nettleserens WebCrypto-API — ingenting lastes opp.",
+    "errors": {
+      "digest": "Klarte ikke å beregne hashen.",
+      "tooLarge": "Filen er større enn 256 MB — velg en mindre fil.",
+      "read": "Klarte ikke å lese filen."
+    },
+    "inputTitle": "Kilde",
+    "sourceLabel": "Kilde",
+    "sourceText": "Tekst",
+    "sourceFile": "Fil",
+    "textLabel": "Tekst",
+    "textHint": "Hashes som UTF-8.",
+    "textPlaceholder": "Skriv eller lim inn tekst…",
+    "chooseFile": "Velg en fil eller slipp den her",
+    "fileHint": "Opptil 256 MB",
+    "resultTitle": "Hashverdier",
+    "formatLabel": "Format",
+    "formatHex": "Hex",
+    "formatBase64": "Base64",
+    "working": "Hasher…",
+    "empty": "Skriv inn tekst eller velg en fil for å se hashverdiene.",
+    "copyAlgo": "Kopier {{algo}}",
+    "sha1Note": "SHA-1 er ikke lenger kollisjonssikker — bruk SHA-256 eller sterkere der sikkerhet er viktig."
+  },
+  "idGenerator": {
+    "privacyNote": "Hver ID genereres lokalt med crypto.getRandomValues — ingenting sendes noe sted.",
+    "settingsTitle": "Innstillinger",
+    "regenerate": "Generer på nytt",
+    "kindLabel": "ID-type",
+    "kinds": {
+      "uuidv4": "UUIDv4",
+      "uuidv7": "UUIDv7",
+      "ulid": "ULID",
+      "nanoid": "Nano ID",
+      "short": "Kortkode"
+    },
+    "kindHints": {
+      "uuidv4": "128-bits tilfeldig UUID (RFC 9562) — standardvalget til generell bruk.",
+      "uuidv7": "128-bits UUID med et sorterbart tidsstempel i millisekunder foran — godt egnet som databasenøkkel.",
+      "ulid": "26-tegns Crockford base32-ID, sorterbar etter opprettelsestidspunkt.",
+      "nanoid": "21-tegns URL-trygg ID med høyere entropi per tegn enn en UUID.",
+      "short": "8-tegns entydig kode (uten 0/O/1/I) — godt egnet for supportsaker og invitasjonskoder."
+    },
+    "countLabel": "Antall",
+    "countHint": "Opptil {{max}} om gangen.",
+    "uppercase": "Store bokstaver",
+    "embeddedTime": "Innebygd tidsstempel: {{date}}",
+    "resultTitle": "Generert",
+    "copyAll": "Kopier alle",
+    "firstLabel": "Første ID",
+    "listLabel": "{{count}} ID",
+    "listLabel_other": "{{count}} IDer"
+  },
+  "regexTester": {
+    "patternTitle": "Mønster",
+    "patternLabel": "Regulært uttrykk",
+    "patternHint": "JavaScript regex-syntaks, uten skråstrekene rundt.",
+    "flagsLabel": "Flagg",
+    "flags": {
+      "global": "Global — finn alle treff, ikke bare det første",
+      "ignoreCase": "Ignorer store/små bokstaver",
+      "multiline": "Flerlinje — ^ og $ matcher linjeskift",
+      "dotAll": "Dot all — . matcher også linjeskift",
+      "unicode": "Unicode — slår på full Unicode-matching",
+      "sticky": "Sticky — matcher kun ved lastIndex"
+    },
+    "invalidPattern": "Ugyldig mønster: {{message}}",
+    "subjectTitle": "Teststreng",
+    "subjectLabel": "Tekst",
+    "subjectPlaceholder": "Lim inn tekst å teste mønsteret mot…",
+    "truncated": "Kun de første {{max}} tegnene testes.",
+    "matchesTitle": "Treff",
+    "stats": {
+      "matches": "Treff",
+      "groups": "Fangstgrupper"
+    },
+    "highlightLabel": "Markerte treff",
+    "table": {
+      "index": "Indeks",
+      "match": "Treff",
+      "groups": "Grupper"
+    },
+    "noMatches": "Ingen treff ennå.",
+    "replaceTitle": "Erstatt",
+    "replaceLabel": "Erstatning",
+    "replaceHint": "Bruk $1, $2 … for fangstgrupper og $<navn> for navngitte grupper.",
+    "replaceResult": "Resultat"
+  },
+  "cronExplainer": {
+    "inputTitle": "Uttrykk",
+    "expressionLabel": "Cron-uttrykk",
+    "expressionHint": "Standard 5-felts cron-syntaks (minutt time dag måned ukedag), eller et makro som @daily.",
+    "errors": {
+      "empty": "Skriv inn et cron-uttrykk.",
+      "fieldCount": "Et cron-uttrykk må ha nøyaktig 5 felt adskilt med mellomrom — fant {{token}}.",
+      "range": "«{{token}}» er utenfor gyldig område for feltet {{field}}.",
+      "syntax": "Klarte ikke å tolke «{{token}}» i feltet {{field}}."
+    },
+    "meaningTitle": "Hva det betyr",
+    "macroExpands": "{{macro}} tilsvarer {{expression}}",
+    "fieldsTitle": "Felt",
+    "allValues": "alle verdier",
+    "fields": {
+      "minute": "Minutt",
+      "hour": "Time",
+      "dayOfMonth": "Dag i måneden",
+      "month": "Måned",
+      "dayOfWeek": "Ukedag"
+    },
+    "nextRunsTitle": "Neste kjøringer",
+    "neverRuns": "Denne planen kjører aldri i løpet av de neste 5 årene.",
+    "next": "Neste",
+    "thenNth": "deretter #{{n}}",
+    "timezoneNote": "Tider vist i {{zone}}.",
+    "joiner": ", ",
+    "describe": {
+      "everyMinute": "Kjører hvert minutt",
+      "everyNMinutes": "Kjører hvert {{n}}. minutt",
+      "everyMinuteOfHours": "Kjører hvert minutt i timene {{hours}}",
+      "hourlyAtMinute": "Kjører hver time ved minutt {{minute}}",
+      "hourlyAtMinutes": "Kjører hver time ved minuttene {{minutes}}",
+      "everyNHoursAtMinute": "Kjører hver {{n}}. time ved minutt {{minute}}",
+      "atTimes": "Kjører kl. {{times}}",
+      "everyNDaysOfMonth": "hver {{n}}. dag i måneden",
+      "onDaysOfMonth": "på dagene {{days}} i måneden",
+      "onWeekdays": "på {{days}}",
+      "inMonths": "i {{months}}",
+      "dayUnionNote": "(dag i måneden eller ukedag — treff på én av dem utløser kjøring)"
+    }
+  },
+  "timestampConverter": {
+    "inputTitle": "Inndata",
+    "useNow": "Bruk nå",
+    "inputLabel": "Tidsstempel eller dato",
+    "inputHint": "Godtar Unix-epoke (sekunder, millisekunder eller mikrosekunder) eller en hvilken som helst datostreng.",
+    "zoneLabel": "Tidssone",
+    "zoneHint": "Brukes på «I sonen» og fulldato-radene under.",
+    "invalid": "Klarte ikke å tolke dette som et tidsstempel eller en dato.",
+    "detected": {
+      "seconds": "Tolket som Unix-sekunder.",
+      "milliseconds": "Tolket som Unix-millisekunder.",
+      "microseconds": "Tolket som Unix-mikrosekunder.",
+      "text": "Tolket som en datostreng."
+    },
+    "liveTitle": "Akkurat nå",
+    "nowSeconds": "Epoke-sekunder",
+    "nowMillis": "Epoke-millisekunder",
+    "nowIso": "UTC-tid",
+    "localZone": "Lokal sone",
+    "resultTitle": "Konvertert",
+    "rows": {
+      "iso": "ISO 8601",
+      "epochSeconds": "Epoke (sekunder)",
+      "epochMillis": "Epoke (millisekunder)",
+      "utc": "UTC",
+      "local": "Lokal tid",
+      "inZone": "I {{zone}}",
+      "relative": "Relativt",
+      "weekday": "Ukedag",
+      "isoWeek": "ISO-uke",
+      "dayOfYear": "Dag i året"
+    },
+    "zoneUnsupported": "Denne tidssonen støttes ikke av nettleseren din."
+  },
+  "subnetCalculator": {
+    "inputTitle": "Nettverk",
+    "inputLabel": "CIDR-blokk",
+    "inputHint": "En IPv4-adresse med prefiks, f.eks. 10.20.30.0/24.",
+    "errors": {
+      "empty": "Skriv inn en CIDR-blokk.",
+      "address": "Det er ikke en gyldig IPv4-adresse.",
+      "prefix": "Prefikset må være mellom 0 og 32.",
+      "format": "Forventet en adresse og prefiks, som 192.168.1.0/24."
+    },
+    "summaryTitle": "Sammendrag",
+    "stats": {
+      "network": "Nettverk",
+      "netmask": "Nettmaske",
+      "usable": "Brukbare verter",
+      "total": "Totalt antall adresser"
+    },
+    "rows": {
+      "address": "Adresse",
+      "prefix": "Prefiks",
+      "netmask": "Nettmaske",
+      "wildcard": "Wildcard-maske",
+      "binaryMask": "Binær maske",
+      "network": "Nettverksadresse",
+      "broadcast": "Kringkastingsadresse",
+      "hostRange": "Brukbart vertsområde",
+      "class": "Klasse",
+      "scope": "Omfang"
+    },
+    "classValue": "Klasse {{letter}}",
+    "private": "Privat",
+    "public": "Offentlig",
+    "pointToPointNote": "En /31 eller /32 har ikke noe brukbart vertsområde i tradisjonell forstand — /31 er en punkt-til-punkt-lenke (RFC 3021), og /32 er én enkelt vert.",
+    "containsTitle": "Inneholder adresse?",
+    "containsLabel": "IPv4-adresse",
+    "containsHint": "Sjekk om en adresse befinner seg i dette subnettet.",
+    "inRange": "Innenfor {{cidr}}",
+    "outOfRange": "Utenfor {{cidr}}",
+    "splitTitle": "Del opp subnett",
+    "splitLabel": "Del i",
+    "splitHint": "Viser opptil {{limit}} resulterende subnett.",
+    "splitNone": "Ikke del opp",
+    "splitCount": "{{count}} subnett",
+    "splitCount_other": "{{count}} subnett",
+    "table": {
+      "subnet": "Subnett",
+      "range": "Område"
+    }
+  },
+  "passwordGenerator": {
+    "privacyNote": "Generert lokalt med Web Crypto sin tilfeldighetsgenerator — sendes aldri noe sted og lagres ikke.",
+    "resultTitle": "Passord",
+    "regenerate": "Generer på nytt",
+    "errors": {
+      "noCharsets": "Velg minst ett tegnsett."
+    },
+    "strengthLabel": "Styrke",
+    "strength": {
+      "weak": "Svak",
+      "fair": "Middels",
+      "strong": "Sterk",
+      "excellent": "Utmerket"
+    },
+    "stats": {
+      "entropy": "Entropi",
+      "pool": "Utvalgsstørrelse",
+      "crackTime": "Anslått knekketid"
+    },
+    "crackAssumption": "Forutsetter 10 milliarder gjetninger per sekund — et raskt offline-angrep mot en stjålet hash.",
+    "settingsTitle": "Innstillinger",
+    "modeLabel": "Modus",
+    "modePassword": "Passord",
+    "modePassphrase": "Passordfrase",
+    "lengthLabel": "Lengde: {{length}}",
+    "charsetsLabel": "Tegnsett",
+    "charsets": {
+      "lower": "Små bokstaver (a-z)",
+      "upper": "Store bokstaver (A-Z)",
+      "digits": "Tall (0-9)",
+      "symbols": "Symboler (!@#…)"
+    },
+    "excludeAmbiguous": "Utelat tvetydige tegn (l, 1, O, 0, …)",
+    "wordsLabel": "Antall ord",
+    "wordsHint": "Valgt fra en liste på {{size}} ord.",
+    "separatorLabel": "Skilletegn",
+    "separators": {
+      "hyphen": "Bindestrek (-)",
+      "dot": "Punktum (.)",
+      "underscore": "Understrek (_)",
+      "space": "Mellomrom"
+    },
+    "capitalise": "Stor forbokstav i ord",
+    "appendNumber": "Legg til et tall",
+    "crack": {
+      "instant": "Umiddelbart",
+      "years": "{{value}} år",
+      "days": "{{value}} dager",
+      "hours": "{{value}} timer",
+      "minutes": "{{value}} minutter",
+      "seconds": "{{value}} sekunder",
+      "eons": "{{value}} år — lenger enn universets alder"
+    }
   }
 }

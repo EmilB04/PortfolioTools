@@ -399,7 +399,7 @@ export function FileCompress() {
   const active = dragging || hovering
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
+    <div className="page-container page-container-medium space-y-6">
 
       {/* Header */}
       <div className="flex items-center gap-3">

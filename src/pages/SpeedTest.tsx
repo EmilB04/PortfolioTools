@@ -6,7 +6,7 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip,
 } from 'recharts'
 import { useSpeedTest, type TestPhase } from '../hooks/useSpeedTest'
-import { useTheme } from '../contexts/ThemeContext'
+import { useTheme } from '../contexts/useTheme'
 
 type Mode = 'continuous' | 'max'
 
@@ -138,7 +138,7 @@ export function SpeedTest() {
   ]
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
+    <div className="page-container page-container-medium space-y-6">
       {/* Header */}
       <div className="flex items-center gap-3">
         <div className="p-2.5 rounded-xl border" style={{ background: 'var(--accent-bg)', borderColor: 'var(--accent-border)' }}>
