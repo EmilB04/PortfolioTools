@@ -17,16 +17,16 @@ export function BrandMark({ iconOnly = false, className = '' }: BrandMarkProps) 
       href="https://emilb.no"
       target="_blank"
       rel="noopener noreferrer"
-      className={`flex min-w-0 shrink-0 items-center gap-2 rounded-full border bg-white text-black transition-colors duration-300 ${
-        iconOnly ? 'h-8 w-8 justify-center' : 'h-10 pl-1 pr-1'
+      className={`flex min-w-0 shrink-0 items-center gap-1.5 rounded-full border bg-white text-black transition-colors duration-300 ${
+        iconOnly ? 'h-7 w-7 justify-center' : 'h-9 p-[3px]'
       } ${className}`}
       style={{ borderColor: 'var(--border)' }}
     >
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full">
-        <img src={ebBlack} alt="" width={32} height={32} className="h-full w-full object-contain" />
+      <span className={`flex shrink-0 items-center justify-center rounded-full ${iconOnly ? 'h-7 w-7' : 'h-[26px] w-[26px]'}`}>
+        <img src={ebBlack} alt="" width={28} height={28} className="h-full w-full object-contain" />
       </span>
       {!iconOnly && (
-        <span className="pr-3 text-[15px] font-bold tracking-tight whitespace-nowrap">
+        <span className="pr-2.5 font-display text-[14px] font-bold tracking-tight whitespace-nowrap">
           PortfolioTools
         </span>
       )}

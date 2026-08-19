@@ -14,12 +14,10 @@ interface ToolCardProps {
   icon: React.ReactNode
   stats: Stat[]
   href: string
-  accentColor: string
-  accentBg: string
   comingSoon?: boolean
 }
 
-export function ToolCard({ title, description, badge, icon, stats, href, accentColor, accentBg, comingSoon }: ToolCardProps) {
+export function ToolCard({ title, description, badge, icon, stats, href, comingSoon }: ToolCardProps) {
   const { t } = useTranslation()
 
   return (
@@ -29,20 +27,17 @@ export function ToolCard({ title, description, badge, icon, stats, href, accentC
       className={`tool-card group relative flex flex-col rounded-2xl border overflow-hidden ${
         comingSoon ? 'cursor-default opacity-50' : ''
       }`}
-      style={{ background: 'var(--surface)', borderColor: 'var(--border)', '--tool': accentColor } as React.CSSProperties}
+      style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
     >
-      {/* Top accent line */}
-      <div className="h-px w-full" style={{ background: `linear-gradient(90deg, transparent, ${accentColor}${comingSoon ? '30' : '70'}, transparent)` }} />
-
       <div className="p-5 sm:p-6 flex-1 flex flex-col gap-4">
         {/* Header row */}
         <div className="flex items-start justify-between gap-3">
-          <div className="p-2.5 rounded-xl" style={{ backgroundColor: accentBg }}>
+          <div className="p-2.5 rounded-xl border" style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}>
             {icon}
           </div>
           <span
-            className="tool-text text-[11px] font-semibold px-2.5 py-1 rounded-full tracking-wide shrink-0"
-            style={{ backgroundColor: accentBg }}
+            className="text-[11px] font-semibold px-2.5 py-1 rounded-full tracking-wide shrink-0 border"
+            style={{ background: 'var(--surface-card)', borderColor: 'var(--border)', color: 'var(--text-subtle)' }}
           >
             {badge}
           </span>
@@ -81,10 +76,14 @@ export function ToolCard({ title, description, badge, icon, stats, href, accentC
           </span>
         ) : (
           <>
-            <span className="tool-text text-[13px] font-medium">
+            <span className="text-[13px] font-medium" style={{ color: 'var(--accent-text)' }}>
               {t('dashboard.openTool')}
             </span>
-            <ArrowRight size={14} className="tool-text transition-transform duration-150 group-hover:translate-x-0.5" />
+            <ArrowRight
+              size={14}
+              className="transition-transform duration-150 group-hover:translate-x-0.5"
+              style={{ color: 'var(--accent-text)' }}
+            />
           </>
         )}
       </div>

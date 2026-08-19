@@ -19,27 +19,27 @@ export default function CookieConsentBanner() {
                     className="fixed inset-x-0 bottom-0 z-[500] flex justify-center px-4 pb-4 sm:px-6"
                 >
                     <div
-                        className="flex w-full max-w-screen-md flex-col gap-3 rounded-2xl border p-4 shadow-[0_18px_48px_rgba(0,0,0,0.28)] backdrop-blur-2xl sm:flex-row sm:items-center sm:justify-between"
+                        className="flex w-full max-w-screen-md flex-col gap-3 rounded-2xl border p-4 shadow-[0_18px_48px_rgba(0,0,0,0.28)] sm:flex-row sm:items-center sm:justify-between"
                         style={{
-                            background: 'color-mix(in srgb, var(--surface-card) 94%, transparent)',
+                            background: 'var(--surface-card-solid)',
                             borderColor: 'var(--border)',
                         }}
                     >
-                        <p className="text-sm text-[var(--text-subtle)]">
+                        <p className="fs-sm text-[var(--text-subtle)]">
                             {t('cookieConsent.message')}
                         </p>
                         <div className="flex shrink-0 gap-2">
                             <button
                                 type="button"
                                 onClick={decline}
-                                className="rounded-xl border border-[var(--border)] px-4 py-2 text-sm font-semibold text-[var(--text-subtle)] transition-colors duration-200 hover:text-[var(--text)]"
+                                className="rounded-xl border border-[var(--border)] px-4 py-2 fs-sm font-semibold text-[var(--text-subtle)] transition-colors duration-200 hover:text-[var(--text)] hover:border-[var(--accent-border)]"
                             >
                                 {t('cookieConsent.decline')}
                             </button>
                             <button
                                 type="button"
                                 onClick={accept}
-                                className="rounded-xl bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-[var(--accent-on)] transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
+                                className="rounded-xl bg-[var(--accent)] px-4 py-2 fs-sm font-semibold text-[var(--accent-on)] transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
                             >
                                 {t('cookieConsent.accept')}
                             </button>

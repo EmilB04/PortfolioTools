@@ -118,15 +118,15 @@ export function QrGenerator() {
       {/* Header */}
       <div className="flex items-center gap-3">
         <div className="p-2.5 rounded-xl border"
-          style={{ background: 'rgba(139,92,246,0.12)', borderColor: 'rgba(139,92,246,0.35)' }}>
-          <QrCode size={20} style={{ color: '#8b5cf6' }} />
+          style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}>
+          <QrCode size={20} style={{ color: 'var(--text-subtle)' }} />
         </div>
         <div className="min-w-0 flex-1">
-          <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
+          <h1 className="fs-xl font-display font-bold tracking-tight" style={{ color: 'var(--text)' }}>
             {t('qrGenerator.title')}
           </h1>
           <InfoButton show={showInfo} onToggle={() => setShowInfo(v => !v)} color={ACCENT} controls={infoId} />
-          <p className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
+          <p className="fs-sm mt-0.5 prose-measure" style={{ color: 'var(--text-subtle)' }}>
             {t('qrGenerator.subtitle')}
           </p>
         </div>
@@ -148,7 +148,7 @@ export function QrGenerator() {
         <div className="space-y-5">
           {/* Text input */}
           <div className="space-y-2">
-            <label className="text-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
+            <label className="fs-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
               {t('qrGenerator.contentLabel')}
             </label>
             <textarea
@@ -157,14 +157,14 @@ export function QrGenerator() {
               rows={3}
               aria-label={t('qrGenerator.contentLabel')}
               placeholder={t('qrGenerator.placeholder')}
-              className="w-full rounded-xl border px-3 py-2.5 text-sm resize-y outline-none transition-colors"
+              className="w-full rounded-xl border px-3 py-2.5 fs-sm resize-y outline-none transition-colors"
               style={{ background: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text)' }}
             />
           </div>
 
           {/* Error correction */}
           <div className="space-y-2">
-            <label className="text-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
+            <label className="fs-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
               {t('qrGenerator.errorCorrection')}
             </label>
             <div className="flex gap-1 p-1 rounded-xl border"
@@ -172,7 +172,7 @@ export function QrGenerator() {
               {EC_LEVELS.map(({ value, recovery }) => (
                 <button key={value} onClick={() => setEcLevel(value)}
                   title={`${t('qrGenerator.recovery')} ${recovery}`}
-                  className="flex-1 px-2 py-1.5 rounded-lg text-sm font-medium transition-all duration-150"
+                  className="flex-1 px-2 py-1.5 rounded-lg fs-sm font-medium transition-all duration-150"
                   style={{
                     background: ecLevel === value ? ACCENT_FILL : 'transparent',
                     color: ecLevel === value ? '#ffffff' : 'var(--text-subtle)',
@@ -181,7 +181,7 @@ export function QrGenerator() {
                 </button>
               ))}
             </div>
-            <p className="text-xs" style={{ color: 'var(--text-subtle)' }}>
+            <p className="fs-xs" style={{ color: 'var(--text-subtle)' }}>
               {t('qrGenerator.ecHint')}
             </p>
           </div>
@@ -193,13 +193,13 @@ export function QrGenerator() {
               { label: t('qrGenerator.background'), value: bg, set: setBg },
             ] as const).map(({ label, value, set }) => (
               <div key={label} className="space-y-2">
-                <label className="text-xs font-medium" style={{ color: 'var(--text-subtle)' }}>{label}</label>
+                <label className="fs-xs font-medium" style={{ color: 'var(--text-subtle)' }}>{label}</label>
                 <div className="flex items-center gap-2 rounded-xl border px-2 py-1.5"
                   style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
                   <input type="color" value={value} onChange={e => set(e.target.value)}
                     aria-label={label}
                     className="w-7 h-7 rounded cursor-pointer border-0 bg-transparent p-0 shrink-0" />
-                  <span className="text-xs font-mono uppercase" style={{ color: 'var(--text-muted)' }}>{value}</span>
+                  <span className="fs-xs font-mono uppercase" style={{ color: 'var(--text-muted)' }}>{value}</span>
                 </div>
               </div>
             ))}
@@ -208,14 +208,14 @@ export function QrGenerator() {
           {/* Size + margin */}
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
-              <label className="text-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
+              <label className="fs-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
                 {t('qrGenerator.exportSize')}
               </label>
               <div className="flex gap-1 p-1 rounded-xl border"
                 style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
                 {SIZE_OPTIONS.map(s => (
                   <button key={s} onClick={() => setSize(s)}
-                    className="flex-1 px-1 py-1.5 rounded-lg text-xs font-medium transition-all duration-150"
+                    className="flex-1 px-1 py-1.5 rounded-lg fs-xs font-medium transition-all duration-150"
                     style={{
                       background: size === s ? ACCENT_FILL : 'transparent',
                       color: size === s ? '#ffffff' : 'var(--text-subtle)',
@@ -226,7 +226,7 @@ export function QrGenerator() {
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-medium flex items-center justify-between" style={{ color: 'var(--text-subtle)' }}>
+              <label className="fs-xs font-medium flex items-center justify-between" style={{ color: 'var(--text-subtle)' }}>
                 <span>{t('qrGenerator.quietZone')}</span>
                 <span className="font-mono" style={{ color: '#8b5cf6' }}>{margin}</span>
               </label>
@@ -248,38 +248,38 @@ export function QrGenerator() {
             ) : (
               <div className="flex flex-col items-center gap-2 text-center px-4">
                 <QrCode size={40} style={{ color: 'var(--text-subtle)', opacity: 0.4 }} />
-                <span className="text-xs" style={{ color: 'var(--text-subtle)' }}>
+                <span className="fs-xs" style={{ color: 'var(--text-subtle)' }}>
                   {t('qrGenerator.emptyPreview')}
                 </span>
               </div>
             )}
           </div>
 
-          {error && <p className="text-xs text-center" style={{ color: '#ef4444' }}>⚠ {error}</p>}
+          {error && <p className="fs-xs text-center" style={{ color: '#ef4444' }}>⚠ {error}</p>}
 
           {/* Actions */}
           <div className="w-full space-y-2">
             <div className="grid grid-cols-2 gap-2">
               <button onClick={downloadPng} disabled={!hasQr}
-                className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-white fs-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
                 style={{ background: '#8b5cf6' }}>
                 <Download size={14} /> PNG
               </button>
               <button onClick={downloadSvg} disabled={!hasQr}
-                className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold border transition-opacity hover:opacity-80 disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl fs-sm font-semibold border transition-opacity hover:opacity-80 disabled:opacity-40 disabled:cursor-not-allowed"
                 style={{ borderColor: '#8b5cf6', color: '#8b5cf6', background: 'transparent' }}>
                 <Download size={14} /> SVG
               </button>
             </div>
             {canCopy && (
               <button onClick={copyPng} disabled={!hasQr}
-                className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-sm font-medium border transition-opacity hover:opacity-70 disabled:opacity-40 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl fs-sm font-medium border transition-opacity hover:opacity-70 disabled:opacity-40 disabled:cursor-not-allowed"
                 style={{ borderColor: 'var(--border)', color: 'var(--text-muted)', background: 'var(--surface-card)' }}>
                 {copied ? <><Check size={14} style={{ color: '#10b981' }} /> {t('qrGenerator.copied')}</> : <><Copy size={14} /> {t('qrGenerator.copyImage')}</>}
               </button>
             )}
             <button onClick={reset}
-              className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-sm font-medium transition-opacity hover:opacity-70"
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl fs-sm font-medium transition-opacity hover:opacity-70"
               style={{ color: 'var(--text-subtle)' }}>
               <RotateCcw size={13} /> {t('qrGenerator.reset')}
             </button>

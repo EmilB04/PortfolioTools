@@ -65,12 +65,12 @@ function Waveform({
           ) : (
             <span className="h-1.5 w-1.5 rounded-full bg-gray-300 dark:bg-gray-600" />
           )}
-          <span className="text-xs font-semibold uppercase tracking-wider"
+          <span className="fs-xs font-semibold uppercase tracking-wider"
             style={{ color: isActive ? color : 'var(--text-subtle)' }}>
             {label}
           </span>
         </div>
-        <span className="text-xs font-mono font-semibold tabular-nums"
+        <span className="fs-xs font-mono font-semibold tabular-nums"
           style={{ color: latest !== null ? color : 'var(--text-subtle)' }}>
           {latest !== null ? `${latest.toFixed(1)}` : '--'}<span className="font-normal" style={{ color: 'var(--text-subtle)' }}> Mbps</span>
         </span>
@@ -151,9 +151,9 @@ export function SpeedTest() {
           <Gauge size={20} style={{ color: 'var(--accent)' }} />
         </div>
         <div className="min-w-0 flex-1">
-          <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>{t('speedTest.title')}</h1>
+          <h1 className="fs-xl font-display font-bold tracking-tight" style={{ color: 'var(--text)' }}>{t('speedTest.title')}</h1>
           <InfoButton show={showInfo} onToggle={() => setShowInfo(v => !v)} color={TOOL.color} controls={infoId} />
-          <p className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>Cloudflare · {t(`speedTest.mode${mode === 'continuous' ? 'Continuous' : 'Max'}`)}</p>
+          <p className="fs-sm mt-0.5 prose-measure" style={{ color: 'var(--text-subtle)' }}>Cloudflare · {t(`speedTest.mode${mode === 'continuous' ? 'Continuous' : 'Max'}`)}</p>
         </div>
       </div>
 
@@ -194,11 +194,11 @@ export function SpeedTest() {
                 </div>
                 <div className="min-w-0">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-sm font-semibold" style={{ color: selected ? 'var(--accent-text)' : 'var(--text)' }}>
+                    <span className="fs-sm font-semibold" style={{ color: selected ? 'var(--accent-text)' : 'var(--text)' }}>
                       {title}
                     </span>
                   </div>
-                  <p className="text-xs mt-0.5 leading-snug" style={{ color: 'var(--text-subtle)' }}>{desc}</p>
+                  <p className="fs-xs mt-0.5 leading-snug" style={{ color: 'var(--text-subtle)' }}>{desc}</p>
                 </div>
               </div>
             </button>
@@ -210,13 +210,13 @@ export function SpeedTest() {
       <div className="flex items-center gap-3 flex-wrap">
         {isRunning ? (
           <button onClick={stop}
-            className="flex items-center justify-center gap-2 flex-1 px-5 py-3 rounded-xl text-white text-sm font-semibold transition-all duration-150 hover:opacity-90"
+            className="flex items-center justify-center gap-2 flex-1 px-5 py-3 rounded-xl text-white fs-sm font-semibold transition-all duration-150 hover:opacity-90"
             style={{ background: '#dc2626' }}>
             <Square size={13} fill="currentColor" />{t('speedTest.stop')}
           </button>
         ) : (
           <button onClick={handleStart}
-            className="flex items-center justify-center gap-2 flex-1 px-5 py-3 rounded-xl text-white text-sm font-semibold transition-all duration-150 hover:opacity-90"
+            className="flex items-center justify-center gap-2 flex-1 px-5 py-3 rounded-xl text-white fs-sm font-semibold transition-all duration-150 hover:opacity-90"
             style={{ background: 'var(--accent)', color: 'var(--accent-on)' }}>
             <Zap size={15} />{phase === 'complete' ? t('speedTest.retest') : t('speedTest.start')}
           </button>
@@ -227,11 +227,11 @@ export function SpeedTest() {
       {mode === 'continuous' && !isRunning && (
         <div className="flex items-center gap-3 flex-wrap">
           <Timer size={14} style={{ color: 'var(--text-subtle)' }} className="shrink-0" />
-          <span className="text-sm shrink-0" style={{ color: 'var(--text-muted)' }}>Run for</span>
+          <span className="fs-sm shrink-0" style={{ color: 'var(--text-muted)' }}>{t('speedTest.runFor')}</span>
           <div className="flex gap-1.5 flex-wrap">
             {DURATION_OPTIONS.map(({ label, ms }) => (
               <button key={label} onClick={() => setLimitMs(ms)}
-                className="px-3 py-1 rounded-lg text-sm font-medium transition-all duration-150"
+                className="px-3 py-1 rounded-lg fs-sm font-medium transition-all duration-150"
                 style={{
                   background: limitMs === ms ? 'var(--accent)' : 'var(--surface-card)',
                   color: limitMs === ms ? 'var(--accent-on)' : 'var(--text-muted)',
@@ -255,14 +255,14 @@ export function SpeedTest() {
                   <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: 'var(--accent)' }} />
                 </span>
               )}
-              <span className="text-sm font-medium" style={{ color: phase === 'complete' ? '#10b981' : 'var(--text-subtle)' }}>
+              <span className="fs-sm font-medium" style={{ color: phase === 'complete' ? '#10b981' : 'var(--text-subtle)' }}>
                 {phaseKey(phase) ? t(phaseKey(phase)) : ''}
               </span>
             </>
           )}
         </div>
         {remaining !== null && (
-          <span className="text-sm tabular-nums font-mono" style={{ color: 'var(--text-subtle)' }}>
+          <span className="fs-sm tabular-nums font-mono" style={{ color: 'var(--text-subtle)' }}>
             {formatCountdown(remaining)} remaining
           </span>
         )}
@@ -277,8 +277,8 @@ export function SpeedTest() {
               style={{ color: value !== null ? color : 'var(--text-subtle)' }}>
               {fmt(value, decimals)}
             </p>
-            <p className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-subtle)' }}>{unit}</p>
-            <p className="text-xs sm:text-sm mt-1" style={{ color: 'var(--text-muted)' }}>{t(`speedTest.${key}`)}</p>
+            <p className="fs-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-subtle)' }}>{unit}</p>
+            <p className="fs-xs sm:text-sm mt-1" style={{ color: 'var(--text-muted)' }}>{t(`speedTest.${key}`)}</p>
           </div>
         ))}
       </div>
@@ -308,11 +308,11 @@ export function SpeedTest() {
 
           {/* Chart legend */}
           <div className="flex gap-5">
-            <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-subtle)' }}>
+            <div className="flex items-center gap-2 fs-sm" style={{ color: 'var(--text-subtle)' }}>
               <div className="w-4 h-0.5 rounded" style={{ backgroundColor: DL_COLOR }} />
               {t('speedTest.download')}
             </div>
-            <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-subtle)' }}>
+            <div className="flex items-center gap-2 fs-sm" style={{ color: 'var(--text-subtle)' }}>
               <div className="w-4 h-0.5 rounded" style={{ backgroundColor: UL_COLOR }} />
               {t('speedTest.upload')}
             </div>
@@ -320,7 +320,7 @@ export function SpeedTest() {
 
           {/* Historical line chart */}
           {history.length === 0 ? (
-            <div className="h-44 flex items-center justify-center text-sm" style={{ color: 'var(--text-subtle)' }}>
+            <div className="h-44 flex items-center justify-center fs-sm" style={{ color: 'var(--text-subtle)' }}>
               {t('speedTest.chartEmpty')}
             </div>
           ) : (
@@ -355,10 +355,10 @@ export function SpeedTest() {
         return (
           <div className="rounded-2xl border border-emerald-200 dark:border-emerald-800/60 bg-emerald-50/60 dark:bg-emerald-950/30 p-5">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-semibold text-emerald-700 dark:text-emerald-400 text-sm uppercase tracking-wider">
+              <h3 className="font-semibold text-emerald-700 dark:text-emerald-400 fs-sm uppercase tracking-wider">
                 {t('speedTest.summary.title')}
               </h3>
-              <span className="text-xs text-emerald-600 dark:text-emerald-500 font-medium">
+              <span className="fs-xs text-emerald-600 dark:text-emerald-500 font-medium">
                 {t('speedTest.summary.cycles', { count: history.length })}
               </span>
             </div>
@@ -371,9 +371,9 @@ export function SpeedTest() {
                 { label: t('speedTest.summary.peakUpload'),   value: peakUl.toFixed(1), unit: 'Mbps', color: UL_COLOR },
               ].map(({ label, value, unit, color }) => (
                 <div key={label} className="flex flex-col items-center gap-0.5">
-                  <span className="text-xl font-bold tabular-nums" style={{ color }}>{value}</span>
-                  <span className="text-xs font-normal" style={{ color: 'var(--text-subtle)' }}>{unit}</span>
-                  <span className="text-xs text-gray-500 dark:text-gray-400 text-center leading-tight mt-0.5">{label}</span>
+                  <span className="fs-xl font-bold tabular-nums" style={{ color }}>{value}</span>
+                  <span className="fs-xs font-normal" style={{ color: 'var(--text-subtle)' }}>{unit}</span>
+                  <span className="fs-xs text-gray-500 dark:text-gray-400 text-center leading-tight mt-0.5">{label}</span>
                 </div>
               ))}
             </div>

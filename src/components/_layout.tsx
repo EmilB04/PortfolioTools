@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { Menu } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { Sidebar } from './nav/Sidebar'
 import { Footer } from './footer/Footer'
 import HeaderSection from './header/HeaderSection'
@@ -10,6 +11,7 @@ function getInitialCollapsed(): boolean {
 }
 
 export function Layout() {
+  const { t } = useTranslation()
   const [collapsed, setCollapsed] = useState(getInitialCollapsed)
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -26,7 +28,7 @@ export function Layout() {
       {/* Mobile backdrop */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-40 bg-black/60 lg:hidden"
           onClick={() => setMobileOpen(false)}
         />
       )}
@@ -42,14 +44,14 @@ export function Layout() {
       {/* Main content — scrollable column */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <header
-          className="relative z-20 shrink-0 h-14 flex items-center justify-between gap-2 border-b px-4 sm:px-6 backdrop-blur-xl"
+          className="relative z-20 shrink-0 h-[52px] flex items-center justify-between gap-2 border-b px-3 sm:px-5"
           style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
         >
           <button
             className="lg:hidden p-2 rounded-lg transition-colors"
             style={{ color: 'var(--text-muted)' }}
             onClick={() => setMobileOpen(true)}
-            aria-label="Open menu"
+            aria-label={t('nav.openMenu')}
           >
             <Menu size={20} />
           </button>

@@ -10,7 +10,12 @@
     "counter": "Counter",
     "screenshotAnnotator": "Screenshot Annotator",
     "closeMenu": "Close menu",
+    "openMenu": "Open menu",
+    "collapseSidebar": "Collapse sidebar",
+    "expandSidebar": "Expand sidebar",
+    "collapse": "Collapse",
     "ariaLabel": "Tool navigation",
+    "breadcrumb": "Breadcrumb",
     "jsonTools": "JSON Tools",
     "jwtDecoder": "JWT Decoder",
     "encoder": "Encoder / Decoder",
@@ -63,12 +68,24 @@
   },
   "dashboard": {
     "title": "Portfolio Tools",
-    "subtitle": "A collection of browser-based utilities — no uploads, no tracking.",
+    "subtitle": "Browser-based utilities. Nothing uploads, nothing gets tracked.",
     "openTool": "Open Tool",
     "openNamed": "Open {{tool}}",
     "comingSoon": "Coming soon",
     "runSpeedTest": "Run Speed Test",
     "tools": "Tools",
+    "pause": "Pause rotation",
+    "resume": "Resume rotation",
+    "search": {
+      "placeholder": "Search tools…",
+      "clear": "Clear search",
+      "resultsCount": "{{count}} tool matches",
+      "resultsCount_other": "{{count}} tools match",
+      "noResults": "No tools match \"{{query}}\""
+    },
+    "filters": {
+      "all": "All"
+    },
     "stats": {
       "formatsSupported": "Formats supported",
       "filesConverted": "Files converted today",
@@ -84,35 +101,50 @@
   "tools": {
     "screenshotAnnotator": {
       "name": "Screenshot Annotator",
-      "description": "Paste a screenshot, annotate it, redact secrets — copy it out as markdown-ready image. Nothing leaves your browser.",
+      "description": "Paste a screenshot, annotate it, redact secrets, then copy it out as a markdown-ready image. Nothing leaves your browser.",
       "badge": "Screenshot → markdown",
       "stats": {
         "aLabel": "Alt text",
         "aValue": "From OCR",
         "bLabel": "Runs",
         "bValue": "In your browser"
+      },
+      "info": {
+        "input": "A screenshot you paste or drop in",
+        "process": "Annotate, redact or add alt text",
+        "output": "A copy-ready image or markdown link"
       }
     },
     "fileConverter": {
       "name": "File Converter",
-      "description": "Convert images (PNG, JPEG, WebP, GIF, BMP, SVG) and data files (JSON, CSV, TSV) — all in your browser.",
+      "description": "Convert images (PNG, JPEG, WebP, GIF, BMP, SVG) and data files (JSON, CSV, TSV), all in your browser.",
       "badge": "10+ formats",
       "stats": {
         "aLabel": "Formats supported",
         "aValue": "10+",
         "bLabel": "Runs",
         "bValue": "In your browser"
+      },
+      "info": {
+        "input": "An image or data file",
+        "process": "Convert it to another format",
+        "output": "The converted file, ready to download"
       }
     },
     "fileCompress": {
       "name": "File Compress",
-      "description": "Compress images (JPEG, PNG, WebP, GIF, BMP, SVG) with quality control, or Gzip any file — all in your browser.",
+      "description": "Compress images (JPEG, PNG, WebP, GIF, BMP, SVG) with quality control, or Gzip any file, all in your browser.",
       "badge": "Images + Gzip",
       "stats": {
         "aLabel": "Formats supported",
         "aValue": "Images + Gzip",
         "bLabel": "Runs",
         "bValue": "In your browser"
+      },
+      "info": {
+        "input": "An image or any file",
+        "process": "Compress it with adjustable quality",
+        "output": "A smaller file with the size saved shown"
       }
     },
     "speedTest": {
@@ -124,22 +156,32 @@
         "aValue": "—",
         "bLabel": "Avg. download today",
         "bValue": "—"
+      },
+      "info": {
+        "input": "Your live network connection",
+        "process": "Measure download, upload and latency",
+        "output": "Real-time speed and ping results"
       }
     },
     "qrGenerator": {
       "name": "QR Generator",
-      "description": "Create QR codes for links, text or Wi-Fi with custom colors. Export PNG or SVG — all in your browser.",
+      "description": "Create QR codes for links, text or Wi-Fi with custom colors, and export PNG or SVG, all in your browser.",
       "badge": "PNG + SVG",
       "stats": {
         "aLabel": "Export formats",
         "aValue": "PNG + SVG",
         "bLabel": "Runs",
         "bValue": "In your browser"
+      },
+      "info": {
+        "input": "A link, text or Wi-Fi details",
+        "process": "Encode it into a QR code",
+        "output": "A downloadable PNG or SVG"
       }
     },
     "qrReader": {
       "name": "QR Reader",
-      "description": "Upload an image of a QR code and decode it instantly — all in your browser.",
+      "description": "Upload an image of a QR code and decode it instantly, all in your browser.",
       "badge": "Decodes locally",
       "stats": {
         "aLabel": "Input",
@@ -162,6 +204,11 @@
         "aValue": "axe-core",
         "bLabel": "Crawl",
         "bValue": "Whole site"
+      },
+      "info": {
+        "input": "A site URL to crawl",
+        "process": "Audit every page with axe-core",
+        "output": "A list of accessibility issues per page"
       }
     },
     "counter": {
@@ -173,50 +220,75 @@
         "aValue": "0",
         "bLabel": "Exited",
         "bValue": "0"
+      },
+      "info": {
+        "input": "Taps as people enter or exit",
+        "process": "Tally the running total",
+        "output": "A live entered / exited count"
       }
     },
     "jsonTools": {
       "name": "JSON Tools",
-      "description": "Format, validate and query JSON with a live JSONPath explorer — pretty-print, minify or sort keys, all in your browser.",
+      "description": "Format, validate and query JSON with a live JSONPath explorer. Pretty-print, minify or sort keys, all in your browser.",
       "badge": "JSONPath built-in",
       "stats": {
         "aLabel": "Formatting modes",
         "aValue": "3",
         "bLabel": "Query language",
         "bValue": "JSONPath"
+      },
+      "info": {
+        "input": "Raw JSON text",
+        "process": "Format, validate or query it with JSONPath",
+        "output": "Pretty-printed, minified or filtered JSON"
       }
     },
     "jwtDecoder": {
       "name": "JWT Decoder",
-      "description": "Decode a JWT's header and payload, inspect standard claims and check expiry — the token never leaves your browser.",
+      "description": "Decode a JWT's header and payload, inspect standard claims and check expiry. The token never leaves your browser.",
       "badge": "Client-side only",
       "stats": {
         "aLabel": "Claims decoded",
         "aValue": "Header + payload",
         "bLabel": "Expiry check",
         "bValue": "Automatic"
+      },
+      "info": {
+        "input": "A JWT token",
+        "process": "Decode its header and payload",
+        "output": "Readable claims and expiry status"
       }
     },
     "encoder": {
       "name": "Encoder / Decoder",
-      "description": "Convert text between Base64, Base64URL, URL encoding, HTML entities and hex — swap direction with one click.",
+      "description": "Convert text between Base64, Base64URL, URL encoding, HTML entities and hex, and swap direction with one click.",
       "badge": "5 schemes",
       "stats": {
         "aLabel": "Encoding schemes",
         "aValue": "5",
         "bLabel": "Direction",
         "bValue": "Encode ⇄ Decode"
+      },
+      "info": {
+        "input": "Text to convert",
+        "process": "Encode or decode it (Base64, URL, hex…)",
+        "output": "The converted text"
       }
     },
     "hashGenerator": {
       "name": "Hash Generator",
-      "description": "Generate SHA-1, SHA-256, SHA-384 and SHA-512 digests from text or a file, in hex or Base64 — computed locally with WebCrypto.",
+      "description": "Generate SHA-1, SHA-256, SHA-384 and SHA-512 digests from text or a file, in hex or Base64. WebCrypto computes them locally.",
       "badge": "WebCrypto",
       "stats": {
         "aLabel": "Algorithms",
         "aValue": "4",
         "bLabel": "Sources",
         "bValue": "Text or file"
+      },
+      "info": {
+        "input": "Text or a file",
+        "process": "Hash it with SHA-1 / 256 / 384 / 512",
+        "output": "A hex or Base64 digest"
       }
     },
     "idGenerator": {
@@ -228,6 +300,11 @@
         "aValue": "5",
         "bLabel": "Batch size",
         "bValue": "Up to 500"
+      },
+      "info": {
+        "input": "A format and batch size",
+        "process": "Generate random or time-based IDs",
+        "output": "A list of ready-to-use IDs"
       }
     },
     "regexTester": {
@@ -239,6 +316,11 @@
         "aValue": "g·i·m·s·u·y",
         "bLabel": "Replace preview",
         "bValue": "Live"
+      },
+      "info": {
+        "input": "A pattern and sample text",
+        "process": "Match it live with your chosen flags",
+        "output": "Highlighted matches, groups and replacements"
       }
     },
     "cronExplainer": {
@@ -250,6 +332,11 @@
         "aValue": "8",
         "bLabel": "Macros supported",
         "bValue": "@daily, @weekly…"
+      },
+      "info": {
+        "input": "A cron expression",
+        "process": "Parse its schedule",
+        "output": "A plain-language description and next run times"
       }
     },
     "timestampConverter": {
@@ -261,6 +348,11 @@
         "aValue": "Epoch · ISO · Local",
         "bLabel": "Live clock",
         "bValue": "Updates every second"
+      },
+      "info": {
+        "input": "A timestamp or date",
+        "process": "Convert between epoch, ISO and local time",
+        "output": "All formats plus a live relative time"
       }
     },
     "subnetCalculator": {
@@ -272,6 +364,11 @@
         "aValue": "Instant",
         "bLabel": "Split into subnets",
         "bValue": "Up to 128"
+      },
+      "info": {
+        "input": "A CIDR block or IP address",
+        "process": "Calculate network, broadcast and host ranges",
+        "output": "Subnet details and optional splits"
       }
     },
     "passwordGenerator": {
@@ -283,11 +380,16 @@
         "aValue": "Password · Passphrase",
         "bLabel": "Strength meter",
         "bValue": "Live entropy"
+      },
+      "info": {
+        "input": "Your length and character preferences",
+        "process": "Generate a random password or passphrase",
+        "output": "A strong password with entropy and strength shown"
       }
     },
     "passwordChecker": {
       "name": "Password Checker",
-      "description": "Type a password and get an instant strength read: entropy, crack-time and a pattern checklist — nothing leaves your browser.",
+      "description": "Type a password and get an instant strength read: entropy, crack time and a pattern checklist. Nothing leaves your browser.",
       "badge": "Pattern-aware",
       "stats": {
         "aLabel": "Checks",
@@ -330,12 +432,17 @@
     "gzipUnsupported": "Gzip not supported in this browser",
     "smallest": "Smallest",
     "bestQuality": "Best quality",
-    "pngNote": "PNG uses lossless compression — switch to WebP or JPEG for smaller files",
+    "pngNote": "PNG uses lossless compression. Switch to WebP or JPEG for smaller files.",
     "auto": "Auto",
     "autoRunning": "Optimizing...",
     "autoTarget": "Auto target size",
     "smaller": "Smaller",
-    "largerBetter": "Larger · better quality"
+    "largerBetter": "Larger · better quality",
+    "noSizeChange": "No size change",
+    "saved": "Saved {{size}} · {{pct}}% smaller",
+    "grewPct": "{{pct}}% larger than original",
+    "original": "Original",
+    "output": "Output"
   },
   "speedTest": {
     "title": "Speed Test",
@@ -344,6 +451,7 @@
     "modeContinuousDesc": "Track speed over time with a live chart",
     "modeMax": "Max Speed",
     "modeMaxDesc": "One-shot test for peak download & upload",
+    "runFor": "Run for",
     "download": "Download",
     "upload": "Upload",
     "ping": "Ping",
@@ -389,7 +497,7 @@
     "reset": "Reset"
   },
   "qrReader": {
-    "privacyNote": "Decoded locally in your browser — the image is never uploaded anywhere.",
+    "privacyNote": "Decoded locally in your browser. The image never gets uploaded.",
     "imageTitle": "Image",
     "clear": "Clear",
     "dropTitle": "Drop a QR code image here",
@@ -471,7 +579,7 @@
       "crop": "Drag to keep only that region",
       "arrow": "Drag from tail to head",
       "box": "Drag to outline a region",
-      "blur": "Drag over anything secret — pixels are destroyed, not hidden",
+      "blur": "Drag over anything secret. It destroys the pixels instead of hiding them.",
       "text": "Type a label above, then click to place it",
       "pin": "Click to drop the next numbered marker"
     },
@@ -488,10 +596,10 @@
     "altPlaceholder": "Describe the screenshot…",
     "altFallback": "screenshot",
     "ocrSuggest": "Suggest from image",
-    "ocrLoading": "Loading OCR engine — first run downloads ~2 MB from a CDN…",
+    "ocrLoading": "Loading OCR engine. First run downloads about 2 MB from a CDN…",
     "filenameLabel": "Filename in markdown",
     "embedLabel": "Embed image as base64 data URI",
-    "embedWarn": "Data URI is ~{{kb}} KB of text. GitHub and GitLab strip these — use Copy image there instead.",
+    "embedWarn": "Data URI is ~{{kb}} KB of text. GitHub and GitLab strip these, so use Copy image there instead.",
     "markdownLabel": "Markdown",
     "copyImage": "Copy image",
     "copyMarkdown": "Copy markdown",
@@ -512,9 +620,15 @@
     "copy": "Copy",
     "copied": "Copied!",
     "copyFailed": "Copy failed",
-    "localOnly": "Runs entirely in your browser — nothing is uploaded.",
+    "localOnly": "Runs entirely in your browser. Nothing gets uploaded.",
     "sample": "Load sample",
-    "clear": "Clear"
+    "clear": "Clear",
+    "showInfo": "Show details",
+    "hideInfo": "Hide details",
+    "howItWorks": "How it works",
+    "stepInput": "Input",
+    "stepProcess": "Process",
+    "stepOutput": "Output"
   },
   "jsonTools": {
     "inputTitle": "Input",
@@ -552,7 +666,7 @@
     "queryResult": "Result"
   },
   "jwtDecoder": {
-    "privacyNote": "Decoding happens entirely in your browser — the token is never sent anywhere.",
+    "privacyNote": "Decoding happens entirely in your browser. The token never gets sent anywhere.",
     "inputTitle": "Token",
     "inputLabel": "JWT",
     "inputHint": "Paste a full token, with or without the \"Bearer \" prefix.",
@@ -581,7 +695,7 @@
       "name": "Name",
       "roles": "Roles"
     },
-    "signatureWarning": "This only decodes the token — it doesn't verify the signature. Never trust these claims without verifying them against the issuer's key.",
+    "signatureWarning": "This only decodes the token. It doesn't verify the signature. Never trust these claims without checking them against the issuer's key.",
     "validity": {
       "valid": "Valid until {{date}}",
       "expired": "Expired {{date}}",
@@ -609,8 +723,8 @@
     "encode": "Encode",
     "decode": "Decode",
     "schemeHints": {
-      "base64": "Standard Base64 (RFC 4648) — uses + and / with = padding.",
-      "base64url": "URL-safe Base64 — uses - and _ instead of + and /, no padding.",
+      "base64": "Standard Base64 (RFC 4648). Uses + and / with = padding.",
+      "base64url": "URL-safe Base64. Uses - and _ instead of + and /, no padding.",
       "url": "Percent-encoding for URLs and query strings (encodeURIComponent).",
       "html": "Escapes characters like < > & \" ' as HTML entities.",
       "hex": "Each byte as two hexadecimal digits."
@@ -633,10 +747,10 @@
     }
   },
   "hashGenerator": {
-    "privacyNote": "Hashing runs locally with the browser's WebCrypto API — nothing is uploaded.",
+    "privacyNote": "Hashing runs locally with the browser's WebCrypto API. Nothing gets uploaded.",
     "errors": {
       "digest": "Couldn't compute the hash.",
-      "tooLarge": "That file is larger than 256 MB — pick a smaller one.",
+      "tooLarge": "That file is larger than 256 MB. Pick a smaller one.",
       "read": "Couldn't read that file."
     },
     "inputTitle": "Source",
@@ -655,10 +769,10 @@
     "working": "Hashing…",
     "empty": "Enter text or choose a file to see its hashes.",
     "copyAlgo": "Copy {{algo}}",
-    "sha1Note": "SHA-1 is no longer collision-resistant — prefer SHA-256 or stronger wherever security matters."
+    "sha1Note": "SHA-1 is no longer collision-resistant. Prefer SHA-256 or stronger wherever security matters."
   },
   "idGenerator": {
-    "privacyNote": "Every ID is generated locally with crypto.getRandomValues — nothing is sent anywhere.",
+    "privacyNote": "Every ID is generated locally with crypto.getRandomValues. Nothing gets sent anywhere.",
     "settingsTitle": "Settings",
     "regenerate": "Regenerate",
     "kindLabel": "ID type",
@@ -670,11 +784,11 @@
       "short": "Short code"
     },
     "kindHints": {
-      "uuidv4": "128-bit random UUID (RFC 9562) — the general-purpose default.",
-      "uuidv7": "128-bit UUID with a sortable millisecond timestamp prefix — good for database keys.",
+      "uuidv4": "128-bit random UUID (RFC 9562), the general-purpose default.",
+      "uuidv7": "128-bit UUID with a sortable millisecond timestamp prefix, good for database keys.",
       "ulid": "26-character Crockford base32 ID, sortable by creation time.",
       "nanoid": "21-character URL-safe ID with more entropy per character than a UUID.",
-      "short": "8-character unambiguous code (no 0/O/1/I) — good for support tickets and invite codes."
+      "short": "8-character unambiguous code (no 0/O/1/I), good for support tickets and invite codes."
     },
     "countLabel": "Count",
     "countHint": "Up to {{max}} at once.",
@@ -692,12 +806,12 @@
     "patternHint": "JavaScript regex syntax, without the surrounding slashes.",
     "flagsLabel": "Flags",
     "flags": {
-      "global": "Global — find all matches, not just the first",
+      "global": "Global: find all matches, not just the first",
       "ignoreCase": "Ignore case",
-      "multiline": "Multiline — ^ and $ match line boundaries",
-      "dotAll": "Dot all — . also matches newlines",
-      "unicode": "Unicode — enables full Unicode matching",
-      "sticky": "Sticky — match only at lastIndex"
+      "multiline": "Multiline: ^ and $ match line boundaries",
+      "dotAll": "Dot all: . also matches newlines",
+      "unicode": "Unicode: enables full Unicode matching",
+      "sticky": "Sticky: match only at lastIndex"
     },
     "invalidPattern": "Invalid pattern: {{message}}",
     "subjectTitle": "Test string",
@@ -727,7 +841,7 @@
     "expressionHint": "Standard 5-field cron syntax (minute hour day month weekday), or a macro like @daily.",
     "errors": {
       "empty": "Enter a cron expression.",
-      "fieldCount": "A cron expression needs exactly 5 space-separated fields — found {{token}}.",
+      "fieldCount": "A cron expression needs exactly 5 space-separated fields. Found {{token}}.",
       "range": "\"{{token}}\" is out of range for the {{field}} field.",
       "syntax": "Couldn't parse \"{{token}}\" in the {{field}} field."
     },
@@ -760,7 +874,7 @@
       "onDaysOfMonth": "on days {{days}} of the month",
       "onWeekdays": "on {{days}}",
       "inMonths": "in {{months}}",
-      "dayUnionNote": "(day-of-month or day-of-week — either match triggers a run)"
+      "dayUnionNote": "(day-of-month or day-of-week: either match triggers a run)"
     }
   },
   "timestampConverter": {
@@ -829,7 +943,7 @@
     "classValue": "Class {{letter}}",
     "private": "Private",
     "public": "Public",
-    "pointToPointNote": "A /31 or /32 has no usable host range in the traditional sense — /31 is a point-to-point link (RFC 3021) and /32 is a single host.",
+    "pointToPointNote": "A /31 or /32 has no usable host range in the traditional sense. /31 is a point-to-point link (RFC 3021); /32 is a single host.",
     "containsTitle": "Contains address?",
     "containsLabel": "IPv4 address",
     "containsHint": "Check whether an address falls inside this subnet.",
@@ -847,7 +961,7 @@
     }
   },
   "passwordGenerator": {
-    "privacyNote": "Generated locally with the Web Crypto RNG — never sent anywhere, never stored.",
+    "privacyNote": "Generated locally with the Web Crypto RNG. Never sent anywhere, never stored.",
     "resultTitle": "Password",
     "regenerate": "Regenerate",
     "errors": {
@@ -865,7 +979,7 @@
       "pool": "Pool size",
       "crackTime": "Est. crack time"
     },
-    "crackAssumption": "Assumes 10 billion guesses per second — a fast offline attack against a stolen hash.",
+    "crackAssumption": "Assumes 10 billion guesses per second, a fast offline attack against a stolen hash.",
     "settingsTitle": "Settings",
     "modeLabel": "Mode",
     "modePassword": "Password",
@@ -897,11 +1011,11 @@
       "hours": "{{value}} hours",
       "minutes": "{{value}} minutes",
       "seconds": "{{value}} seconds",
-      "eons": "{{value}} years — longer than the age of the universe"
+      "eons": "{{value}} years, longer than the age of the universe"
     }
   },
   "passwordChecker": {
-    "privacyNote": "Checked locally with the same math as the generator — never sent anywhere, never stored.",
+    "privacyNote": "Checked locally with the same math as the generator. Never sent anywhere, never stored.",
     "inputTitle": "Password",
     "placeholder": "Type a password to check…",
     "show": "Show password",

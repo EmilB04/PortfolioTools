@@ -37,6 +37,11 @@ export function PasswordChecker() {
       title={t('tools.passwordChecker.name')}
       subtitle={t('tools.passwordChecker.description')}
       privacyNote={t('passwordChecker.privacyNote')}
+      info={{
+        input: t('tools.passwordChecker.info.input'),
+        process: t('tools.passwordChecker.info.process'),
+        output: t('tools.passwordChecker.info.output'),
+      }}
     >
       <Panel title={t('passwordChecker.inputTitle')}>
         <div className="space-y-4">

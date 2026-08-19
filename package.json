@@ -11,7 +11,7 @@
     "scan": "node scripts/wcag-scan.mjs"
   },
   "dependencies": {
-    "@cloudflare/puppeteer": "^1.1.0",
+    "@cloudflare/puppeteer": "^0.0.11",
     "axe-core": "^4.10.2",
     "framer-motion": "^12.42.0",
     "i18next": "^24.2.3",

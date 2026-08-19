@@ -13,7 +13,7 @@ export function SidebarLogo({ collapsed, isMobileDrawer, mobileClose }: SidebarL
 
   return (
     <div
-      className="h-14 flex items-center justify-between shrink-0 border-b px-4"
+      className="h-[52px] flex items-center justify-between shrink-0 border-b px-3"
       style={{ borderColor: 'var(--border)' }}
     >
       <BrandMark iconOnly={collapsed && !isMobileDrawer} />

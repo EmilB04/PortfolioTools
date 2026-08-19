@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,18 +6,22 @@
 
 /* ── Typography system ───────────────────────────────────────── */
 :root {
-  --font-display: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
+  /* Inter for the interface, Inter Tight for display. One superfamily, two voices:
+   * the tight cut gives headings a denser, more deliberate set without introducing a
+   * second personality, and Inter's tall x-height keeps small UI text legible. */
+  --font-display: 'Inter Tight', 'Inter', system-ui, sans-serif;
   --font-body:    'Inter', system-ui, -apple-system, sans-serif;
   --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
 
-  /* Fluid modular scale — min at 360px, max at 1280px viewport */
-  --fs-xs:   clamp(0.72rem, 0.69rem + 0.14vw, 0.8rem);
-  --fs-sm:   clamp(0.82rem, 0.78rem + 0.18vw, 0.92rem);
-  --fs-base: clamp(0.92rem, 0.88rem + 0.2vw,  1.02rem);
-  --fs-lg:   clamp(1.06rem, 0.98rem + 0.36vw, 1.28rem);
-  --fs-xl:   clamp(1.28rem, 1.12rem + 0.72vw, 1.7rem);
-  --fs-2xl:  clamp(1.6rem,  1.32rem + 1.24vw, 2.35rem);
-  --fs-3xl:  clamp(2rem,    1.56rem + 1.95vw, 3.1rem);
+  /* Fluid modular scale — min at 360px, max at 1280px viewport. The small end is
+   * deliberately not tiny: 16px body and 12.5px minimum keeps long tool output readable. */
+  --fs-xs:   clamp(0.78rem,  0.755rem + 0.11vw, 0.845rem);
+  --fs-sm:   clamp(0.875rem, 0.85rem  + 0.13vw, 0.95rem);
+  --fs-base: clamp(1rem,     0.965rem + 0.16vw, 1.07rem);
+  --fs-lg:   clamp(1.125rem, 1.05rem  + 0.34vw, 1.33rem);
+  --fs-xl:   clamp(1.35rem,  1.18rem  + 0.75vw, 1.78rem);
+  --fs-2xl:  clamp(1.7rem,   1.4rem   + 1.3vw,  2.45rem);
+  --fs-3xl:  clamp(2.1rem,   1.65rem  + 2vw,    3.2rem);
 
   /* Fluid spacing rhythm */
   --gap-page: clamp(1rem, 0.6rem + 1.8vw, 2rem);
@@ -31,15 +35,16 @@
   --content-narrow:  34rem; /* focused, mostly-text or single-control tools */
 }
 
-/* ── Design tokens (dark-first, plum-ink chassis shared with PortfolioPortal) ──
- * --accent is the one signal color (live/active/focus/primary actions); --accent-2
- * (violet) stays reserved for per-tool branding. Neutrals are plum-tinted rather than
- * true gray so they share a hue family with the accent instead of fighting it.
+/* ── Design tokens (flat, neutral chassis) ──────────────────────────────────
+ * One signal color: --accent. It is the only saturated color in the site's chrome —
+ * used sparingly for active/live/focus/primary actions — everything else is a flat
+ * neutral gray so the accent stays legible instead of competing with per-surface tint.
+ * No blur, no gradients, no glow: every surface is a solid flat color plus a 1px border.
  */
 :root {
   --accent:        #f1376e;
   --accent-hover:  #ff5c8a;
-  --accent-bg:     rgba(241, 55, 110, 0.16);
+  --accent-bg:     rgba(241, 55, 110, 0.14);
   --accent-border: rgba(241, 55, 110, 0.4);
   /* Accent as *text*. The raw accent fails AA against its own --accent-bg tint, so
    * each theme shifts it away from the surface: lighter here, darker in html.light.
@@ -47,50 +52,42 @@
   --accent-text:   color-mix(in srgb, var(--accent) 86%, #fff);
   --accent-on:     #ffffff;
 
-  /* Secondary accent (violet) — unifies per-tool purples */
-  --accent-2:        #8b5cf6;
-  --accent-2-bg:     rgba(139, 92, 246, 0.12);
-  --accent-2-border: rgba(139, 92, 246, 0.4);
-  --accent-gradient: linear-gradient(120deg, #f1376e 0%, #8b5cf6 100%);
-
-  --surface:       rgba(19, 14, 28, 0.8);
-  --surface-card:  rgba(26, 20, 36, 0.9);
-  --surface-card-solid: #1a1424;
-  --surface-hover: rgba(34, 27, 46, 0.94);
-  --text:          #f5f2f8;
-  --text-muted:    #8b7f9c;
-  --text-subtle:   #a79db5;
-  --border:        rgba(42, 35, 53, 1);
-  --border-strong: rgba(58, 49, 71, 1);
-  --border-hover:  rgba(66, 58, 78, 1);
-  --shadow:        rgba(0,0,0,0.5) 0 10px 20px -4px;
-  --glow:          rgba(241, 55, 110, 0.25);
+  --surface:       #121115;
+  --surface-card:  #17161b;
+  --surface-card-solid: #17161b;
+  --surface-hover: #1c1b21;
+  --text:          #f2f1f4;
+  /* Both dim tones clear 4.5:1 against --surface-card, the darkest thing either sits on. */
+  --text-muted:    #918f99;
+  --text-subtle:   #a8a6ae;
+  --border:        #232228;
+  --border-strong: #2f2e35;
+  --border-hover:  #38373e;
+  --shadow:        rgba(0,0,0,0.4) 0 8px 16px -4px;
+  /* Hairline on color swatches: pure white on dark, pure black on light. A tinted
+   * neutral here picks up the surface underneath and reads as dirt on the edge. */
+  --swatch-ring:   rgba(255, 255, 255, 0.16);
 }
 
 html.light {
   --accent-hover:  #c41e56;
-  --accent-bg:     rgba(241, 55, 110, 0.12);
+  --accent-bg:     rgba(241, 55, 110, 0.1);
   /* 28% toward black: the least darkening that keeps every one of the 13 accent
    * presets at >=4.5:1 on both white and its own --accent-bg tint. */
   --accent-text:   color-mix(in srgb, var(--accent) 72%, #000);
 
-  --accent-2:        #7c3aed;
-  --accent-2-bg:     rgba(124, 58, 237, 0.1);
-  --accent-2-border: rgba(124, 58, 237, 0.35);
-  --accent-gradient: linear-gradient(120deg, #f1376e 0%, #7c3aed 100%);
-
-  --surface:       rgba(255, 255, 255, 0.8);
-  --surface-card:  rgba(244, 241, 248, 0.9);
-  --surface-card-solid: #f4f1f8;
-  --surface-hover: rgba(248, 245, 251, 0.95);
-  --text:          #17111f;
-  --text-muted:    #6f677c;
-  --text-subtle:   #5c5369;
-  --border:        rgba(226, 220, 234, 1);
-  --border-strong: rgba(201, 193, 213, 1);
-  --border-hover:  rgba(201, 193, 213, 1);
-  --shadow:        rgba(0,0,0,0.08) 0 10px 20px -4px;
-  --glow:          rgba(241, 55, 110, 0.18);
+  --surface:       #ffffff;
+  --surface-card:  #f7f7f8;
+  --surface-card-solid: #f7f7f8;
+  --surface-hover: #f0f0f2;
+  --text:          #17161b;
+  --text-muted:    #6a6871;
+  --text-subtle:   #55535b;
+  --border:        #e4e3e7;
+  --border-strong: #d3d2d8;
+  --border-hover:  #c2c1c8;
+  --shadow:        rgba(0,0,0,0.06) 0 8px 16px -4px;
+  --swatch-ring:   rgba(0, 0, 0, 0.14);
 }
 
 /* ── Base ───────────────────────────────────────────────────── */
@@ -102,7 +99,7 @@ html.light {
   body {
     font-family: var(--font-body);
     font-size: var(--fs-base);
-    line-height: 1.55;
+    line-height: 1.6;
     color: var(--text);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -110,12 +107,20 @@ html.light {
     transition: background 0.3s ease, color 0.3s ease;
   }
 
+  /* Paragraphs shouldn't strand a single word on the last line. */
+  p { text-wrap: pretty; }
+
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
-    line-height: 1.08;
+    letter-spacing: -0.021em;
+    line-height: 1.12;
     font-weight: 700;
+    /* Even line lengths matter more than a full last line on short display text. */
+    text-wrap: balance;
   }
+
+  /* Any figure that updates in place must not reflow its neighbours. */
+  input, output, td, .font-mono { font-variant-numeric: tabular-nums; }
 
   ::selection {
     background: var(--accent-bg);
@@ -138,11 +143,11 @@ html.light {
 }
 
 html {
-  background-color: #0e0a15;
+  background-color: #0a0a0c;
 }
 
 html.light {
-  background-color: #faf8fc;
+  background-color: #fbfbfc;
 }
 
 /* ── Page containers ────────────────────────────────────────────
@@ -166,48 +171,15 @@ html.light {
   .prose-measure { max-width: 68ch; }
 }
 
-/* ── Dropdown / settings-menu components (shared language with PortfolioPortal) ── */
+/* ── Dropdown surface ────────────────────────────────────────────────────────
+ * The settings panel is the only floating surface in the app. Its rows carry their
+ * own flat accent-tinted selected state inline, so this is just the raised sheet.
+ */
 @layer components {
   .pp-dropdown-panel {
-    background:
-      linear-gradient(180deg, color-mix(in srgb, var(--surface-card-solid) 100%, #000 0%) 0%, color-mix(in srgb, var(--surface-card-solid) 92%, #000 8%) 100%);
+    background: var(--surface-card-solid);
     border: 1px solid var(--border);
-    box-shadow:
-      0 24px 60px rgba(0, 0, 0, 0.42),
-      inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  }
-
-  .pp-dropdown-trigger {
-    transition:
-      transform 180ms ease,
-      border-color 180ms ease,
-      background-color 180ms ease,
-      box-shadow 180ms ease,
-      color 180ms ease;
-  }
-
-  .pp-dropdown-trigger:hover {
-    transform: translateY(-1px);
-  }
-
-  .pp-dropdown-item {
-    transition:
-      transform 160ms ease,
-      background-color 160ms ease,
-      color 160ms ease,
-      box-shadow 160ms ease;
-  }
-
-  .pp-dropdown-item:hover {
-    transform: translateX(2px);
-  }
-
-  .pp-dropdown-item[aria-selected='true'],
-  .pp-dropdown-item[aria-pressed='true'],
-  .pp-dropdown-item[data-active='true'] {
-    background: color-mix(in srgb, var(--accent) 16%, var(--surface-card));
-    color: var(--text);
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 24%, transparent);
+    box-shadow: var(--shadow);
   }
 }
 
@@ -220,37 +192,25 @@ html.light {
   .text-muted      { color: var(--text-muted); }
   .text-subtle     { color: var(--text-subtle); }
   .accent-color    { color: var(--accent-text); }
-  .accent-2-color  { color: var(--accent-2); }
 
-  /* Per-tool branding colors. Set --tool on the element, then use these instead of
-   * inlining the hex: on light backgrounds a vivid brand color fails WCAG AA as
+  /* Per-tool brand tone, used sparingly for in-tool functional state (selected
+   * segment, primary action, live indicators) — never for top-level chrome, which
+   * stays on the single --accent. Set --tool on the element, then use these instead
+   * of inlining the hex: on light backgrounds a vivid brand color fails WCAG AA as
    * text (and as a fill under white text), so both darken there and stay vivid on
    * dark. 37% / 33% are the worst-case shifts across the seven tool colors. */
   .tool-text { color: var(--tool); }
   html.light .tool-text { color: color-mix(in srgb, var(--tool) 63%, #000); }
   /* Always carries white text, so it darkens in both themes, not just light. */
   .tool-fill { background: color-mix(in srgb, var(--tool) 63%, #000); }
-  .bg-accent-gradient { background: var(--accent-gradient); }
-  .text-accent-gradient {
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-  }
-  .accent-glow { box-shadow: 0 0 24px var(--glow); }
 
-  /* Tool grid cards: border/lift driven by the per-card --tool var, so the JS
-   * layer never has to touch style.borderColor/transform on hover. */
+  /* Tool grid cards: border driven by the per-card --tool var, so the JS layer
+   * never has to touch style.borderColor on hover. Flat — no lift, no glow. */
   .tool-card {
-    transition: border-color 200ms ease, transform 200ms ease, background-color 200ms ease;
+    transition: border-color 200ms ease, background-color 200ms ease;
   }
   .tool-card:hover, .tool-card:focus-visible {
-    border-color: color-mix(in srgb, var(--tool) 50%, transparent);
-    transform: translateY(-2px);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .tool-card:hover, .tool-card:focus-visible { transform: none; }
+    border-color: var(--accent-border);
   }
 
   /* Fluid type utilities */

@@ -63,6 +63,11 @@ export function QrReader() {
       title={t('tools.qrReader.name')}
       subtitle={t('tools.qrReader.description')}
       privacyNote={t('qrReader.privacyNote')}
+      info={{
+        input: t('tools.qrReader.info.input'),
+        process: t('tools.qrReader.info.process'),
+        output: t('tools.qrReader.info.output'),
+      }}
     >
       <Panel title={t('qrReader.imageTitle')} actions={file && (
         <ActionButton variant="ghost" icon={<X size={13} />} onClick={clear}>
