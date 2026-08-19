@@ -223,7 +223,7 @@ html.light {
     transition: border-color 200ms ease, background-color 200ms ease;
   }
   .tool-card:hover, .tool-card:focus-visible {
-    border-color: var(--border-hover);
+    border-color: var(--accent-border);
   }
 
   /* Fluid type utilities */

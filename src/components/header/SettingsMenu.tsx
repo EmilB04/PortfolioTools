@@ -116,7 +116,7 @@ export default function SettingsMenu() {
                     motion-reduce:transition-none
                     ${open
                         ? 'border-[var(--accent)] bg-[color:color-mix(in_srgb,var(--surface-card)_90%,#000_10%)] text-[var(--text)] shadow-[0_12px_30px_rgba(0,0,0,0.18)] ring-4 ring-[color:color-mix(in_srgb,var(--accent)_16%,transparent)]'
-                        : 'border-[var(--border)] bg-[color:color-mix(in_srgb,var(--surface)_92%,#000_8%)] text-[var(--text)] shadow-[0_8px_24px_rgba(0,0,0,0.14)] hover:border-[var(--border-hover)] hover:bg-[color:color-mix(in_srgb,var(--surface-card)_88%,#000_12%)] active:translate-y-0 active:scale-[0.985] active:shadow-[0_4px_14px_rgba(0,0,0,0.14)]'
+                        : 'border-[var(--border)] bg-[color:color-mix(in_srgb,var(--surface)_92%,#000_8%)] text-[var(--text)] shadow-[0_8px_24px_rgba(0,0,0,0.14)] hover:border-[var(--accent-border)] hover:bg-[color:color-mix(in_srgb,var(--surface-card)_88%,#000_12%)] active:translate-y-0 active:scale-[0.985] active:shadow-[0_4px_14px_rgba(0,0,0,0.14)]'
                     }
                 `}
             >
@@ -267,7 +267,7 @@ export default function SettingsMenu() {
                                 <button
                                     type="button"
                                     onClick={decline}
-                                    className="flex-1 rounded-xl border border-[var(--border)] px-3 py-2 text-xs font-semibold text-[var(--text-subtle)] transition-colors duration-200 hover:text-[var(--text)]"
+                                    className="flex-1 rounded-xl border border-[var(--border)] px-3 py-2 text-xs font-semibold text-[var(--text-subtle)] transition-colors duration-200 hover:text-[var(--text)] hover:border-[var(--accent-border)]"
                                 >
                                     {t('cookieConsent.decline')}
                                 </button>

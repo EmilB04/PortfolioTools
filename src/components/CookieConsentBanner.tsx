@@ -32,7 +32,7 @@ export default function CookieConsentBanner() {
                             <button
                                 type="button"
                                 onClick={decline}
-                                className="rounded-xl border border-[var(--border)] px-4 py-2 text-sm font-semibold text-[var(--text-subtle)] transition-colors duration-200 hover:text-[var(--text)]"
+                                className="rounded-xl border border-[var(--border)] px-4 py-2 text-sm font-semibold text-[var(--text-subtle)] transition-colors duration-200 hover:text-[var(--text)] hover:border-[var(--accent-border)]"
                             >
                                 {t('cookieConsent.decline')}
                             </button>

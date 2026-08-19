@@ -388,9 +388,10 @@ export function ActionButton({
     <button
       type="button"
       {...props}
-      className={`${base} border hover:opacity-80 ${variant === 'outline' ? 'tool-text' : ''} ${className}`}
+      className={`${base} border hover:opacity-80 hover:border-[var(--accent-border)] ${
+        variant === 'outline' ? 'tool-text border-[var(--border-strong)]' : 'border-[var(--border)]'
+      } ${className}`}
       style={{
-        borderColor: variant === 'outline' ? 'var(--border-strong)' : 'var(--border)',
         color: variant === 'ghost' ? 'var(--text-muted)' : undefined,
         background: 'var(--surface-card)',
       }}

@@ -265,8 +265,8 @@ export function Dashboard() {
               value={query}
               onChange={e => setQuery(e.target.value)}
               placeholder={t('dashboard.search.placeholder')}
-              className="w-full rounded-xl border pl-9 pr-9 py-2 fs-sm"
-              style={{ background: 'var(--surface-card)', borderColor: 'var(--border)', color: 'var(--text)' }}
+              className="w-full rounded-xl border border-[var(--border)] pl-9 pr-9 py-2 fs-sm transition-colors hover:border-[var(--accent-border)] focus:border-[var(--accent-border)]"
+              style={{ background: 'var(--surface-card)', color: 'var(--text)' }}
             />
             {query && (
               <button
@@ -292,6 +292,8 @@ export function Dashboard() {
                 background: categoryFilter === 'all' ? 'var(--accent-bg)' : 'transparent',
                 color: categoryFilter === 'all' ? 'var(--accent-text)' : 'var(--text-subtle)',
               }}
+              onMouseEnter={e => { if (categoryFilter !== 'all') e.currentTarget.style.borderColor = 'var(--accent-border)' }}
+              onMouseLeave={e => { if (categoryFilter !== 'all') e.currentTarget.style.borderColor = 'var(--border)' }}
             >
               {t('dashboard.filters.all')}
             </button>
@@ -307,6 +309,8 @@ export function Dashboard() {
                   background: categoryFilter === category ? 'var(--accent-bg)' : 'transparent',
                   color: categoryFilter === category ? 'var(--accent-text)' : 'var(--text-subtle)',
                 }}
+                onMouseEnter={e => { if (categoryFilter !== category) e.currentTarget.style.borderColor = 'var(--accent-border)' }}
+                onMouseLeave={e => { if (categoryFilter !== category) e.currentTarget.style.borderColor = 'var(--border)' }}
               >
                 {t(`nav.categories.${category}`)}
               </button>
