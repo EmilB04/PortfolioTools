@@ -106,3 +106,15 @@ export const TOOL_GROUPS: ToolGroup[] = CATEGORY_ORDER.map(category => ({
 
 /** Cards shown on the dashboard, in registry order. */
 export const DASHBOARD_TOOLS = TOOLS.filter(tool => !tool.hideOnDashboard)
+
+/**
+ * Resolve a pathname to the tool it belongs to. Longest-prefix match, so nested
+ * routes still resolve to their parent tool. Shared by the sidebar (to highlight the
+ * active item) and the header breadcrumb, which must never disagree about where you are.
+ */
+export function findActiveTool(pathname: string): ToolDefinition | undefined {
+  if (pathname === '/') return TOOLS.find(tool => tool.to === '/')
+  return TOOLS.filter(tool => tool.to !== '/' && pathname.startsWith(tool.to)).sort(
+    (a, b) => b.to.length - a.to.length,
+  )[0]
+}

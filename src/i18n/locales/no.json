@@ -15,6 +15,7 @@
     "expandSidebar": "Utvid sidepanel",
     "collapse": "Slå sammen",
     "ariaLabel": "Verktøynavigasjon",
+    "breadcrumb": "Brødsmulesti",
     "jsonTools": "JSON-verktøy",
     "jwtDecoder": "JWT-dekoder",
     "encoder": "Koder / Dekoder",

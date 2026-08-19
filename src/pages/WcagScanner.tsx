@@ -111,7 +111,7 @@ function SeverityBar({ counts, total, labels }: { counts: Record<Impact, number>
       </div>
       <div className="flex flex-wrap gap-x-5 gap-y-1.5">
         {IMPACT_ORDER.map(imp => (
-          <div key={imp} className="flex items-center gap-1.5 text-xs">
+          <div key={imp} className="flex items-center gap-1.5 fs-xs">
             <span className="h-2 w-2 rounded-full shrink-0" style={{ background: IMPACT_COLOR[imp] }} />
             <span style={{ color: 'var(--text-subtle)' }}>{labels[imp]}</span>
             <span className="font-mono font-semibold tabular-nums" style={{ color: 'var(--text)' }}>{counts[imp]}</span>
@@ -272,11 +272,11 @@ export function WcagScanner() {
           <Accessibility size={20} style={{ color: 'var(--text-subtle)' }} />
         </div>
         <div className="min-w-0 flex-1">
-          <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
+          <h1 className="fs-xl font-display font-bold tracking-tight" style={{ color: 'var(--text)' }}>
             {t('wcagScanner.title')}
           </h1>
           <InfoButton show={showInfo} onToggle={() => setShowInfo(v => !v)} color={ACCENT} controls={infoId} />
-          <p className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
+          <p className="fs-sm mt-0.5 prose-measure" style={{ color: 'var(--text-subtle)' }}>
             {t('wcagScanner.subtitle')}
           </p>
         </div>
@@ -310,18 +310,18 @@ export function WcagScanner() {
             onKeyDown={e => { if (e.key === 'Enter' && !isScanning) scan() }}
             disabled={isScanning}
             placeholder={t('wcagScanner.placeholder')}
-            className="flex-1 min-w-0 bg-transparent text-sm outline-none disabled:opacity-60"
+            className="flex-1 min-w-0 bg-transparent fs-sm outline-none disabled:opacity-60"
             style={{ color: 'var(--text)' }}
           />
         </div>
 
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <div className="flex items-center gap-2">
-            <span className="text-xs shrink-0" style={{ color: 'var(--text-subtle)' }}>{t('wcagScanner.pages')}</span>
+            <span className="fs-xs shrink-0" style={{ color: 'var(--text-subtle)' }}>{t('wcagScanner.pages')}</span>
             <div className="flex gap-1 p-1 rounded-xl border" style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}>
               {MAX_OPTIONS.map(n => (
                 <button key={n} onClick={() => setMaxPages(n)} disabled={isScanning}
-                  className="px-2.5 py-1 rounded-lg text-sm font-medium transition-all duration-150 disabled:cursor-not-allowed"
+                  className="px-2.5 py-1 rounded-lg fs-sm font-medium transition-all duration-150 disabled:cursor-not-allowed"
                   style={{
                     background: maxPages === n ? ACCENT_FILL : 'transparent',
                     color: maxPages === n ? '#ffffff' : 'var(--text-subtle)',
@@ -334,13 +334,13 @@ export function WcagScanner() {
 
           {isScanning ? (
             <button onClick={stop}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white fs-sm font-semibold transition-opacity hover:opacity-90"
               style={{ background: '#dc2626' }}>
               <Square size={13} fill="currentColor" /> {t('wcagScanner.stop')}
             </button>
           ) : (
             <button onClick={scan} disabled={!url.trim()}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white fs-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
               style={{ background: ACCENT_FILL }}>
               <ScanLine size={15} /> {t('wcagScanner.scan')}
             </button>
@@ -349,7 +349,7 @@ export function WcagScanner() {
       </div>
 
       {errorMsg && (
-        <p className="text-sm flex items-center gap-1.5" style={{ color: '#ef4444' }}>
+        <p className="fs-sm flex items-center gap-1.5" style={{ color: '#ef4444' }}>
           <AlertTriangle size={14} /> {errorMsg}
         </p>
       )}
@@ -365,7 +365,7 @@ export function WcagScanner() {
               <h2 className="fs-lg font-display font-bold" style={{ color: 'var(--text)' }}>
                 {t('wcagScanner.emptyTitle')}
               </h2>
-              <p className="text-sm mt-1 max-w-md" style={{ color: 'var(--text-subtle)' }}>
+              <p className="fs-sm mt-1 max-w-md" style={{ color: 'var(--text-subtle)' }}>
                 {t('wcagScanner.emptyBody')}
               </p>
             </div>
@@ -399,7 +399,7 @@ export function WcagScanner() {
                   {totals.total === 0 ? t('wcagScanner.clean') : t('wcagScanner.issues', { count: totals.total })}
                   {isScanning && <Loader2 size={15} className="animate-spin" style={{ color: ACCENT }} />}
                 </p>
-                <p className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
+                <p className="fs-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
                   {t('wcagScanner.scanned', { count: pages.length })}
                 </p>
               </div>
@@ -431,21 +431,21 @@ export function WcagScanner() {
                     style={{ background: p.error ? '#ef4444' : worst ? IMPACT_COLOR[worst] : '#10b981' }}
                     aria-hidden="true"
                   />
-                  <span className="text-sm truncate" style={{ color: 'var(--text)' }}>
+                  <span className="fs-sm truncate" style={{ color: 'var(--text)' }}>
                     {p.url.replace(/^https?:\/\//, '')}
                   </span>
                 </span>
                 <div className="flex items-center gap-3 shrink-0">
                   {p.error ? (
-                    <span className="text-xs flex items-center gap-1" style={{ color: '#ef4444' }}>
+                    <span className="fs-xs flex items-center gap-1" style={{ color: '#ef4444' }}>
                       <AlertTriangle size={12} /> {t('wcagScanner.pageError')}
                     </span>
                   ) : count === 0 ? (
-                    <span className="text-xs flex items-center gap-1" style={{ color: '#10b981' }}>
+                    <span className="fs-xs flex items-center gap-1" style={{ color: '#10b981' }}>
                       <CheckCircle2 size={12} /> 0
                     </span>
                   ) : (
-                    <span className="text-xs font-semibold px-2 py-0.5 rounded-full"
+                    <span className="fs-xs font-semibold px-2 py-0.5 rounded-full"
                       style={{ background: `${IMPACT_COLOR[worst ?? 'minor']}1f`, color: IMPACT_COLOR[worst ?? 'minor'] }}>
                       {t('wcagScanner.issues', { count })}
                     </span>
@@ -466,10 +466,10 @@ export function WcagScanner() {
                   >
                     <div className="px-4 pb-4 space-y-3 border-t pt-3" style={{ borderColor: 'var(--border)' }}>
                       {p.error && (
-                        <p className="text-sm" style={{ color: '#ef4444' }}>{p.error}</p>
+                        <p className="fs-sm" style={{ color: '#ef4444' }}>{p.error}</p>
                       )}
                       {!p.error && p.violations.length === 0 && (
-                        <p className="text-sm" style={{ color: '#10b981' }}>{t('wcagScanner.pageClean')}</p>
+                        <p className="fs-sm" style={{ color: '#10b981' }}>{t('wcagScanner.pageClean')}</p>
                       )}
                       {[...p.violations]
                         .sort((a, b) => IMPACT_ORDER.indexOf((a.impact ?? 'minor') as Impact) - IMPACT_ORDER.indexOf((b.impact ?? 'minor') as Impact))
@@ -479,26 +479,26 @@ export function WcagScanner() {
                             <div className="flex items-start justify-between gap-2">
                               <div className="min-w-0">
                                 <div className="flex items-center gap-2 flex-wrap">
-                                  <span className="text-xs font-bold uppercase px-1.5 py-0.5 rounded"
+                                  <span className="fs-xs font-bold uppercase px-1.5 py-0.5 rounded"
                                     style={{ background: `${IMPACT_COLOR[(v.impact ?? 'minor') as Impact]}22`, color: IMPACT_COLOR[(v.impact ?? 'minor') as Impact] }}>
                                     {v.impact ?? 'minor'}
                                   </span>
-                                  <span className="text-sm font-medium" style={{ color: 'var(--text)' }}>{v.help}</span>
+                                  <span className="fs-sm font-medium" style={{ color: 'var(--text)' }}>{v.help}</span>
                                 </div>
-                                <p className="text-xs mt-1" style={{ color: 'var(--text-subtle)' }}>{v.description}</p>
+                                <p className="fs-xs mt-1" style={{ color: 'var(--text-subtle)' }}>{v.description}</p>
                               </div>
-                              <span className="text-xs tabular-nums shrink-0" style={{ color: 'var(--text-subtle)' }}>
+                              <span className="fs-xs tabular-nums shrink-0" style={{ color: 'var(--text-subtle)' }}>
                                 ×{v.nodeCount}
                               </span>
                             </div>
                             <div className="flex items-center gap-3 mt-2">
                               <a href={v.helpUrl} target="_blank" rel="noopener noreferrer"
-                                className="text-xs flex items-center gap-1 hover:underline" style={{ color: ACCENT }}>
+                                className="fs-xs flex items-center gap-1 hover:underline" style={{ color: ACCENT }}>
                                 {t('wcagScanner.howToFix')} <ExternalLink size={11} />
                               </a>
                             </div>
                             {v.nodes[0] && (
-                              <pre className="text-xs mt-2 p-2 rounded overflow-x-auto"
+                              <pre className="fs-xs mt-2 p-2 rounded overflow-x-auto"
                                 style={{ background: 'var(--surface)', color: 'var(--text-muted)' }}>
                                 {v.nodes[0].html}
                               </pre>
@@ -518,17 +518,17 @@ export function WcagScanner() {
       {pages.length > 0 && (
         <div className="space-y-2 pt-2">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
+            <h2 className="fs-sm font-semibold" style={{ color: 'var(--text)' }}>
               {t('wcagScanner.summary')}
             </h2>
             <button onClick={copySummary}
-              className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg border transition-colors hover:opacity-80"
+              className="flex items-center gap-1.5 fs-xs px-2.5 py-1.5 rounded-lg border transition-colors hover:opacity-80"
               style={{ background: 'var(--surface)', borderColor: 'var(--border)', color: copied ? '#10b981' : 'var(--text-subtle)' }}>
               {copied ? <Check size={13} /> : <Copy size={13} />}
               {copied ? t('wcagScanner.copied') : t('wcagScanner.copy')}
             </button>
           </div>
-          <pre className="text-xs p-3 rounded-xl border overflow-x-auto whitespace-pre-wrap break-words"
+          <pre className="fs-xs p-3 rounded-xl border overflow-x-auto whitespace-pre-wrap break-words"
             style={{ background: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
             {summaryText}
           </pre>
@@ -539,11 +539,11 @@ export function WcagScanner() {
       {history.length > 0 && (
         <div className="space-y-2 pt-2">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold flex items-center gap-1.5" style={{ color: 'var(--text)' }}>
+            <h2 className="fs-sm font-semibold flex items-center gap-1.5" style={{ color: 'var(--text)' }}>
               <History size={14} style={{ color: 'var(--text-subtle)' }} /> {t('wcagScanner.history')}
             </h2>
             <button onClick={clearAll}
-              className="text-xs hover:underline" style={{ color: 'var(--text-subtle)' }}>
+              className="fs-xs hover:underline" style={{ color: 'var(--text-subtle)' }}>
               {t('wcagScanner.clearHistory')}
             </button>
           </div>
@@ -563,21 +563,21 @@ export function WcagScanner() {
                     aria-hidden="true"
                   />
                   <div className="min-w-0">
-                    <div className="text-sm truncate" style={{ color: 'var(--text)' }}>
+                    <div className="fs-sm truncate" style={{ color: 'var(--text)' }}>
                       {h.url.replace(/^https?:\/\//, '')}
                     </div>
-                    <div className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
+                    <div className="fs-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
                       {timeAgo(h.timestamp, i18n.language)} · {t('wcagScanner.scanned', { count: h.pagesScanned })}
                     </div>
                   </div>
                 </button>
                 <div className="flex items-center gap-2 shrink-0">
                   {h.totalIssues === 0 ? (
-                    <span className="text-xs flex items-center gap-1" style={{ color: '#10b981' }}>
+                    <span className="fs-xs flex items-center gap-1" style={{ color: '#10b981' }}>
                       <CheckCircle2 size={12} /> 0
                     </span>
                   ) : (
-                    <span className="text-xs font-semibold px-2 py-0.5 rounded-full"
+                    <span className="fs-xs font-semibold px-2 py-0.5 rounded-full"
                       style={{ background: 'rgba(220,38,38,0.12)', color: '#dc2626' }}>
                       {t('wcagScanner.issues', { count: h.totalIssues })}
                     </span>
@@ -603,7 +603,7 @@ export function WcagScanner() {
                     transition={{ duration: 0.2, ease: 'easeInOut' }}
                     className="overflow-hidden"
                   >
-                    <pre className="text-xs px-4 pb-4 pt-3 border-t overflow-x-auto whitespace-pre-wrap break-words"
+                    <pre className="fs-xs px-4 pb-4 pt-3 border-t overflow-x-auto whitespace-pre-wrap break-words"
                       style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
                       {buildSummary(h.pages, h.url)}
                     </pre>

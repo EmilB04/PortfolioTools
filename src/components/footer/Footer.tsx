@@ -15,7 +15,7 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border transition-all duration-150"
+      className="inline-flex items-center gap-1.5 fs-xs font-medium px-3 py-1.5 rounded-lg border transition-all duration-150"
       style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}
       onMouseEnter={e => {
         e.currentTarget.style.borderColor = 'var(--border-hover)'
@@ -45,7 +45,7 @@ export function Footer() {
         className="page-container page-container-wide rounded-2xl border px-5 py-4 flex flex-wrap items-center justify-between gap-3"
         style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
       >
-        <p className="text-xs" style={{ color: 'var(--text-subtle)' }}>
+        <p className="fs-xs" style={{ color: 'var(--text-subtle)' }}>
           © {year}{' '}
           <span className="font-semibold" style={{ color: 'var(--text-muted)' }}>Emil Berglund</span>
           <span className="mx-2 opacity-40">·</span>

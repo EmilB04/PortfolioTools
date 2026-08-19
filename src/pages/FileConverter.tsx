@@ -362,11 +362,11 @@ export function FileConverter() {
           <FileInput size={20} style={{ color: 'var(--text-subtle)' }} />
         </div>
         <div className="min-w-0 flex-1">
-          <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
+          <h1 className="fs-xl font-display font-bold tracking-tight" style={{ color: 'var(--text)' }}>
             {t('fileConverter.title')}
           </h1>
           <InfoButton show={showInfo} onToggle={() => setShowInfo(v => !v)} color={ACCENT} controls={infoId} />
-          <p className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
+          <p className="fs-sm mt-0.5 prose-measure" style={{ color: 'var(--text-subtle)' }}>
             Images · JSON · CSV · TSV{AVIF_SUPPORTED ? ' · AVIF' : ''} · browser-only, no uploads
           </p>
         </div>
@@ -411,14 +411,14 @@ export function FileConverter() {
               }} />
           </div>
           <div className="text-center">
-            <p className="text-sm font-medium"
+            <p className="fs-sm font-medium"
               style={{
                 color: (dragging || hovering) ? 'var(--text)' : 'var(--text-muted)',
                 transition: 'color 0.18s ease',
               }}>
               {t('fileConverter.dropzone')}
             </p>
-            <p className="text-xs mt-1.5" style={{ color: 'var(--text-subtle)' }}>
+            <p className="fs-xs mt-1.5" style={{ color: 'var(--text-subtle)' }}>
               {t('fileConverter.dropzoneFormats')}
               {AVIF_SUPPORTED ? ' · AVIF' : ''}
             </p>
@@ -438,8 +438,8 @@ export function FileConverter() {
                 <FileInput size={16} style={{ color: '#f97316' }} />
               </div>
               <div className="min-w-0">
-                <p className="text-sm font-medium truncate" style={{ color: 'var(--text)' }}>{file.name}</p>
-                <p className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
+                <p className="fs-sm font-medium truncate" style={{ color: 'var(--text)' }}>{file.name}</p>
+                <p className="fs-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
                   {fmtBytes(file.size)} · {MIME_LABEL[mime] ?? mime}
                 </p>
               </div>
@@ -456,7 +456,7 @@ export function FileConverter() {
             <div className="space-y-2">
               <div className="flex items-center gap-3 flex-wrap">
                 {/* Source badge */}
-                <div className="px-3 py-1.5 rounded-lg text-sm font-semibold"
+                <div className="px-3 py-1.5 rounded-lg fs-sm font-semibold"
                   style={{
                     background: 'var(--surface-card)',
                     color: 'var(--text-muted)',
@@ -474,7 +474,7 @@ export function FileConverter() {
                     <button key={tm}
                       disabled={conv.kind === 'done'}
                       onClick={() => setConv(s => s.kind === 'selected' ? { ...s, targetMime: tm } : s)}
-                      className="px-3 py-1 rounded-lg text-sm font-medium transition-all duration-150 disabled:cursor-default"
+                      className="px-3 py-1 rounded-lg fs-sm font-medium transition-all duration-150 disabled:cursor-default"
                       style={{
                         background: targetMime === tm ? '#f97316' : 'transparent',
                         color:      targetMime === tm ? '#ffffff' : 'var(--text-subtle)',
@@ -487,7 +487,7 @@ export function FileConverter() {
 
               {/* Estimated size for image-to-image (no quality slider) */}
               {conv.kind === 'selected' && isImgTarget && !needsQuality && estSize !== null && (
-                <p className="text-xs tabular-nums pl-1" style={{ color: 'var(--text-subtle)' }}>
+                <p className="fs-xs tabular-nums pl-1" style={{ color: 'var(--text-subtle)' }}>
                   Estimated output: ~{fmtBytes(estSize)}
                 </p>
               )}
@@ -498,16 +498,16 @@ export function FileConverter() {
           {conv.kind === 'selected' && needsQuality && (
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
+                <span className="fs-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
                   {t('fileConverter.quality')}
                 </span>
                 <div className="flex items-center gap-3">
                   {estSize !== null && (
-                    <span className="text-xs tabular-nums" style={{ color: 'var(--text-subtle)' }}>
+                    <span className="fs-xs tabular-nums" style={{ color: 'var(--text-subtle)' }}>
                       ~{fmtBytes(estSize)}
                     </span>
                   )}
-                  <span className="text-xs font-mono font-semibold w-9 text-right" style={{ color: '#f97316' }}>
+                  <span className="fs-xs font-mono font-semibold w-9 text-right" style={{ color: '#f97316' }}>
                     {quality}%
                   </span>
                 </div>
@@ -525,7 +525,7 @@ export function FileConverter() {
           <div className="flex items-center gap-3 flex-wrap">
             {conv.kind === 'selected' && (
               <button onClick={handleConvert}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white fs-sm font-semibold transition-opacity hover:opacity-90"
                 style={{ background: '#f97316' }}>
                 <ArrowRight size={14} />
                 {t('fileConverter.convert')}
@@ -533,7 +533,7 @@ export function FileConverter() {
             )}
 
             {conv.kind === 'converting' && (
-              <div className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold"
+              <div className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white fs-sm font-semibold"
                 style={{ background: '#f97316', opacity: 0.85 }}>
                 <Loader2 size={14} className="animate-spin" />
                 {t('fileConverter.converting')}
@@ -543,12 +543,12 @@ export function FileConverter() {
             {conv.kind === 'done' && (
               <>
                 <button onClick={handleDownload}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white fs-sm font-semibold transition-opacity hover:opacity-90"
                   style={{ background: '#22c55e' }}>
                   <Download size={14} />
                   {t('fileConverter.download')}
                 </button>
-                <div className="text-xs tabular-nums" style={{ color: 'var(--text-subtle)' }}>
+                <div className="fs-xs tabular-nums" style={{ color: 'var(--text-subtle)' }}>
                   {fmtBytes(conv.blob.size)}
                   {conv.blob.size < file.size && (
                     <span className="ml-2 font-semibold" style={{ color: '#22c55e' }}>
@@ -565,7 +565,7 @@ export function FileConverter() {
             )}
 
             {conv.kind === 'error' && (
-              <p className="text-sm" style={{ color: '#ef4444' }}>⚠ {conv.message}</p>
+              <p className="fs-sm" style={{ color: '#ef4444' }}>⚠ {conv.message}</p>
             )}
           </div>
         </div>
@@ -574,7 +574,7 @@ export function FileConverter() {
       {/* Convert another nudge */}
       {(conv.kind === 'done' || conv.kind === 'error') && (
         <button onClick={reset}
-          className="w-full py-3 rounded-xl border text-sm font-medium transition-opacity hover:opacity-70"
+          className="w-full py-3 rounded-xl border fs-sm font-medium transition-opacity hover:opacity-70"
           style={{
             borderColor: 'var(--border)',
             color: 'var(--text-subtle)',

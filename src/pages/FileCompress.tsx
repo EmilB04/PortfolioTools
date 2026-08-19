@@ -208,7 +208,7 @@ function SizeBar({ original, result }: { original: number; result: number }) {
         { kind: 'output',   label: t('fileCompress.output'),   size: result,   widthPct: Math.min(100, ratio * 100), accent: isSmaller },
       ] as const).map(({ kind, label, size, widthPct, accent }) => (
         <div key={kind} className="flex items-center gap-3">
-          <span className="text-xs w-14 text-right shrink-0" style={{ color: 'var(--text-subtle)' }}>
+          <span className="fs-xs w-14 text-right shrink-0" style={{ color: 'var(--text-subtle)' }}>
             {label}
           </span>
           <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--border)' }}>
@@ -220,7 +220,7 @@ function SizeBar({ original, result }: { original: number; result: number }) {
               }}
             />
           </div>
-          <span className="text-xs w-16 tabular-nums text-right shrink-0 font-medium"
+          <span className="fs-xs w-16 tabular-nums text-right shrink-0 font-medium"
             style={{ color: accent ? '#10b981' : 'var(--text-muted)' }}>
             {fmtBytes(size)}
           </span>
@@ -228,15 +228,15 @@ function SizeBar({ original, result }: { original: number; result: number }) {
       ))}
       <div className="text-center pt-0.5">
         {isSmaller ? (
-          <span className="text-sm font-semibold" style={{ color: '#10b981' }}>
+          <span className="fs-sm font-semibold" style={{ color: '#10b981' }}>
             {t('fileCompress.saved', { size: fmtBytes(original - result), pct: savedPct })}
           </span>
         ) : grewPct > 0 ? (
-          <span className="text-sm" style={{ color: '#f59e0b' }}>
+          <span className="fs-sm" style={{ color: '#f59e0b' }}>
             {t('fileCompress.grewPct', { pct: grewPct })}
           </span>
         ) : (
-          <span className="text-sm" style={{ color: 'var(--text-subtle)' }}>{t('fileCompress.noSizeChange')}</span>
+          <span className="fs-sm" style={{ color: 'var(--text-subtle)' }}>{t('fileCompress.noSizeChange')}</span>
         )}
       </div>
     </div>
@@ -414,11 +414,11 @@ export function FileCompress() {
           <FileArchive size={20} style={{ color: 'var(--text-subtle)' }} />
         </div>
         <div className="min-w-0 flex-1">
-          <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
+          <h1 className="fs-xl font-display font-bold tracking-tight" style={{ color: 'var(--text)' }}>
             {t('fileCompress.title')}
           </h1>
           <InfoButton show={showInfo} onToggle={() => setShowInfo(v => !v)} color={ACCENT} controls={infoId} />
-          <p className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
+          <p className="fs-sm mt-0.5 prose-measure" style={{ color: 'var(--text-subtle)' }}>
             Images · Any file via Gzip · browser-only, no uploads
           </p>
         </div>
@@ -463,14 +463,14 @@ export function FileCompress() {
               }} />
           </div>
           <div className="text-center">
-            <p className="text-sm font-medium"
+            <p className="fs-sm font-medium"
               style={{
                 color: active ? 'var(--text)' : 'var(--text-muted)',
                 transition: 'color 0.18s ease',
               }}>
               {t('fileCompress.dropzone')}
             </p>
-            <p className="text-xs mt-1.5" style={{ color: 'var(--text-subtle)' }}>
+            <p className="fs-xs mt-1.5" style={{ color: 'var(--text-subtle)' }}>
               {t('fileCompress.dropzoneFormats')}
             </p>
           </div>
@@ -489,8 +489,8 @@ export function FileCompress() {
                 <FileArchive size={16} style={{ color: '#10b981' }} />
               </div>
               <div className="min-w-0">
-                <p className="text-sm font-medium truncate" style={{ color: 'var(--text)' }}>{file.name}</p>
-                <p className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
+                <p className="fs-sm font-medium truncate" style={{ color: 'var(--text)' }}>{file.name}</p>
+                <p className="fs-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
                   {fmtBytes(file.size)} · {MIME_LABEL[mime] ?? mime}
                 </p>
               </div>
@@ -509,16 +509,16 @@ export function FileCompress() {
               {state.kind === 'ready' && needsQuality && (
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
+                    <span className="fs-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
                       {t('fileCompress.quality')}
                     </span>
                     <div className="flex items-center gap-3">
                       {estSize !== null && (
-                        <span className="text-xs tabular-nums" style={{ color: 'var(--text-subtle)' }}>
+                        <span className="fs-xs tabular-nums" style={{ color: 'var(--text-subtle)' }}>
                           ~{fmtBytes(estSize)}
                         </span>
                       )}
-                      <span className="text-xs font-mono font-semibold w-9 text-right" style={{ color: '#10b981' }}>
+                      <span className="fs-xs font-mono font-semibold w-9 text-right" style={{ color: '#10b981' }}>
                         {quality}%
                       </span>
                     </div>
@@ -529,7 +529,7 @@ export function FileCompress() {
                     className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
                     style={{ accentColor: '#10b981' }}
                   />
-                  <div className="flex justify-between text-xs" style={{ color: 'var(--text-subtle)' }}>
+                  <div className="flex justify-between fs-xs" style={{ color: 'var(--text-subtle)' }}>
                     <span>{t('fileCompress.smallest')}</span>
                     <span>{t('fileCompress.bestQuality')}</span>
                   </div>
@@ -538,7 +538,7 @@ export function FileCompress() {
 
               {/* PNG note */}
               {state.kind === 'ready' && isPngOut && (
-                <p className="text-xs px-1" style={{ color: 'var(--text-subtle)' }}>
+                <p className="fs-xs px-1" style={{ color: 'var(--text-subtle)' }}>
                   {t('fileCompress.pngNote')}
                 </p>
               )}
@@ -548,17 +548,17 @@ export function FileCompress() {
                 <div className="space-y-2 rounded-xl border p-3"
                   style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-medium flex items-center gap-1.5" style={{ color: 'var(--text-subtle)' }}>
+                    <span className="fs-xs font-medium flex items-center gap-1.5" style={{ color: 'var(--text-subtle)' }}>
                       <Wand2 size={12} style={{ color: '#10b981' }} />
                       {t('fileCompress.autoTarget')}
                     </span>
                     <div className="flex items-center gap-3">
                       {file && (
-                        <span className="text-xs tabular-nums" style={{ color: 'var(--text-subtle)' }}>
+                        <span className="fs-xs tabular-nums" style={{ color: 'var(--text-subtle)' }}>
                           ≤ {fmtBytes(Math.round(file.size * targetPct / 100))}
                         </span>
                       )}
-                      <span className="text-xs font-mono font-semibold w-9 text-right" style={{ color: '#10b981' }}>
+                      <span className="fs-xs font-mono font-semibold w-9 text-right" style={{ color: '#10b981' }}>
                         {targetPct}%
                       </span>
                     </div>
@@ -569,7 +569,7 @@ export function FileCompress() {
                     className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
                     style={{ accentColor: '#10b981' }}
                   />
-                  <div className="flex justify-between text-xs" style={{ color: 'var(--text-subtle)' }}>
+                  <div className="flex justify-between fs-xs" style={{ color: 'var(--text-subtle)' }}>
                     <span>{t('fileCompress.smaller')}</span>
                     <span>{t('fileCompress.largerBetter')}</span>
                   </div>
@@ -582,7 +582,7 @@ export function FileCompress() {
           {!isImage && (state.kind === 'ready' || state.kind === 'done') && (
             <div className="flex items-center gap-2 px-3 py-2 rounded-lg border"
               style={{ background: 'rgba(16,185,129,0.08)', borderColor: 'rgba(16,185,129,0.25)' }}>
-              <span className="text-xs font-medium" style={{ color: '#10b981' }}>
+              <span className="fs-xs font-medium" style={{ color: '#10b981' }}>
                 {GZIP_SUPPORTED ? t('fileCompress.gzipLabel') : t('fileCompress.gzipUnsupported')}
               </span>
             </div>
@@ -596,7 +596,7 @@ export function FileCompress() {
                 <button
                   onClick={handleCompress}
                   disabled={!isImage && !GZIP_SUPPORTED}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white fs-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
                   style={{ background: '#10b981' }}>
                   <Minimize2 size={14} />
                   {t('fileCompress.compress')}
@@ -605,7 +605,7 @@ export function FileCompress() {
                 {isImage && (
                   <button
                     onClick={handleAuto}
-                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold border transition-opacity hover:opacity-80"
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl fs-sm font-semibold border transition-opacity hover:opacity-80"
                     style={{ borderColor: '#10b981', color: '#10b981', background: 'transparent' }}>
                     <Wand2 size={14} />
                     {t('fileCompress.auto')}
@@ -616,7 +616,7 @@ export function FileCompress() {
 
             {/* Manual compressing spinner */}
             {state.kind === 'compressing' && (
-              <div className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold"
+              <div className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white fs-sm font-semibold"
                 style={{ background: '#10b981', opacity: 0.85 }}>
                 <Loader2 size={14} className="animate-spin" />
                 {t('fileCompress.compressing')}
@@ -625,7 +625,7 @@ export function FileCompress() {
 
             {/* Auto optimizing spinner */}
             {autoRunning && (
-              <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold border"
+              <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl fs-sm font-semibold border"
                 style={{ borderColor: '#10b981', color: '#10b981', background: 'transparent' }}>
                 <Loader2 size={14} className="animate-spin" />
                 {t('fileCompress.autoRunning')}
@@ -635,7 +635,7 @@ export function FileCompress() {
             {/* Download */}
             {state.kind === 'done' && (
               <button onClick={handleDownload}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white fs-sm font-semibold transition-opacity hover:opacity-90"
                 style={{ background: '#10b981' }}>
                 <Download size={14} />
                 {t('fileCompress.download')}
@@ -644,7 +644,7 @@ export function FileCompress() {
 
             {/* Error */}
             {state.kind === 'error' && (
-              <p className="text-sm" style={{ color: '#ef4444' }}>⚠ {state.message}</p>
+              <p className="fs-sm" style={{ color: '#ef4444' }}>⚠ {state.message}</p>
             )}
           </div>
 
@@ -658,7 +658,7 @@ export function FileCompress() {
       {/* Compress another nudge */}
       {(state.kind === 'done' || state.kind === 'error') && (
         <button onClick={reset}
-          className="w-full py-3 rounded-xl border text-sm font-medium transition-opacity hover:opacity-70"
+          className="w-full py-3 rounded-xl border fs-sm font-medium transition-opacity hover:opacity-70"
           style={{
             borderColor: 'var(--border)',
             color: 'var(--text-subtle)',

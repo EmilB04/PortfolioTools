@@ -166,7 +166,7 @@ export function Dashboard() {
             {/* Rotating featured tool */}
             <div className="space-y-3 max-w-2xl min-h-[15rem] sm:min-h-[13rem]">
               <div
-                className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border text-xs font-semibold transition-colors duration-500"
+                className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border fs-xs font-semibold transition-colors duration-500"
                 style={{ borderColor: 'var(--border)', background: 'var(--surface-card)', color: 'var(--text-subtle)' }}
               >
                 <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--accent)' }} />
@@ -194,7 +194,7 @@ export function Dashboard() {
                   </p>
                   <Link
                     to={hero.href}
-                    className="inline-flex items-center gap-2 mt-1 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-150"
+                    className="inline-flex items-center gap-2 mt-1 px-4 py-2.5 rounded-xl fs-sm font-semibold text-white transition-all duration-150"
                     style={{ background: 'var(--accent)' }}
                     onMouseEnter={e => (e.currentTarget.style.opacity = '0.9')}
                     onMouseLeave={e => (e.currentTarget.style.opacity = '1')}

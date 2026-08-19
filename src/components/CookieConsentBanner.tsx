@@ -25,21 +25,21 @@ export default function CookieConsentBanner() {
                             borderColor: 'var(--border)',
                         }}
                     >
-                        <p className="text-sm text-[var(--text-subtle)]">
+                        <p className="fs-sm text-[var(--text-subtle)]">
                             {t('cookieConsent.message')}
                         </p>
                         <div className="flex shrink-0 gap-2">
                             <button
                                 type="button"
                                 onClick={decline}
-                                className="rounded-xl border border-[var(--border)] px-4 py-2 text-sm font-semibold text-[var(--text-subtle)] transition-colors duration-200 hover:text-[var(--text)] hover:border-[var(--accent-border)]"
+                                className="rounded-xl border border-[var(--border)] px-4 py-2 fs-sm font-semibold text-[var(--text-subtle)] transition-colors duration-200 hover:text-[var(--text)] hover:border-[var(--accent-border)]"
                             >
                                 {t('cookieConsent.decline')}
                             </button>
                             <button
                                 type="button"
                                 onClick={accept}
-                                className="rounded-xl bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-[var(--accent-on)] transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
+                                className="rounded-xl bg-[var(--accent)] px-4 py-2 fs-sm font-semibold text-[var(--accent-on)] transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
                             >
                                 {t('cookieConsent.accept')}
                             </button>

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useId, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ChevronDown } from 'lucide-react'
-import { TOOLS, TOOL_GROUPS } from '../../tools/registry'
+import { TOOL_GROUPS, findActiveTool } from '../../tools/registry'
 import type { ToolDefinition } from '../../tools/registry'
 import { loadCollapsedGroups, saveCollapsedGroups } from './navStorage'
 
@@ -126,14 +126,6 @@ export function SidebarNav({ collapsed, isMobileDrawer, mobileClose }: SidebarNa
   )
 }
 
-/** Longest-prefix match so nested routes still highlight their tool. */
-function findActiveTool(pathname: string): ToolDefinition | undefined {
-  if (pathname === '/') return TOOLS.find(tool => tool.to === '/')
-  return TOOLS.filter(tool => tool.to !== '/' && pathname.startsWith(tool.to)).sort(
-    (a, b) => b.to.length - a.to.length,
-  )[0]
-}
-
 function ToolLink({
   tool,
   iconOnly,
@@ -154,8 +146,8 @@ function ToolLink({
       title={iconOnly ? label : undefined}
       onClick={onNavigate}
       className={({ isActive }) =>
-        `group relative flex items-center gap-3 rounded-xl fs-sm font-medium transition-all duration-150 ${
-          iconOnly ? 'justify-center px-0 py-2.5' : 'px-3 py-2'
+        `group relative flex items-center gap-2.5 rounded-lg fs-xs font-medium transition-colors duration-150 ${
+          iconOnly ? 'justify-center px-0 py-2' : 'px-2.5 py-1.5'
         } ${isActive ? 'active-nav' : 'inactive-nav'}`
       }
       style={({ isActive }) => ({
@@ -172,7 +164,7 @@ function ToolLink({
               style={{ background: 'var(--accent)' }}
             />
           )}
-          <Icon size={16} aria-hidden="true" className="shrink-0" />
+          <Icon size={15} aria-hidden="true" className="shrink-0" />
           {iconOnly ? <span className="sr-only">{label}</span> : <span className="truncate">{label}</span>}
         </>
       )}

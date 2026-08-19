@@ -15,7 +15,7 @@ export function Sidebar({ collapsed, onToggle, mobileClose }: SidebarProps) {
     <aside
       className="h-screen flex flex-col border-r transition-[width] duration-200 ease-in-out overflow-hidden"
       style={{
-        width: collapsed && !isMobileDrawer ? 60 : 240,
+        width: collapsed && !isMobileDrawer ? 56 : 224,
         background: 'var(--surface)',
         borderColor: 'var(--border)',
       }}

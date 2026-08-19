@@ -44,7 +44,7 @@ export function Layout() {
       {/* Main content — scrollable column */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <header
-          className="relative z-20 shrink-0 h-14 flex items-center justify-between gap-2 border-b px-4 sm:px-6"
+          className="relative z-20 shrink-0 h-[52px] flex items-center justify-between gap-2 border-b px-3 sm:px-5"
           style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
         >
           <button

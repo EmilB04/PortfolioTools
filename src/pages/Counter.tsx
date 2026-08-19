@@ -100,11 +100,11 @@ export function Counter() {
           <DoorOpen size={20} style={{ color: 'var(--text-subtle)' }} />
         </div>
         <div className="min-w-0 flex-1">
-          <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
+          <h1 className="fs-xl font-display font-bold tracking-tight" style={{ color: 'var(--text)' }}>
             {t('counter.title')}
           </h1>
           <InfoButton show={showInfo} onToggle={() => setShowInfo(v => !v)} color={ACCENT} controls={infoId} />
-          <p className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
+          <p className="fs-sm mt-0.5 prose-measure" style={{ color: 'var(--text-subtle)' }}>
             {t('counter.subtitle')}
           </p>
         </div>
@@ -128,7 +128,7 @@ export function Counter() {
           const Icon = m === 'entered' ? LogIn : LogOut
           return (
             <button key={m} onClick={e => { haptic('light', e.currentTarget); setMode(m) }}
-              className="flex-1 flex items-center justify-center gap-2 px-3 py-3 rounded-xl text-sm font-semibold transition-all duration-150"
+              className="flex-1 flex items-center justify-center gap-2 px-3 py-3 rounded-xl fs-sm font-semibold transition-all duration-150"
               style={{ background: active ? c.fill : 'transparent', color: active ? '#ffffff' : 'var(--text-subtle)' }}>
               <Icon size={16} />
               {m === 'entered' ? t('counter.entered') : t('counter.exited')}
@@ -175,15 +175,15 @@ export function Counter() {
       <div className="grid grid-cols-3 gap-1 rounded-2xl border px-2 py-3"
         style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}>
         <div className="flex flex-col items-center gap-0.5">
-          <span className="text-base font-bold tabular-nums" style={{ color: MODE_COLORS.entered.color }}>{counts.entered}</span>
+          <span className="fs-base font-bold tabular-nums" style={{ color: MODE_COLORS.entered.color }}>{counts.entered}</span>
           <span className="text-[9.5px] uppercase tracking-wide" style={{ color: 'var(--text-subtle)' }}>{t('counter.entered')}</span>
         </div>
         <div className="flex flex-col items-center gap-0.5">
-          <span className="text-base font-bold tabular-nums" style={{ color: MODE_COLORS.exited.color }}>{counts.exited}</span>
+          <span className="fs-base font-bold tabular-nums" style={{ color: MODE_COLORS.exited.color }}>{counts.exited}</span>
           <span className="text-[9.5px] uppercase tracking-wide" style={{ color: 'var(--text-subtle)' }}>{t('counter.exited')}</span>
         </div>
         <div className="flex flex-col items-center gap-0.5">
-          <span className="text-base font-bold tabular-nums" style={{ color: 'var(--text)' }}>{net}</span>
+          <span className="fs-base font-bold tabular-nums" style={{ color: 'var(--text)' }}>{net}</span>
           <span className="text-[9.5px] uppercase tracking-wide" style={{ color: 'var(--text-subtle)' }}>{t('counter.netInside')}</span>
         </div>
       </div>
@@ -201,12 +201,12 @@ export function Counter() {
           <Plus size={56} />
         </button>
       </div>
-      <p className="text-center text-xs -mt-2" style={{ color: 'var(--text-subtle)' }}>
+      <p className="text-center fs-xs -mt-2" style={{ color: 'var(--text-subtle)' }}>
         {t('counter.actionHint')}
       </p>
 
       {/* Utility row */}
-      <div className="flex items-center justify-between text-xs pt-1" style={{ color: 'var(--text-subtle)' }}>
+      <div className="flex items-center justify-between fs-xs pt-1" style={{ color: 'var(--text-subtle)' }}>
         <span className="inline-flex items-center gap-1.5">
           <Smartphone size={13} />
           {t('counter.savedNote')}
@@ -229,12 +229,12 @@ export function Counter() {
             <p className="text-[13px] leading-relaxed" style={{ color: 'var(--text-muted)' }}>{confirm.body}</p>
             <div className="flex gap-2.5 pt-1">
               <button onClick={e => { haptic('light', e.currentTarget); setConfirm(null) }}
-                className="flex-1 py-3 rounded-xl text-sm font-semibold border"
+                className="flex-1 py-3 rounded-xl fs-sm font-semibold border"
                 style={{ borderColor: 'var(--border)', background: 'var(--surface-card)', color: 'var(--text)' }}>
                 {t('counter.cancel')}
               </button>
               <button onClick={e => { haptic('heavy', e.currentTarget); confirm.onConfirm(); setConfirm(null) }}
-                className="flex-1 py-3 rounded-xl text-sm font-semibold text-white"
+                className="flex-1 py-3 rounded-xl fs-sm font-semibold text-white"
                 style={{ background: confirm.accentColor }}>
                 {t('counter.confirm')}
               </button>

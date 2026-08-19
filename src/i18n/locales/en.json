@@ -15,6 +15,7 @@
     "expandSidebar": "Expand sidebar",
     "collapse": "Collapse",
     "ariaLabel": "Tool navigation",
+    "breadcrumb": "Breadcrumb",
     "jsonTools": "JSON Tools",
     "jwtDecoder": "JWT Decoder",
     "encoder": "Encoder / Decoder",

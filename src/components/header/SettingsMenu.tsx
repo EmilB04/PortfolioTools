@@ -43,24 +43,22 @@ function SunIcon() {
     )
 }
 
-const INDICATOR_BG: Record<string, string> = {
-    dark: 'linear-gradient(135deg, rgba(99,102,241,0.4), rgba(139,92,246,0.5))',
-    system: 'linear-gradient(135deg, rgba(156,163,175,0.3), rgba(107,114,128,0.4))',
-    light: 'linear-gradient(135deg, rgba(251,191,36,0.4), rgba(249,115,22,0.45))',
-}
+const SECTION_HEADING =
+    'mb-1.5 px-1 fs-xs font-mono font-medium uppercase tracking-[0.16em] text-[var(--text-muted)]'
 
+/** Offsets for the sliding selection pill, one per segment position. */
 const INDICATOR_TRANSLATE: Record<string, string> = {
-    dark: 'translateX(4px)',
-    system: 'translateX(calc(100% + 4px))',
-    light: 'translateX(calc(200% + 4px))',
+    dark: 'translateX(3px)',
+    system: 'translateX(calc(100% + 3px))',
+    light: 'translateX(calc(200% + 3px))',
 }
 
 type ThemeValue = 'dark' | 'system' | 'light'
 
-const THEME_OPTIONS: { value: ThemeValue; labelKey: string; Icon: () => React.JSX.Element; activeColor: string }[] = [
-    { value: 'dark', labelKey: 'theme.dark', Icon: MoonIcon, activeColor: '#a5b4fc' },
-    { value: 'system', labelKey: 'theme.system', Icon: SystemIcon, activeColor: 'var(--text)' },
-    { value: 'light', labelKey: 'theme.light', Icon: SunIcon, activeColor: '#fbbf24' },
+const THEME_OPTIONS: { value: ThemeValue; labelKey: string; Icon: () => React.JSX.Element }[] = [
+    { value: 'dark', labelKey: 'theme.dark', Icon: MoonIcon },
+    { value: 'system', labelKey: 'theme.system', Icon: SystemIcon },
+    { value: 'light', labelKey: 'theme.light', Icon: SunIcon },
 ]
 
 export default function SettingsMenu() {
@@ -109,32 +107,31 @@ export default function SettingsMenu() {
                 type="button"
                 aria-haspopup="dialog"
                 aria-expanded={open}
-                aria-label={t('settingsMenu.settings')}
                 onClick={() => setOpen((value) => !value)}
                 className={`
-                    pp-dropdown-trigger group relative inline-flex h-10 w-10 items-center justify-center rounded-full border
+                    group inline-flex h-9 shrink-0 items-center gap-2 rounded-lg border bg-[var(--surface-card)]
+                    px-2 fs-xs font-semibold transition-colors duration-150 sm:px-2.5
                     motion-reduce:transition-none
                     ${open
-                        ? 'border-[var(--accent)] bg-[color:color-mix(in_srgb,var(--surface-card)_90%,#000_10%)] text-[var(--text)] shadow-[0_12px_30px_rgba(0,0,0,0.18)] ring-4 ring-[color:color-mix(in_srgb,var(--accent)_16%,transparent)]'
-                        : 'border-[var(--border)] bg-[color:color-mix(in_srgb,var(--surface)_92%,#000_8%)] text-[var(--text)] shadow-[0_8px_24px_rgba(0,0,0,0.14)] hover:border-[var(--accent-border)] hover:bg-[color:color-mix(in_srgb,var(--surface-card)_88%,#000_12%)] active:translate-y-0 active:scale-[0.985] active:shadow-[0_4px_14px_rgba(0,0,0,0.14)]'
+                        ? 'border-[var(--accent-border)] text-[var(--text)]'
+                        : 'border-[var(--border)] text-[var(--text-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--text)]'
                     }
                 `}
             >
                 <FiSettings
                     aria-hidden="true"
-                    className={`
-                        h-4.5 w-4.5 shrink-0 transition-transform duration-300 ease-out
-                        ${open ? 'rotate-45 text-[var(--accent)]' : 'text-[var(--text-subtle)] group-hover:text-[var(--text)]'}
-                    `}
+                    className={`h-4 w-4 shrink-0 transition-transform duration-300 ease-out ${open ? 'rotate-90' : ''}`}
                 />
+                <span className="hidden sm:inline">{t('settingsMenu.settings')}</span>
+                <span className="sr-only sm:hidden">{t('settingsMenu.settings')}</span>
             </button>
 
             <div
                 role="dialog"
                 aria-label={t('settingsMenu.settings')}
                 className={`
-                    pp-dropdown-panel absolute right-0 top-[calc(100%+0.6rem)] z-[600] w-72 max-w-[calc(100vw-2rem)]
-                    max-h-[70vh] overflow-y-auto rounded-[1.4rem]
+                    pp-dropdown-panel absolute right-0 top-[calc(100%+0.5rem)] z-[600] w-[17.5rem] max-w-[calc(100vw-2rem)]
+                    max-h-[70vh] overflow-y-auto rounded-2xl
                     transition-all duration-200 ease-out origin-top-right motion-reduce:transition-none
                     ${open
                         ? 'pointer-events-auto translate-y-0 scale-100 opacity-100'
@@ -142,12 +139,11 @@ export default function SettingsMenu() {
                     }
                 `}
             >
-                <div className="flex flex-col gap-4 p-4">
+                {/* p-2 against rounded-lg children keeps the panel and its rows concentric. */}
+                <div className="flex flex-col gap-3 p-2">
                     <section>
-                        <h3 className="mb-2 px-1 text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-subtle)]">
-                            {t('languageSwitcher.section')}
-                        </h3>
-                        <div role="listbox" aria-label={t('languageSwitcher.choose')} className="flex flex-col gap-1">
+                        <h3 className={SECTION_HEADING}>{t('languageSwitcher.section')}</h3>
+                        <div role="listbox" aria-label={t('languageSwitcher.choose')} className="flex flex-col gap-0.5">
                             {SUPPORTED_LANGUAGES.map((language) => {
                                 const selected = language.code === currentLanguage
                                 return (
@@ -158,17 +154,17 @@ export default function SettingsMenu() {
                                         aria-selected={selected}
                                         onClick={() => void handleLanguageSelect(language.code)}
                                         className={`
-                                            pp-dropdown-item flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left
-                                            motion-reduce:transition-none
+                                            flex w-full items-center justify-between rounded-lg px-2.5 py-2 text-left fs-sm
+                                            transition-colors duration-150 motion-reduce:transition-none
                                             ${selected
-                                                ? 'text-[var(--text)]'
-                                                : 'text-[var(--text-subtle)] hover:bg-[var(--surface)] hover:text-[var(--text)] active:scale-[0.99]'
+                                                ? 'bg-[var(--accent-bg)] font-semibold text-[var(--accent-text)]'
+                                                : 'font-medium text-[var(--text-subtle)] hover:bg-[var(--surface-hover)] hover:text-[var(--text)]'
                                             }
                                         `}
                                     >
-                                        <span className="font-medium">{language.label}</span>
+                                        <span>{language.label}</span>
                                         {selected && (
-                                            <span className="h-2 w-2 rounded-full bg-[var(--accent)]" aria-hidden="true" />
+                                            <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" aria-hidden="true" />
                                         )}
                                     </button>
                                 )
@@ -176,30 +172,26 @@ export default function SettingsMenu() {
                         </div>
                     </section>
 
-                    <section className="border-t border-[var(--border)] pt-4">
-                        <h3 className="mb-2 px-1 text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-subtle)]">
-                            {t('settingsMenu.appearance')}
-                        </h3>
-                        <div className="relative grid grid-cols-3 gap-1 rounded-xl bg-[color:color-mix(in_srgb,var(--surface)_92%,#000_8%)] p-1.5 ring-1 ring-white/5">
+                    <section>
+                        <h3 className={SECTION_HEADING}>{t('settingsMenu.appearance')}</h3>
+                        <div className="relative grid grid-cols-3 gap-1 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-[3px]">
                             <span
-                                className="absolute inset-y-1 rounded-lg transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] pointer-events-none"
+                                className="pointer-events-none absolute inset-y-[3px] rounded-[5px] border border-[var(--accent-border)] bg-[var(--accent-bg)] transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] motion-reduce:transition-none"
                                 style={{
-                                    width: 'calc(33.333% - 3px)',
+                                    width: 'calc(33.333% - 2px)',
                                     transform: INDICATOR_TRANSLATE[theme],
-                                    background: INDICATOR_BG[theme],
                                 }}
                             />
-                            {THEME_OPTIONS.map(({ value, labelKey, Icon, activeColor }) => {
+                            {THEME_OPTIONS.map(({ value, labelKey, Icon }) => {
                                 const selected = theme === value
                                 return (
                                     <button
                                         key={value}
                                         type="button"
-                                        aria-label={t(labelKey)}
                                         aria-pressed={selected}
                                         onClick={() => setTheme(value)}
-                                        style={{ color: selected ? activeColor : 'var(--text-subtle)' }}
-                                        className="pp-dropdown-item relative z-10 flex items-center justify-center gap-1.5 rounded-lg px-2 py-2 text-xs font-semibold hover:text-[var(--text)]"
+                                        style={{ color: selected ? 'var(--accent-text)' : 'var(--text-subtle)' }}
+                                        className="relative z-10 flex items-center justify-center gap-1.5 rounded-[5px] px-1 py-1.5 fs-xs font-semibold transition-colors duration-150 hover:text-[var(--text)]"
                                     >
                                         <Icon />
                                         {t(labelKey)}
@@ -209,11 +201,9 @@ export default function SettingsMenu() {
                         </div>
                     </section>
 
-                    <section className="border-t border-[var(--border)] pt-4">
-                        <h3 className="mb-2 px-1 text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-subtle)]">
-                            {t('settingsMenu.accentColor')}
-                        </h3>
-                        <div role="listbox" aria-label={t('settingsMenu.chooseAccent')} className="flex flex-wrap gap-2 px-1">
+                    <section>
+                        <h3 className={SECTION_HEADING}>{t('settingsMenu.accentColor')}</h3>
+                        <div role="listbox" aria-label={t('settingsMenu.chooseAccent')} className="grid grid-cols-7 gap-1">
                             {(Object.keys(ACCENT_PRESETS) as AccentColor[]).map((color) => {
                                 const preset = ACCENT_PRESETS[color]
                                 const selected = color === accent
@@ -224,19 +214,20 @@ export default function SettingsMenu() {
                                         role="option"
                                         aria-selected={selected}
                                         aria-label={preset.label}
+                                        title={preset.label}
                                         onClick={() => setAccent(color)}
                                         className={`
-                                            pp-dropdown-item flex h-9 w-9 items-center justify-center rounded-full border-2
-                                            ${selected
-                                                ? 'border-[var(--accent)] scale-110'
-                                                : 'border-transparent hover:scale-105'
-                                            }
+                                            flex h-8 w-8 items-center justify-center rounded-lg border transition-colors duration-150
+                                            ${selected ? 'border-[var(--accent)]' : 'border-transparent hover:border-[var(--border-strong)]'}
                                         `}
                                     >
                                         <span
                                             aria-hidden="true"
-                                            className="h-6 w-6 rounded-full ring-1 ring-black/10"
-                                            style={{ background: resolvedTheme === 'dark' ? preset.dark : preset.light }}
+                                            className="h-4 w-4 rounded-full"
+                                            style={{
+                                                background: resolvedTheme === 'dark' ? preset.dark : preset.light,
+                                                boxShadow: 'inset 0 0 0 1px var(--swatch-ring)',
+                                            }}
                                         />
                                     </button>
                                 )
@@ -244,40 +235,37 @@ export default function SettingsMenu() {
                         </div>
                     </section>
 
-                    <section className="border-t border-[var(--border)] pt-4">
-                        <h3 className="mb-2 px-1 text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-subtle)]">
-                            {t('cookieConsent.section')}
-                        </h3>
-                        <p className="mb-2 px-1 text-xs text-[var(--text-subtle)]">
+                    <section className="border-t border-[var(--border)] pt-3">
+                        <h3 className={SECTION_HEADING}>{t('cookieConsent.section')}</h3>
+                        <p className="mb-2 px-1 fs-xs" style={{ color: 'var(--text-muted)' }}>
                             {consent === 'accepted'
                                 ? t('cookieConsent.statusAccepted')
                                 : consent === 'declined'
                                     ? t('cookieConsent.statusDeclined')
                                     : t('cookieConsent.statusUndecided')}
                         </p>
-                        {consent === null && (
-                            <div className="flex gap-2 px-1">
+                        {consent === null ? (
+                            <div className="flex gap-1.5 px-1">
                                 <button
                                     type="button"
                                     onClick={accept}
-                                    className="flex-1 rounded-xl bg-[var(--accent)] px-3 py-2 text-xs font-semibold text-white transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
+                                    className="flex-1 rounded-lg bg-[var(--accent)] px-3 py-2 fs-xs font-semibold text-[var(--accent-on)] transition-transform duration-150 active:scale-[0.98] motion-reduce:transition-none"
                                 >
                                     {t('cookieConsent.accept')}
                                 </button>
                                 <button
                                     type="button"
                                     onClick={decline}
-                                    className="flex-1 rounded-xl border border-[var(--border)] px-3 py-2 text-xs font-semibold text-[var(--text-subtle)] transition-colors duration-200 hover:text-[var(--text)] hover:border-[var(--accent-border)]"
+                                    className="flex-1 rounded-lg border border-[var(--border)] px-3 py-2 fs-xs font-semibold text-[var(--text-subtle)] transition-colors duration-150 hover:border-[var(--accent-border)] hover:text-[var(--text)]"
                                 >
                                     {t('cookieConsent.decline')}
                                 </button>
                             </div>
-                        )}
-                        {consent !== null && (
+                        ) : (
                             <button
                                 type="button"
                                 onClick={showBanner}
-                                className="mt-2 w-full px-1 text-left text-xs underline text-[var(--text-subtle)] hover:text-[var(--text)]"
+                                className="w-full rounded-lg px-1 py-1 text-left fs-xs underline text-[var(--text-subtle)] transition-colors duration-150 hover:text-[var(--text)]"
                             >
                                 {t('cookieConsent.manage')}
                             </button>
