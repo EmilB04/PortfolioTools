@@ -84,9 +84,7 @@ export function Dashboard() {
           description: t(`tools.${tool.key}.description`),
           badge: t(`tools.${tool.key}.badge`),
           href: tool.to,
-          accentColor: tool.color,
-          accentBg: `${tool.color}1f`,
-          icon: <tool.icon size={20} color={tool.color} />,
+          icon: <tool.icon size={20} color="var(--text-subtle)" />,
           stats: [
             { label: t(`tools.${tool.key}.stats.aLabel`), value: overrides?.[0] ?? t(`tools.${tool.key}.stats.aValue`) },
             { label: t(`tools.${tool.key}.stats.bLabel`), value: overrides?.[1] ?? t(`tools.${tool.key}.stats.bValue`) },
@@ -168,10 +166,10 @@ export function Dashboard() {
             {/* Rotating featured tool */}
             <div className="space-y-3 max-w-2xl min-h-[15rem] sm:min-h-[13rem]">
               <div
-                className="tool-text inline-flex items-center gap-2 px-2.5 py-1 rounded-full border text-xs font-semibold transition-colors duration-500"
-                style={{ borderColor: hero.accentColor, background: hero.accentBg, '--tool': hero.accentColor } as React.CSSProperties}
+                className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border text-xs font-semibold transition-colors duration-500"
+                style={{ borderColor: 'var(--border)', background: 'var(--surface-card)', color: 'var(--text-subtle)' }}
               >
-                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: hero.accentColor }} />
+                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--accent)' }} />
                 {hero.badge}
               </div>
               <AnimatePresence mode="wait">
@@ -184,7 +182,7 @@ export function Dashboard() {
                   className="space-y-3"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="p-2 rounded-xl shrink-0" style={{ background: hero.accentBg }}>
+                    <span className="p-2 rounded-xl border shrink-0" style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}>
                       {hero.icon}
                     </span>
                     <h2 className="fs-3xl font-display font-extrabold tracking-tight" style={{ color: 'var(--text)' }}>
@@ -196,8 +194,8 @@ export function Dashboard() {
                   </p>
                   <Link
                     to={hero.href}
-                    className="tool-fill inline-flex items-center gap-2 mt-1 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-150 hover:-translate-y-0.5"
-                    style={{ '--tool': hero.accentColor } as React.CSSProperties}
+                    className="inline-flex items-center gap-2 mt-1 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-150"
+                    style={{ background: 'var(--accent)' }}
                     onMouseEnter={e => (e.currentTarget.style.opacity = '0.9')}
                     onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
                   >
@@ -218,7 +216,7 @@ export function Dashboard() {
                     className="h-1.5 rounded-full transition-all duration-300"
                     style={{
                       width: i === featured ? 20 : 6,
-                      background: i === featured ? hero.accentColor : 'var(--border)',
+                      background: i === featured ? 'var(--accent)' : 'var(--border)',
                     }}
                   />
                 ))}
@@ -348,8 +346,6 @@ export function Dashboard() {
                   href={tool.href}
                   icon={tool.icon}
                   stats={tool.stats}
-                  accentColor={tool.accentColor}
-                  accentBg={tool.accentBg}
                 />
               ))}
             </div>

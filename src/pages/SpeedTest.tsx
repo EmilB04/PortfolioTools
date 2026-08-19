@@ -227,7 +227,7 @@ export function SpeedTest() {
       {mode === 'continuous' && !isRunning && (
         <div className="flex items-center gap-3 flex-wrap">
           <Timer size={14} style={{ color: 'var(--text-subtle)' }} className="shrink-0" />
-          <span className="text-sm shrink-0" style={{ color: 'var(--text-muted)' }}>Run for</span>
+          <span className="text-sm shrink-0" style={{ color: 'var(--text-muted)' }}>{t('speedTest.runFor')}</span>
           <div className="flex gap-1.5 flex-wrap">
             {DURATION_OPTIONS.map(({ label, ms }) => (
               <button key={label} onClick={() => setLimitMs(ms)}

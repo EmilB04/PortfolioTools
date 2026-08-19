@@ -19,9 +19,9 @@ export default function CookieConsentBanner() {
                     className="fixed inset-x-0 bottom-0 z-[500] flex justify-center px-4 pb-4 sm:px-6"
                 >
                     <div
-                        className="flex w-full max-w-screen-md flex-col gap-3 rounded-2xl border p-4 shadow-[0_18px_48px_rgba(0,0,0,0.28)] backdrop-blur-2xl sm:flex-row sm:items-center sm:justify-between"
+                        className="flex w-full max-w-screen-md flex-col gap-3 rounded-2xl border p-4 shadow-[0_18px_48px_rgba(0,0,0,0.28)] sm:flex-row sm:items-center sm:justify-between"
                         style={{
-                            background: 'color-mix(in srgb, var(--surface-card) 94%, transparent)',
+                            background: 'var(--surface-card-solid)',
                             borderColor: 'var(--border)',
                         }}
                     >

@@ -118,8 +118,8 @@ export function QrGenerator() {
       {/* Header */}
       <div className="flex items-center gap-3">
         <div className="p-2.5 rounded-xl border"
-          style={{ background: 'rgba(139,92,246,0.12)', borderColor: 'rgba(139,92,246,0.35)' }}>
-          <QrCode size={20} style={{ color: '#8b5cf6' }} />
+          style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}>
+          <QrCode size={20} style={{ color: 'var(--text-subtle)' }} />
         </div>
         <div className="min-w-0 flex-1">
           <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>

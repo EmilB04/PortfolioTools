@@ -268,8 +268,8 @@ export function WcagScanner() {
       {/* Header */}
       <div className="flex items-center gap-3">
         <div className="p-2.5 rounded-xl border"
-          style={{ background: 'rgba(20,184,166,0.12)', borderColor: 'rgba(20,184,166,0.35)' }}>
-          <Accessibility size={20} style={{ color: ACCENT }} />
+          style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}>
+          <Accessibility size={20} style={{ color: 'var(--text-subtle)' }} />
         </div>
         <div className="min-w-0 flex-1">
           <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>

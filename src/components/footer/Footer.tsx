@@ -42,7 +42,7 @@ export function Footer() {
       style={{ paddingInline: 'var(--gap-page)' }}
     >
       <div
-        className="page-container page-container-wide rounded-2xl border backdrop-blur-sm px-5 py-4 flex flex-wrap items-center justify-between gap-3"
+        className="page-container page-container-wide rounded-2xl border px-5 py-4 flex flex-wrap items-center justify-between gap-3"
         style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
       >
         <p className="text-xs" style={{ color: 'var(--text-subtle)' }}>

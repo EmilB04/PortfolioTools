@@ -31,15 +31,16 @@
   --content-narrow:  34rem; /* focused, mostly-text or single-control tools */
 }
 
-/* ── Design tokens (dark-first, plum-ink chassis shared with PortfolioPortal) ──
- * --accent is the one signal color (live/active/focus/primary actions); --accent-2
- * (violet) stays reserved for per-tool branding. Neutrals are plum-tinted rather than
- * true gray so they share a hue family with the accent instead of fighting it.
+/* ── Design tokens (flat, neutral chassis) ──────────────────────────────────
+ * One signal color: --accent. It is the only saturated color in the site's chrome —
+ * used sparingly for active/live/focus/primary actions — everything else is a flat
+ * neutral gray so the accent stays legible instead of competing with per-surface tint.
+ * No blur, no gradients, no glow: every surface is a solid flat color plus a 1px border.
  */
 :root {
   --accent:        #f1376e;
   --accent-hover:  #ff5c8a;
-  --accent-bg:     rgba(241, 55, 110, 0.16);
+  --accent-bg:     rgba(241, 55, 110, 0.14);
   --accent-border: rgba(241, 55, 110, 0.4);
   /* Accent as *text*. The raw accent fails AA against its own --accent-bg tint, so
    * each theme shifts it away from the surface: lighter here, darker in html.light.
@@ -47,50 +48,37 @@
   --accent-text:   color-mix(in srgb, var(--accent) 86%, #fff);
   --accent-on:     #ffffff;
 
-  /* Secondary accent (violet) — unifies per-tool purples */
-  --accent-2:        #8b5cf6;
-  --accent-2-bg:     rgba(139, 92, 246, 0.12);
-  --accent-2-border: rgba(139, 92, 246, 0.4);
-  --accent-gradient: linear-gradient(120deg, #f1376e 0%, #8b5cf6 100%);
-
-  --surface:       rgba(19, 14, 28, 0.8);
-  --surface-card:  rgba(26, 20, 36, 0.9);
-  --surface-card-solid: #1a1424;
-  --surface-hover: rgba(34, 27, 46, 0.94);
-  --text:          #f5f2f8;
-  --text-muted:    #8b7f9c;
-  --text-subtle:   #a79db5;
-  --border:        rgba(42, 35, 53, 1);
-  --border-strong: rgba(58, 49, 71, 1);
-  --border-hover:  rgba(66, 58, 78, 1);
-  --shadow:        rgba(0,0,0,0.5) 0 10px 20px -4px;
-  --glow:          rgba(241, 55, 110, 0.25);
+  --surface:       #121115;
+  --surface-card:  #17161b;
+  --surface-card-solid: #17161b;
+  --surface-hover: #1c1b21;
+  --text:          #f2f1f4;
+  --text-muted:    #85838d;
+  --text-subtle:   #a3a1a9;
+  --border:        #232228;
+  --border-strong: #2f2e35;
+  --border-hover:  #38373e;
+  --shadow:        rgba(0,0,0,0.4) 0 8px 16px -4px;
 }
 
 html.light {
   --accent-hover:  #c41e56;
-  --accent-bg:     rgba(241, 55, 110, 0.12);
+  --accent-bg:     rgba(241, 55, 110, 0.1);
   /* 28% toward black: the least darkening that keeps every one of the 13 accent
    * presets at >=4.5:1 on both white and its own --accent-bg tint. */
   --accent-text:   color-mix(in srgb, var(--accent) 72%, #000);
 
-  --accent-2:        #7c3aed;
-  --accent-2-bg:     rgba(124, 58, 237, 0.1);
-  --accent-2-border: rgba(124, 58, 237, 0.35);
-  --accent-gradient: linear-gradient(120deg, #f1376e 0%, #7c3aed 100%);
-
-  --surface:       rgba(255, 255, 255, 0.8);
-  --surface-card:  rgba(244, 241, 248, 0.9);
-  --surface-card-solid: #f4f1f8;
-  --surface-hover: rgba(248, 245, 251, 0.95);
-  --text:          #17111f;
-  --text-muted:    #6f677c;
-  --text-subtle:   #5c5369;
-  --border:        rgba(226, 220, 234, 1);
-  --border-strong: rgba(201, 193, 213, 1);
-  --border-hover:  rgba(201, 193, 213, 1);
-  --shadow:        rgba(0,0,0,0.08) 0 10px 20px -4px;
-  --glow:          rgba(241, 55, 110, 0.18);
+  --surface:       #ffffff;
+  --surface-card:  #f7f7f8;
+  --surface-card-solid: #f7f7f8;
+  --surface-hover: #f0f0f2;
+  --text:          #17161b;
+  --text-muted:    #75737b;
+  --text-subtle:   #5e5c64;
+  --border:        #e4e3e7;
+  --border-strong: #d3d2d8;
+  --border-hover:  #c2c1c8;
+  --shadow:        rgba(0,0,0,0.06) 0 8px 16px -4px;
 }
 
 /* ── Base ───────────────────────────────────────────────────── */
@@ -138,11 +126,11 @@ html.light {
 }
 
 html {
-  background-color: #0e0a15;
+  background-color: #0a0a0c;
 }
 
 html.light {
-  background-color: #faf8fc;
+  background-color: #fbfbfc;
 }
 
 /* ── Page containers ────────────────────────────────────────────
@@ -169,12 +157,9 @@ html.light {
 /* ── Dropdown / settings-menu components (shared language with PortfolioPortal) ── */
 @layer components {
   .pp-dropdown-panel {
-    background:
-      linear-gradient(180deg, color-mix(in srgb, var(--surface-card-solid) 100%, #000 0%) 0%, color-mix(in srgb, var(--surface-card-solid) 92%, #000 8%) 100%);
+    background: var(--surface-card-solid);
     border: 1px solid var(--border);
-    box-shadow:
-      0 24px 60px rgba(0, 0, 0, 0.42),
-      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    box-shadow: var(--shadow);
   }
 
   .pp-dropdown-trigger {
@@ -220,37 +205,25 @@ html.light {
   .text-muted      { color: var(--text-muted); }
   .text-subtle     { color: var(--text-subtle); }
   .accent-color    { color: var(--accent-text); }
-  .accent-2-color  { color: var(--accent-2); }
 
-  /* Per-tool branding colors. Set --tool on the element, then use these instead of
-   * inlining the hex: on light backgrounds a vivid brand color fails WCAG AA as
+  /* Per-tool brand tone, used sparingly for in-tool functional state (selected
+   * segment, primary action, live indicators) — never for top-level chrome, which
+   * stays on the single --accent. Set --tool on the element, then use these instead
+   * of inlining the hex: on light backgrounds a vivid brand color fails WCAG AA as
    * text (and as a fill under white text), so both darken there and stay vivid on
    * dark. 37% / 33% are the worst-case shifts across the seven tool colors. */
   .tool-text { color: var(--tool); }
   html.light .tool-text { color: color-mix(in srgb, var(--tool) 63%, #000); }
   /* Always carries white text, so it darkens in both themes, not just light. */
   .tool-fill { background: color-mix(in srgb, var(--tool) 63%, #000); }
-  .bg-accent-gradient { background: var(--accent-gradient); }
-  .text-accent-gradient {
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-  }
-  .accent-glow { box-shadow: 0 0 24px var(--glow); }
 
-  /* Tool grid cards: border/lift driven by the per-card --tool var, so the JS
-   * layer never has to touch style.borderColor/transform on hover. */
+  /* Tool grid cards: border driven by the per-card --tool var, so the JS layer
+   * never has to touch style.borderColor on hover. Flat — no lift, no glow. */
   .tool-card {
-    transition: border-color 200ms ease, transform 200ms ease, background-color 200ms ease;
+    transition: border-color 200ms ease, background-color 200ms ease;
   }
   .tool-card:hover, .tool-card:focus-visible {
-    border-color: color-mix(in srgb, var(--tool) 50%, transparent);
-    transform: translateY(-2px);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .tool-card:hover, .tool-card:focus-visible { transform: none; }
+    border-color: var(--border-hover);
   }
 
   /* Fluid type utilities */

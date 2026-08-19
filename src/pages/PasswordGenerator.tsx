@@ -83,6 +83,11 @@ export function PasswordGenerator() {
       title={t('tools.passwordGenerator.name')}
       subtitle={t('tools.passwordGenerator.description')}
       privacyNote={t('passwordGenerator.privacyNote')}
+      info={{
+        input: t('tools.passwordGenerator.info.input'),
+        process: t('tools.passwordGenerator.info.process'),
+        output: t('tools.passwordGenerator.info.output'),
+      }}
     >
       <Panel
         title={t('passwordGenerator.resultTitle')}

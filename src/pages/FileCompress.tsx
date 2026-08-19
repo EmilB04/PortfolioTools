@@ -194,6 +194,7 @@ type CompressState =
 // ── SizeBar ────────────────────────────────────────────────────────────────────
 
 function SizeBar({ original, result }: { original: number; result: number }) {
+  const { t } = useTranslation()
   const ratio     = result / original
   const isSmaller = result < original
   const savedPct  = isSmaller ? Math.round((1 - ratio) * 100) : 0
@@ -203,10 +204,10 @@ function SizeBar({ original, result }: { original: number; result: number }) {
     <div className="rounded-xl border p-4 space-y-2.5"
       style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}>
       {([
-        { label: 'Original', size: original, widthPct: 100,                        accent: false },
-        { label: 'Output',   size: result,   widthPct: Math.min(100, ratio * 100), accent: isSmaller },
-      ] as const).map(({ label, size, widthPct, accent }) => (
-        <div key={label} className="flex items-center gap-3">
+        { kind: 'original', label: t('fileCompress.original'), size: original, widthPct: 100,                        accent: false },
+        { kind: 'output',   label: t('fileCompress.output'),   size: result,   widthPct: Math.min(100, ratio * 100), accent: isSmaller },
+      ] as const).map(({ kind, label, size, widthPct, accent }) => (
+        <div key={kind} className="flex items-center gap-3">
           <span className="text-xs w-14 text-right shrink-0" style={{ color: 'var(--text-subtle)' }}>
             {label}
           </span>
@@ -215,7 +216,7 @@ function SizeBar({ original, result }: { original: number; result: number }) {
               className="h-full rounded-full transition-all duration-700"
               style={{
                 width: `${widthPct}%`,
-                background: accent ? '#10b981' : ratio > 1 && label === 'Output' ? '#f59e0b' : 'var(--text-subtle)',
+                background: accent ? '#10b981' : ratio > 1 && kind === 'output' ? '#f59e0b' : 'var(--text-subtle)',
               }}
             />
           </div>
@@ -228,14 +229,14 @@ function SizeBar({ original, result }: { original: number; result: number }) {
       <div className="text-center pt-0.5">
         {isSmaller ? (
           <span className="text-sm font-semibold" style={{ color: '#10b981' }}>
-            Saved {fmtBytes(original - result)} · {savedPct}% smaller
+            {t('fileCompress.saved', { size: fmtBytes(original - result), pct: savedPct })}
           </span>
         ) : grewPct > 0 ? (
           <span className="text-sm" style={{ color: '#f59e0b' }}>
-            {grewPct}% larger than original
+            {t('fileCompress.grewPct', { pct: grewPct })}
           </span>
         ) : (
-          <span className="text-sm" style={{ color: 'var(--text-subtle)' }}>No size change</span>
+          <span className="text-sm" style={{ color: 'var(--text-subtle)' }}>{t('fileCompress.noSizeChange')}</span>
         )}
       </div>
     </div>
@@ -409,8 +410,8 @@ export function FileCompress() {
       {/* Header */}
       <div className="flex items-center gap-3">
         <div className="p-2.5 rounded-xl border"
-          style={{ background: 'rgba(16,185,129,0.12)', borderColor: 'rgba(16,185,129,0.35)' }}>
-          <FileArchive size={20} style={{ color: '#10b981' }} />
+          style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}>
+          <FileArchive size={20} style={{ color: 'var(--text-subtle)' }} />
         </div>
         <div className="min-w-0 flex-1">
           <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>

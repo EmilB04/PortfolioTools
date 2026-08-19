@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Crop, MoveUpRight, Square, Droplet, Type, Hash,
@@ -8,6 +8,7 @@ import type { Rect, Shape, ToolId } from '../lib/screenshotAnnotator/types'
 import { newId, normalizeRect } from '../lib/screenshotAnnotator/types'
 import { drawCropOverlay, drawShape, renderScene } from '../lib/screenshotAnnotator/render'
 import { suggestAlt } from '../lib/screenshotAnnotator/ocr'
+import { InfoButton, InfoPanel } from '../components/tools/ToolUI'
 
 // ── Constants ────────────────────────────────────────────────────────────────────
 
@@ -88,6 +89,8 @@ export function ScreenshotAnnotator() {
   const [copied, setCopied]     = useState<'image' | 'md' | null>(null)
   const [confirmRemove, setConfirmRemove] = useState(false)
   const [error, setError]       = useState<string | null>(null)
+  const [showInfo, setShowInfo] = useState(false)
+  const infoId = useId()
   const [dropActive, setDropActive] = useState(false)
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -373,18 +376,29 @@ export function ScreenshotAnnotator() {
       {/* Header */}
       <div className="flex items-center gap-3">
         <div className="p-2.5 rounded-xl border"
-          style={{ background: 'rgba(245,158,11,0.12)', borderColor: 'rgba(245,158,11,0.35)' }}>
-          <ImageDown size={20} style={{ color: ACCENT }} />
+          style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}>
+          <ImageDown size={20} style={{ color: 'var(--text-subtle)' }} />
         </div>
         <div className="min-w-0 flex-1">
           <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text)' }}>
             {t('screenshotAnnotator.title')}
           </h1>
+          <InfoButton show={showInfo} onToggle={() => setShowInfo(v => !v)} color={ACCENT} controls={infoId} />
           <p className="text-xs mt-0.5" style={{ color: 'var(--text-subtle)' }}>
             {t('screenshotAnnotator.subtitle')}
           </p>
         </div>
       </div>
+
+      {showInfo && (
+        <InfoPanel
+          id={infoId}
+          input={t('tools.screenshotAnnotator.info.input')}
+          process={t('tools.screenshotAnnotator.info.process')}
+          output={t('tools.screenshotAnnotator.info.output')}
+          color={ACCENT}
+        />
+      )}
 
       {!img ? (
         /* Drop zone */

@@ -145,9 +145,9 @@ export function ToolShell({
       <div className="flex items-start gap-3">
         <div
           className="p-2.5 rounded-xl border shrink-0"
-          style={{ background: `${color}1f`, borderColor: `${color}59` }}
+          style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}
         >
-          <span className="tool-text flex">{icon}</span>
+          <span className="flex" style={{ color: 'var(--text-subtle)' }}>{icon}</span>
         </div>
         <div className="min-w-0 flex-1">
           <h1 className="fs-xl font-display font-bold tracking-tight" style={{ color: 'var(--text)' }}>
