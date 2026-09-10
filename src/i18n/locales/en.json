@@ -117,7 +117,7 @@
     },
     "fileConverter": {
       "name": "File Converter",
-      "description": "Convert images (PNG, JPEG, WebP, GIF, BMP, SVG) and data files (JSON, CSV, TSV), all in your browser.",
+      "description": "Convert images (PNG, JPEG, WebP, GIF, BMP, SVG) data files (JSON, CSV, TSV) and PowerPoint (PPTX to Markdown or PDF), all in your browser.",
       "badge": "10+ formats",
       "stats": {
         "aLabel": "Formats supported",
@@ -410,7 +410,7 @@
   "fileConverter": {
     "title": "File Converter",
     "dropzone": "Drop a file here or click to browse",
-    "dropzoneFormats": "PNG · JPEG · WebP · GIF · BMP · SVG · JSON · CSV",
+    "dropzoneFormats": "PNG · JPEG · WebP · GIF · BMP · SVG · JSON · CSV · TSV · PPTX",
     "selectFormat": "Select output format",
     "convert": "Convert",
     "converting": "Converting...",

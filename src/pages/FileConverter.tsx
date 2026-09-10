@@ -24,7 +24,10 @@ const IMG_OUT = [
   ...(AVIF_SUPPORTED ? ['image/avif'] : []),
 ]
 
+const PPTX_MIME = 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+
 const CONVERSIONS: Record<string, string[]> = {
+  [PPTX_MIME]:                 ['text/markdown', 'application/pdf'],
   'image/png':                 IMG_OUT.filter(m => m !== 'image/png'),
   'image/jpeg':                IMG_OUT.filter(m => m !== 'image/jpeg'),
   'image/webp':                IMG_OUT.filter(m => m !== 'image/webp'),
@@ -48,9 +51,15 @@ const MIME_LABEL: Record<string, string> = {
   'application/json':          'JSON',
   'text/csv':                  'CSV',
   'text/tab-separated-values': 'TSV',
+  [PPTX_MIME]:                 'PPTX',
+  'text/markdown':             'MD',
+  'application/pdf':           'PDF',
 }
 
 const MIME_EXT: Record<string, string> = {
+  [PPTX_MIME]:                 'pptx',
+  'text/markdown':             'md',
+  'application/pdf':           'pdf',
   'image/png':                 'png',
   'image/jpeg':                'jpg',
   'image/webp':                'webp',
@@ -166,8 +175,126 @@ function tsvToCsv(text: string): string {
     .join('\n')
 }
 
+// ── PPTX parsing ───────────────────────────────────────────────────────────────
+
+interface SlideBlock { title: string | null; lines: { text: string; lvl: number }[] }
+
+async function parsePptx(file: File): Promise<SlideBlock[]> {
+  const { default: JSZip } = await import('jszip')
+  const zip = await JSZip.loadAsync(await file.arrayBuffer())
+  const slideNames = Object.keys(zip.files)
+    .filter(n => /^ppt\/slides\/slide\d+\.xml$/.test(n))
+    .sort((a, b) => {
+      const na = Number(a.match(/slide(\d+)\.xml$/)![1])
+      const nb = Number(b.match(/slide(\d+)\.xml$/)![1])
+      return na - nb
+    })
+  const parser = new DOMParser()
+  const slides: SlideBlock[] = []
+  for (const name of slideNames) {
+    const xml = await zip.files[name].async('string')
+    const doc = parser.parseFromString(xml, 'application/xml')
+    const shapes = Array.from(doc.getElementsByTagName('p:sp'))
+    const block: SlideBlock = { title: null, lines: [] }
+    for (const sp of shapes) {
+      const ph = sp.getElementsByTagName('p:ph')[0]
+      const phType = ph?.getAttribute('type') ?? ''
+      const isTitle = phType === 'title' || phType === 'ctrTitle'
+      const paras = Array.from(sp.getElementsByTagName('a:p'))
+      for (const p of paras) {
+        const text = Array.from(p.getElementsByTagName('a:t'))
+          .map(t => t.textContent ?? '')
+          .join('')
+          .trim()
+        if (!text) continue
+        if (isTitle && block.title === null) {
+          block.title = text
+        } else {
+          const lvl = Number(p.getElementsByTagName('a:pPr')[0]?.getAttribute('lvl') ?? '0')
+          block.lines.push({ text, lvl: Number.isFinite(lvl) ? lvl : 0 })
+        }
+      }
+    }
+    slides.push(block)
+  }
+  return slides
+}
+
+function pptxToMarkdown(slides: SlideBlock[]): string {
+  return slides.map((s, i) => {
+    const heading = `## ${s.title ?? `Slide ${i + 1}`}`
+    const body = s.lines.map(l => `${'  '.repeat(l.lvl)}- ${l.text}`).join('\n')
+    return body ? `${heading}\n\n${body}` : heading
+  }).join('\n\n')
+}
+
+// ── PPTX visual render ─────────────────────────────────────────────────────────
+// Renders each slide to a DOM subtree via pptx-preview, rasterises it with
+// html2canvas, and lays the images into a PDF one slide per page. Fidelity is
+// "looks roughly right" — text, images and basic shapes render; SmartArt,
+// transitions and some chart/font details may drift.
+
+async function pptxRenderToPdf(file: File): Promise<Blob> {
+  const [{ init }, html2canvasMod, { jsPDF }] = await Promise.all([
+    import('pptx-preview'),
+    import('html2canvas'),
+    import('jspdf'),
+  ])
+  const html2canvas = html2canvasMod.default
+
+  const RENDER_W = 1280
+  const host = document.createElement('div')
+  host.style.cssText =
+    'position:fixed;left:-100000px;top:0;width:1280px;pointer-events:none;opacity:0;z-index:-1'
+  document.body.appendChild(host)
+
+  try {
+    const previewer = init(host, {
+      width: RENDER_W,
+      height: Math.round((RENDER_W * 9) / 16),
+      mode: 'list',
+    })
+    await previewer.preview(await file.arrayBuffer())
+
+    const slideEls = Array.from(
+      host.querySelectorAll<HTMLElement>('.pptx-preview-slide-wrapper')
+    )
+    if (!slideEls.length) throw new Error('No slides could be rendered')
+
+    // Give embedded images / fonts a moment to settle before rasterising.
+    await new Promise(r => setTimeout(r, 300))
+
+    const { width: pxW, height: pxH } = previewer.htmlRender.renderPort
+    const orientation = pxW >= pxH ? 'landscape' : 'portrait'
+    const pdf = new jsPDF({ unit: 'pt', format: [pxW, pxH], orientation })
+
+    for (let i = 0; i < slideEls.length; i++) {
+      const canvas = await html2canvas(slideEls[i], {
+        scale: 2,
+        backgroundColor: '#ffffff',
+        logging: false,
+        useCORS: true,
+      })
+      const img = canvas.toDataURL('image/jpeg', 0.92)
+      if (i > 0) pdf.addPage([pxW, pxH], orientation)
+      pdf.addImage(img, 'JPEG', 0, 0, pxW, pxH)
+    }
+    return pdf.output('blob')
+  } finally {
+    document.body.removeChild(host)
+  }
+}
+
 async function convertFile(file: File, srcMime: string, tgtMime: string, quality: number): Promise<Blob> {
   if (srcMime.startsWith('image/')) return convertImage(file, tgtMime, quality)
+  if (srcMime === PPTX_MIME) {
+    if (tgtMime === 'text/markdown') {
+      const slides = await parsePptx(file)
+      return new Blob([pptxToMarkdown(slides)], { type: 'text/markdown' })
+    }
+    if (tgtMime === 'application/pdf') return pptxRenderToPdf(file)
+    throw new Error('Unsupported conversion')
+  }
   const text = await file.text()
   const key = `${srcMime}→${tgtMime}`
   const fns: Record<string, () => string> = {
@@ -202,6 +329,7 @@ function detectMime(file: File): string {
   const byExt: Record<string, string> = {
     csv: 'text/csv', json: 'application/json', tsv: 'text/tab-separated-values',
     svg: 'image/svg+xml', bmp: 'image/bmp', avif: 'image/avif',
+    pptx: PPTX_MIME,
   }
   return (ext && byExt[ext]) ? byExt[ext] : file.type
 }
@@ -367,7 +495,7 @@ export function FileConverter() {
           </h1>
           <InfoButton show={showInfo} onToggle={() => setShowInfo(v => !v)} color={ACCENT} controls={infoId} />
           <p className="fs-sm mt-0.5 prose-measure" style={{ color: 'var(--text-subtle)' }}>
-            Images · JSON · CSV · TSV{AVIF_SUPPORTED ? ' · AVIF' : ''} · browser-only, no uploads
+            Images · JSON · CSV · TSV · PPTX{AVIF_SUPPORTED ? ' · AVIF' : ''} · browser-only, no uploads
           </p>
         </div>
       </div>
@@ -585,7 +713,7 @@ export function FileConverter() {
       )}
 
       <input ref={inputRef} type="file"
-        accept="image/*,.json,.csv,.tsv,application/json,text/csv,text/tab-separated-values"
+        accept={`image/*,.json,.csv,.tsv,.pptx,application/json,text/csv,text/tab-separated-values,${PPTX_MIME}`}
         className="hidden"
         onChange={onInputChange}
       />
