@@ -25,9 +25,11 @@ const IMG_OUT = [
 ]
 
 const PPTX_MIME = 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+const PPT_MIME = 'application/vnd.ms-powerpoint'
 
 const CONVERSIONS: Record<string, string[]> = {
   [PPTX_MIME]:                 ['text/markdown', 'application/pdf'],
+  [PPT_MIME]:                  ['text/markdown'],
   'image/png':                 IMG_OUT.filter(m => m !== 'image/png'),
   'image/jpeg':                IMG_OUT.filter(m => m !== 'image/jpeg'),
   'image/webp':                IMG_OUT.filter(m => m !== 'image/webp'),
@@ -52,12 +54,14 @@ const MIME_LABEL: Record<string, string> = {
   'text/csv':                  'CSV',
   'text/tab-separated-values': 'TSV',
   [PPTX_MIME]:                 'PPTX',
+  [PPT_MIME]:                  'PPT',
   'text/markdown':             'MD',
   'application/pdf':           'PDF',
 }
 
 const MIME_EXT: Record<string, string> = {
   [PPTX_MIME]:                 'pptx',
+  [PPT_MIME]:                  'ppt',
   'text/markdown':             'md',
   'application/pdf':           'pdf',
   'image/png':                 'png',
@@ -228,6 +232,201 @@ function pptxToMarkdown(slides: SlideBlock[]): string {
   }).join('\n\n')
 }
 
+// ── Legacy .ppt (binary OLE / CFBF) parsing ─────────────────────────────────────
+// Best-effort text extraction only — no visual render is possible without a
+// dedicated binary-format renderer. The CFBF (Compound File Binary Format)
+// reader below implements just enough of MS-CFB to locate the "PowerPoint
+// Document" stream, then a minimal MS-PPT record walker pulls text runs out
+// of Slide containers. Slide order and title/body grouping are approximate:
+// stale persisted copies of edited slides may appear (duplicated text), and
+// slides are matched by container order rather than the real persist
+// directory, since implementing the full persist-object resolution is out of
+// scope for a "good enough" export.
+
+const ENDOFCHAIN = 0xfffffffe
+const FREESECT = 0xffffffff
+const FATSECT = 0xfffffffd
+const DIFSECT = 0xfffffffc
+
+function readCfbfStream(buf: ArrayBuffer, streamName: string): Uint8Array | null {
+  const dv = new DataView(buf)
+  const sig = [0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1]
+  for (let i = 0; i < 8; i++) if (dv.getUint8(i) !== sig[i]) return null
+
+  const sectorShift = dv.getUint16(30, true)
+  const sectorSize = 1 << sectorShift
+  const numFatSectors = dv.getUint32(44, true)
+  const firstDirSector = dv.getUint32(48, true)
+  const firstDifatSector = dv.getUint32(68, true)
+  const numDifatSectors = dv.getUint32(72, true)
+
+  const sectorOffset = (n: number) => 512 + n * sectorSize
+  const readSectorU32 = (n: number): number[] => {
+    const off = sectorOffset(n)
+    const vals: number[] = []
+    for (let i = 0; i < sectorSize; i += 4) vals.push(dv.getUint32(off + i, true))
+    return vals
+  }
+
+  // Gather FAT sector locations: 109 in the header, plus any DIFAT chain.
+  const fatSectorLocs: number[] = []
+  for (let i = 0; i < 109 && fatSectorLocs.length < numFatSectors; i++) {
+    const loc = dv.getUint32(76 + i * 4, true)
+    if (loc !== FREESECT) fatSectorLocs.push(loc)
+  }
+  let difatSector = firstDifatSector
+  for (let d = 0; d < numDifatSectors && difatSector !== ENDOFCHAIN && difatSector !== FREESECT; d++) {
+    const entries = readSectorU32(difatSector)
+    for (let i = 0; i < entries.length - 1 && fatSectorLocs.length < numFatSectors; i++) {
+      if (entries[i] !== FREESECT) fatSectorLocs.push(entries[i])
+    }
+    difatSector = entries[entries.length - 1]
+  }
+
+  const fat: number[] = []
+  for (const loc of fatSectorLocs) fat.push(...readSectorU32(loc))
+
+  const readChain = (startSector: number, size?: number): Uint8Array => {
+    const chunks: Uint8Array[] = []
+    let sector = startSector
+    let guard = 0
+    while (sector !== ENDOFCHAIN && sector !== FREESECT && sector >= 0 && guard++ < 1_000_000) {
+      chunks.push(new Uint8Array(buf, sectorOffset(sector), sectorSize))
+      sector = fat[sector]
+      if (sector === FATSECT || sector === DIFSECT) break
+    }
+    const out = new Uint8Array(chunks.reduce((n, c) => n + c.length, 0))
+    let off = 0
+    for (const c of chunks) { out.set(c, off); off += c.length }
+    return size !== undefined ? out.slice(0, size) : out
+  }
+
+  const dirBytes = readChain(firstDirSector)
+  const dirDv = new DataView(dirBytes.buffer, dirBytes.byteOffset, dirBytes.byteLength)
+  const numEntries = Math.floor(dirBytes.length / 128)
+  for (let i = 0; i < numEntries; i++) {
+    const base = i * 128
+    const objType = dirDv.getUint8(base + 66)
+    if (objType !== 1 && objType !== 2) continue // storage or stream only
+    const nameLen = dirDv.getUint16(base + 64, true)
+    if (nameLen < 2) continue
+    let name = ''
+    for (let c = 0; c < nameLen / 2 - 1; c++) name += String.fromCharCode(dirDv.getUint16(base + c * 2, true))
+    if (name !== streamName) continue
+    const startSector = dirDv.getUint32(base + 116, true)
+    const sizeLow = dirDv.getUint32(base + 120, true)
+    return readChain(startSector, sizeLow)
+  }
+  return null
+}
+
+// MS-PPT binary record parsing (RT_* record types from [MS-PPT]).
+const RT_TEXT_HEADER_ATOM = 0x0f9f // 3999
+const RT_TEXT_CHARS_ATOM = 0x0fa0 // 4000
+const RT_TEXT_BYTES_ATOM = 0x0fa8 // 4008
+const RT_SLIDE = 0x03ee // 1006
+const RT_NOTES = 0x03f0 // 1008
+const RT_MAIN_MASTER = 0x03f8 // 1016
+
+function walkPptRecords(
+  bytes: Uint8Array,
+  dv: DataView,
+  start: number,
+  end: number,
+  onText: (text: string, headerType: number) => void,
+  headerType: { current: number },
+) {
+  let pos = start
+  while (pos + 8 <= end) {
+    const verInst = dv.getUint16(pos, true)
+    const recVer = verInst & 0x000f
+    const recType = dv.getUint16(pos + 2, true)
+    const recLen = dv.getUint32(pos + 4, true)
+    const dataStart = pos + 8
+    const dataEnd = Math.min(dataStart + recLen, end)
+
+    if (recType === RT_TEXT_HEADER_ATOM && dataEnd - dataStart >= 4) {
+      headerType.current = dv.getUint32(dataStart, true)
+    } else if (recType === RT_TEXT_CHARS_ATOM) {
+      let text = ''
+      for (let i = dataStart; i + 1 < dataEnd; i += 2) text += String.fromCharCode(dv.getUint16(i, true))
+      if (text.trim()) onText(text, headerType.current)
+    } else if (recType === RT_TEXT_BYTES_ATOM) {
+      let text = ''
+      for (let i = dataStart; i < dataEnd; i++) text += String.fromCharCode(dv.getUint8(i))
+      if (text.trim()) onText(text, headerType.current)
+    } else if (recVer === 0xf) {
+      // Container record — recurse into its children.
+      walkPptRecords(bytes, dv, dataStart, dataEnd, onText, headerType)
+    }
+    pos = dataStart + recLen
+  }
+}
+
+function parsePpt(file: File): Promise<SlideBlock[]> {
+  return file.arrayBuffer().then(buf => {
+    const stream = readCfbfStream(buf, 'PowerPoint Document')
+    if (!stream) throw new Error('Not a valid legacy PPT file')
+    const dv = new DataView(stream.buffer, stream.byteOffset, stream.byteLength)
+
+    const slides: SlideBlock[] = []
+    let pos = 0
+    while (pos + 8 <= stream.length) {
+      const verInst = dv.getUint16(pos, true)
+      const recVer = verInst & 0x000f
+      const recType = dv.getUint16(pos + 2, true)
+      const recLen = dv.getUint32(pos + 4, true)
+      const dataStart = pos + 8
+      const dataEnd = Math.min(dataStart + recLen, stream.length)
+
+      if (recType === RT_SLIDE) {
+        const block: SlideBlock = { title: null, lines: [] }
+        const headerType = { current: -1 }
+        walkPptRecords(stream, dv, dataStart, dataEnd, (text, ht) => {
+          // Header types: 0 = title, 6 = center title. Everything else is body text.
+          if ((ht === 0 || ht === 6) && block.title === null) block.title = text
+          else block.lines.push({ text, lvl: 0 })
+        }, headerType)
+        if (block.title !== null || block.lines.length) slides.push(block)
+      } else if (recType !== RT_NOTES && recType !== RT_MAIN_MASTER && recVer === 0xf) {
+        // Recurse into other top-level containers to find nested Slide records.
+        const sub = parsePptSlideScan(stream, dv, dataStart, dataEnd)
+        slides.push(...sub)
+      }
+      pos = dataStart + recLen
+    }
+    if (!slides.length) throw new Error('No slide text found in this PPT file')
+    return slides
+  })
+}
+
+function parsePptSlideScan(bytes: Uint8Array, dv: DataView, start: number, end: number): SlideBlock[] {
+  const slides: SlideBlock[] = []
+  let pos = start
+  while (pos + 8 <= end) {
+    const verInst = dv.getUint16(pos, true)
+    const recVer = verInst & 0x000f
+    const recType = dv.getUint16(pos + 2, true)
+    const recLen = dv.getUint32(pos + 4, true)
+    const dataStart = pos + 8
+    const dataEnd = Math.min(dataStart + recLen, end)
+
+    if (recType === RT_SLIDE) {
+      const block: SlideBlock = { title: null, lines: [] }
+      const headerType = { current: -1 }
+      walkPptRecords(bytes, dv, dataStart, dataEnd, (text, ht) => {
+        if ((ht === 0 || ht === 6) && block.title === null) block.title = text
+        else block.lines.push({ text, lvl: 0 })
+      }, headerType)
+      if (block.title !== null || block.lines.length) slides.push(block)
+    } else if (recType !== RT_NOTES && recType !== RT_MAIN_MASTER && recVer === 0xf) {
+      slides.push(...parsePptSlideScan(bytes, dv, dataStart, dataEnd))
+    }
+    pos = dataStart + recLen
+  }
+  return slides
+}
+
 // ── PPTX visual render ─────────────────────────────────────────────────────────
 // Renders each slide to a DOM subtree via pptx-preview, rasterises it with
 // html2canvas, and lays the images into a PDF one slide per page. Fidelity is
@@ -295,6 +494,10 @@ async function convertFile(file: File, srcMime: string, tgtMime: string, quality
     if (tgtMime === 'application/pdf') return pptxRenderToPdf(file)
     throw new Error('Unsupported conversion')
   }
+  if (srcMime === PPT_MIME) {
+    const slides = await parsePpt(file)
+    return new Blob([pptxToMarkdown(slides)], { type: 'text/markdown' })
+  }
   const text = await file.text()
   const key = `${srcMime}→${tgtMime}`
   const fns: Record<string, () => string> = {
@@ -329,7 +532,7 @@ function detectMime(file: File): string {
   const byExt: Record<string, string> = {
     csv: 'text/csv', json: 'application/json', tsv: 'text/tab-separated-values',
     svg: 'image/svg+xml', bmp: 'image/bmp', avif: 'image/avif',
-    pptx: PPTX_MIME,
+    pptx: PPTX_MIME, ppt: PPT_MIME,
   }
   return (ext && byExt[ext]) ? byExt[ext] : file.type
 }
@@ -495,7 +698,7 @@ export function FileConverter() {
           </h1>
           <InfoButton show={showInfo} onToggle={() => setShowInfo(v => !v)} color={ACCENT} controls={infoId} />
           <p className="fs-sm mt-0.5 prose-measure" style={{ color: 'var(--text-subtle)' }}>
-            Images · JSON · CSV · TSV · PPTX{AVIF_SUPPORTED ? ' · AVIF' : ''} · browser-only, no uploads
+            Images · JSON · CSV · TSV · PPTX · PPT{AVIF_SUPPORTED ? ' · AVIF' : ''} · browser-only, no uploads
           </p>
         </div>
       </div>
@@ -713,7 +916,7 @@ export function FileConverter() {
       )}
 
       <input ref={inputRef} type="file"
-        accept={`image/*,.json,.csv,.tsv,.pptx,application/json,text/csv,text/tab-separated-values,${PPTX_MIME}`}
+        accept={`image/*,.json,.csv,.tsv,.pptx,.ppt,application/json,text/csv,text/tab-separated-values,${PPTX_MIME},${PPT_MIME}`}
         className="hidden"
         onChange={onInputChange}
       />
