@@ -117,7 +117,7 @@
     },
     "fileConverter": {
       "name": "Filkonverterer",
-      "description": "Konverter bilder (PNG, JPEG, WebP, GIF, BMP, SVG) og datafiler (JSON, CSV, TSV), direkte i nettleseren.",
+      "description": "Konverter bilder (PNG, JPEG, WebP, GIF, BMP, SVG) datafiler (JSON, CSV, TSV) og PowerPoint (PPTX til Markdown eller PDF), direkte i nettleseren.",
       "badge": "10+ formater",
       "stats": {
         "aLabel": "Formater støttet",
@@ -410,7 +410,7 @@
   "fileConverter": {
     "title": "Filkonverterer",
     "dropzone": "Slipp en fil her eller klikk for å bla",
-    "dropzoneFormats": "PNG · JPEG · WebP · GIF · BMP · SVG · JSON · CSV",
+    "dropzoneFormats": "PNG · JPEG · WebP · GIF · BMP · SVG · JSON · CSV · TSV · PPTX",
     "selectFormat": "Velg utdataformat",
     "convert": "Konverter",
     "converting": "Konverterer...",

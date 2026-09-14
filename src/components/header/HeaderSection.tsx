@@ -23,17 +23,17 @@ function Breadcrumb() {
         {tool.category !== 'overview' && (
           <>
             <li
-              className="fs-xs font-mono uppercase tracking-[0.14em]"
+              className="fs-sm font-mono uppercase leading-none tracking-[0.14em]"
               style={{ color: 'var(--text-muted)' }}
             >
               {t(`nav.categories.${tool.category}`)}
             </li>
-            <li aria-hidden="true" className="flex">
-              <ChevronRight size={13} style={{ color: 'var(--text-muted)' }} />
+            <li aria-hidden="true" className="flex items-center">
+              <ChevronRight size={14} style={{ color: 'var(--text-muted)' }} />
             </li>
           </>
         )}
-        <li className="truncate fs-sm font-medium" style={{ color: 'var(--text)' }} aria-current="page">
+        <li className="truncate fs-sm font-medium leading-none" style={{ color: 'var(--text)' }} aria-current="page">
           {t(`nav.${tool.key}`)}
         </li>
       </ol>
