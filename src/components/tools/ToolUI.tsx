@@ -142,9 +142,10 @@ export function ToolShell({
       className={`page-container ${widthClass} space-y-6`}
       style={{ '--tool': color } as React.CSSProperties}
     >
-      <div className="flex items-start gap-3">
+      <header className="flex items-start gap-3">
         <div
           className="p-2.5 rounded-xl border shrink-0"
+          aria-hidden="true"
           style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}
         >
           <span className="flex" style={{ color: 'var(--text-subtle)' }}>{icon}</span>
@@ -160,7 +161,7 @@ export function ToolShell({
             {subtitle}
           </p>
         </div>
-      </div>
+      </header>
 
       {info && showInfo && <InfoPanel id={infoId} {...info} color={color} />}
 
@@ -192,9 +193,10 @@ export function Panel({
   className?: string
 }) {
   const headingId = useId()
+  const Container = title ? 'section' : 'div'
 
   return (
-    <section
+    <Container
       aria-labelledby={title ? headingId : undefined}
       className={`rounded-2xl border ${className}`}
       style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
@@ -217,7 +219,7 @@ export function Panel({
         </div>
       )}
       <div className="p-4">{children}</div>
-    </section>
+    </Container>
   )
 }
 

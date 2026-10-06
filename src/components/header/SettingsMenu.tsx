@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiSettings } from 'react-icons/fi'
 import { SUPPORTED_LANGUAGES } from '../../lib/i18n.ts'
-import { ACCENT_PRESETS, type AccentColor } from '../../contexts/accent-context'
-import { useAccent } from '../../contexts/useAccent'
 import { useTheme } from '../../contexts/useTheme'
 import { useCookieConsent } from '../../contexts/useCookieConsent'
 import { writePreference } from '../../lib/cookieConsent'
@@ -63,8 +61,7 @@ const THEME_OPTIONS: { value: ThemeValue; labelKey: string; Icon: () => React.JS
 
 export default function SettingsMenu() {
     const { i18n, t } = useTranslation()
-    const { theme, resolvedTheme, setTheme } = useTheme()
-    const { accent, setAccent } = useAccent()
+    const { theme, setTheme } = useTheme()
     const { consent, accept, decline, showBanner } = useCookieConsent()
     const [open, setOpen] = useState(false)
     const rootRef = useRef<HTMLDivElement | null>(null)
@@ -83,6 +80,9 @@ export default function SettingsMenu() {
 
         function handleKeyDown(event: KeyboardEvent) {
             if (event.key === 'Escape') {
+                if (rootRef.current?.contains(document.activeElement)) {
+                    rootRef.current.querySelector<HTMLButtonElement>('button')?.focus()
+                }
                 setOpen(false)
             }
         }
@@ -128,6 +128,7 @@ export default function SettingsMenu() {
 
             <div
                 role="dialog"
+                inert={!open}
                 aria-label={t('settingsMenu.settings')}
                 className={`
                     pp-dropdown-panel absolute right-0 top-[calc(100%+0.5rem)] z-[600] w-[17.5rem] max-w-[calc(100vw-2rem)]
@@ -143,15 +144,14 @@ export default function SettingsMenu() {
                 <div className="flex flex-col gap-3 p-2">
                     <section>
                         <h3 className={SECTION_HEADING}>{t('languageSwitcher.section')}</h3>
-                        <div role="listbox" aria-label={t('languageSwitcher.choose')} className="flex flex-col gap-0.5">
+                        <div role="group" aria-label={t('languageSwitcher.choose')} className="flex flex-col gap-0.5">
                             {SUPPORTED_LANGUAGES.map((language) => {
                                 const selected = language.code === currentLanguage
                                 return (
                                     <button
                                         key={language.code}
                                         type="button"
-                                        role="option"
-                                        aria-selected={selected}
+                                        aria-pressed={selected}
                                         onClick={() => void handleLanguageSelect(language.code)}
                                         className={`
                                             flex w-full items-center justify-between rounded-lg px-2.5 py-2 text-left fs-sm
@@ -195,40 +195,6 @@ export default function SettingsMenu() {
                                     >
                                         <Icon />
                                         {t(labelKey)}
-                                    </button>
-                                )
-                            })}
-                        </div>
-                    </section>
-
-                    <section>
-                        <h3 className={SECTION_HEADING}>{t('settingsMenu.accentColor')}</h3>
-                        <div role="listbox" aria-label={t('settingsMenu.chooseAccent')} className="grid grid-cols-7 gap-1">
-                            {(Object.keys(ACCENT_PRESETS) as AccentColor[]).map((color) => {
-                                const preset = ACCENT_PRESETS[color]
-                                const selected = color === accent
-                                return (
-                                    <button
-                                        key={color}
-                                        type="button"
-                                        role="option"
-                                        aria-selected={selected}
-                                        aria-label={preset.label}
-                                        title={preset.label}
-                                        onClick={() => setAccent(color)}
-                                        className={`
-                                            flex h-8 w-8 items-center justify-center rounded-lg border transition-colors duration-150
-                                            ${selected ? 'border-[var(--accent)]' : 'border-transparent hover:border-[var(--border-strong)]'}
-                                        `}
-                                    >
-                                        <span
-                                            aria-hidden="true"
-                                            className="h-4 w-4 rounded-full"
-                                            style={{
-                                                background: resolvedTheme === 'dark' ? preset.dark : preset.light,
-                                                boxShadow: 'inset 0 0 0 1px var(--swatch-ring)',
-                                            }}
-                                        />
                                     </button>
                                 )
                             })}

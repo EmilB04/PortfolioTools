@@ -715,21 +715,22 @@ export function FileConverter() {
 
       {/* Drop zone */}
       {conv.kind === 'idle' && (
-        <div
+        <button
+          type="button"
           onDrop={onDrop}
           onDragOver={e => { e.preventDefault(); setDragging(true) }}
           onDragLeave={() => setDragging(false)}
           onMouseEnter={() => setHovering(true)}
           onMouseLeave={() => setHovering(false)}
           onClick={() => inputRef.current?.click()}
-          className="rounded-2xl border-2 border-dashed p-14 flex flex-col items-center gap-4 cursor-pointer select-none"
+          className="w-full rounded-2xl border-2 border-dashed p-14 flex flex-col items-center gap-4 cursor-pointer select-none"
           style={{
             borderColor: dragging ? '#f97316' : hovering ? 'rgba(249,115,22,0.55)' : 'var(--border)',
             background:  dragging ? 'rgba(249,115,22,0.06)' : hovering ? 'rgba(249,115,22,0.03)' : 'var(--surface)',
             transition: 'border-color 0.18s ease, background 0.18s ease',
           }}
         >
-          <div className="p-4 rounded-full"
+          <span className="block p-4 rounded-full"
             style={{
               background: dragging ? 'rgba(249,115,22,0.18)' : hovering ? 'rgba(249,115,22,0.10)' : 'var(--surface-card)',
               transition: 'background 0.18s ease, transform 0.18s ease',
@@ -740,21 +741,21 @@ export function FileConverter() {
                 color: dragging ? '#f97316' : hovering ? 'rgba(249,115,22,0.75)' : 'var(--text-subtle)',
                 transition: 'color 0.18s ease',
               }} />
-          </div>
-          <div className="text-center">
-            <p className="fs-sm font-medium"
+          </span>
+          <span className="block text-center">
+            <span className="fs-sm font-medium"
               style={{
                 color: (dragging || hovering) ? 'var(--text)' : 'var(--text-muted)',
                 transition: 'color 0.18s ease',
               }}>
               {t('fileConverter.dropzone')}
-            </p>
-            <p className="fs-xs mt-1.5" style={{ color: 'var(--text-subtle)' }}>
+            </span>
+            <span className="block fs-xs mt-1.5" style={{ color: 'var(--text-subtle)' }}>
               {t('fileConverter.dropzoneFormats')}
               {AVIF_SUPPORTED ? ' · AVIF' : ''}
-            </p>
-          </div>
-        </div>
+            </span>
+          </span>
+        </button>
       )}
 
       {/* File card */}
@@ -844,7 +845,9 @@ export function FileConverter() {
                 </div>
               </div>
               <input
-                type="range" min={10} max={100} value={quality}
+                aria-label={t('fileConverter.quality')}
+                    aria-valuetext={`${quality}%`}
+                    type="range" min={10} max={100} value={quality}
                 onChange={e => setConv(s => s.kind === 'selected' ? { ...s, quality: Number(e.target.value) } : s)}
                 className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
                 style={{ accentColor: '#f97316' }}

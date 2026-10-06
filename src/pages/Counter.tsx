@@ -37,12 +37,23 @@ export function Counter() {
   const [editValue, setEditValue] = useState('')
   const [confirm, setConfirm] = useState<ConfirmState>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  const confirmId = useId()
 
   useEffect(() => { saveCounterState(counts) }, [counts])
 
   useEffect(() => {
     if (editing) { inputRef.current?.focus(); inputRef.current?.select() }
   }, [editing])
+
+  useEffect(() => {
+    if (confirm && !dialogRef.current?.open) dialogRef.current?.showModal()
+  }, [confirm])
+
+  function closeConfirm() {
+    dialogRef.current?.close()
+    setConfirm(null)
+  }
 
   const modeColors = MODE_COLORS[mode]
   const modeLabel = mode === 'entered' ? t('counter.entered') : t('counter.exited')
@@ -127,7 +138,7 @@ export function Counter() {
           const active = mode === m
           const Icon = m === 'entered' ? LogIn : LogOut
           return (
-            <button key={m} onClick={e => { haptic('light', e.currentTarget); setMode(m) }}
+            <button key={m} type="button" aria-pressed={active} onClick={e => { haptic('light', e.currentTarget); setMode(m) }}
               className="flex-1 flex items-center justify-center gap-2 px-3 py-3 rounded-xl fs-sm font-semibold transition-all duration-150"
               style={{ background: active ? c.fill : 'transparent', color: active ? '#ffffff' : 'var(--text-subtle)' }}>
               <Icon size={16} />
@@ -149,6 +160,7 @@ export function Counter() {
           <input
             ref={inputRef}
             type="number"
+            aria-label={t('counter.editCount', { label: modeLabel })}
             inputMode="numeric"
             value={editValue}
             onChange={e => setEditValue(e.target.value)}
@@ -158,7 +170,7 @@ export function Counter() {
             style={{ fontSize: 64, fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--text)', borderColor: modeColors.color }}
           />
         ) : (
-          <button onClick={startEdit}
+          <button aria-label={t('counter.editCount', { label: modeLabel })} onClick={startEdit}
             className="tabular-nums leading-none mt-1 border-b-2 border-transparent hover:border-dashed transition-colors"
             style={{ fontSize: 64, fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--text)', borderColor: 'var(--border)' }}>
             {counts[mode]}
@@ -195,7 +207,7 @@ export function Counter() {
           style={{ borderColor: 'var(--border)', background: 'var(--surface-card)', color: 'var(--text-muted)' }}>
           <Minus size={18} />
         </button>
-        <button onClick={e => increment(e.currentTarget)} aria-label={t('counter.entered')}
+        <button onClick={e => increment(e.currentTarget)} aria-label={modeLabel}
           className="w-36 h-36 rounded-full flex items-center justify-center text-white shadow-lg transition-transform active:scale-95"
           style={{ background: modeColors.fill }}>
           <Plus size={56} />
@@ -220,27 +232,31 @@ export function Counter() {
 
       {/* Confirm sheet */}
       {confirm && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center px-0 sm:px-4"
+        <dialog ref={dialogRef}
+          aria-labelledby={`${confirmId}-title`}
+          aria-describedby={`${confirmId}-body`}
+          onCancel={event => { event.preventDefault(); closeConfirm() }}
+          className="fixed inset-0 m-0 h-full max-h-none w-full max-w-none border-0 flex items-end sm:items-center justify-center px-0 sm:px-4"
           style={{ background: 'rgba(0,0,0,0.55)' }}
-          onClick={e => { if (e.target === e.currentTarget) setConfirm(null) }}>
+          onClick={e => { if (e.target === e.currentTarget) closeConfirm() }}>
           <div className="w-full sm:max-w-sm rounded-t-2xl sm:rounded-2xl border p-5 space-y-3"
             style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
-            <h2 className="text-[15px] font-bold" style={{ color: 'var(--text)' }}>{confirm.title}</h2>
-            <p className="text-[13px] leading-relaxed" style={{ color: 'var(--text-muted)' }}>{confirm.body}</p>
+            <h2 id={`${confirmId}-title`} className="text-[15px] font-bold" style={{ color: 'var(--text)' }}>{confirm.title}</h2>
+            <p id={`${confirmId}-body`} className="text-[13px] leading-relaxed" style={{ color: 'var(--text-muted)' }}>{confirm.body}</p>
             <div className="flex gap-2.5 pt-1">
-              <button onClick={e => { haptic('light', e.currentTarget); setConfirm(null) }}
+              <button onClick={e => { haptic('light', e.currentTarget); closeConfirm() }}
                 className="flex-1 py-3 rounded-xl fs-sm font-semibold border"
                 style={{ borderColor: 'var(--border)', background: 'var(--surface-card)', color: 'var(--text)' }}>
                 {t('counter.cancel')}
               </button>
-              <button onClick={e => { haptic('heavy', e.currentTarget); confirm.onConfirm(); setConfirm(null) }}
+              <button onClick={e => { haptic('heavy', e.currentTarget); confirm.onConfirm(); closeConfirm() }}
                 className="flex-1 py-3 rounded-xl fs-sm font-semibold text-white"
                 style={{ background: confirm.accentColor }}>
                 {t('counter.confirm')}
               </button>
             </div>
           </div>
-        </div>
+        </dialog>
       )}
     </div>
   )
