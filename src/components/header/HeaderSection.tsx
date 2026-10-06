@@ -1,6 +1,6 @@
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { ChevronRight } from 'lucide-react'
+import { ChevronRight, Search } from 'lucide-react'
 import SettingsMenu from './SettingsMenu'
 import { BrandMark } from '../BrandMark'
 import { findActiveTool } from '../../tools/registry'
@@ -26,6 +26,8 @@ function Breadcrumb() {
               className="fs-sm font-mono uppercase leading-none tracking-[0.14em]"
               style={{ color: 'var(--text-muted)' }}
             >
+              <Link to="/" className="hover:text-[var(--accent-text)]">{t('nav.dashboard')}</Link>
+              <span aria-hidden="true"> · </span>
               {t(`nav.categories.${tool.category}`)}
             </li>
             <li aria-hidden="true" className="flex items-center">
@@ -46,12 +48,20 @@ function Breadcrumb() {
  * app's only global control on the right. On mobile the breadcrumb gives way to the
  * brand badge, since the drawer trigger already occupies the left edge.
  */
-export default function HeaderSection() {
+export default function HeaderSection({ onSearch }: { onSearch: () => void }) {
+  const { t } = useTranslation()
   return (
     <div className="flex min-w-0 flex-1 items-center justify-between gap-3">
       <Breadcrumb />
       <BrandMark iconOnly className="lg:hidden" />
-      <SettingsMenu />
+      <div className="flex items-center gap-3">
+        <button type="button" className="global-tool-search" aria-haspopup="dialog" onClick={() => onSearch()} aria-keyshortcuts="Meta+K Control+K">
+          <Search size={14} aria-hidden="true" />
+          <span>{t('dashboard.search.label')}</span>
+          <kbd>{t('dashboard.search.shortcut')}</kbd>
+        </button>
+        <SettingsMenu />
+      </div>
     </div>
   )
 }

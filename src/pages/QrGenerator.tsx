@@ -148,10 +148,11 @@ export function QrGenerator() {
         <div className="space-y-5">
           {/* Text input */}
           <div className="space-y-2">
-            <label className="fs-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
+            <label htmlFor="qr-content" className="fs-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
               {t('qrGenerator.contentLabel')}
             </label>
             <textarea
+              id="qr-content"
               value={text}
               onChange={e => setText(e.target.value)}
               rows={3}
@@ -164,13 +165,13 @@ export function QrGenerator() {
 
           {/* Error correction */}
           <div className="space-y-2">
-            <label className="fs-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
+            <p id="qr-error-correction" className="fs-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
               {t('qrGenerator.errorCorrection')}
-            </label>
-            <div className="flex gap-1 p-1 rounded-xl border"
+            </p>
+            <div role="group" aria-labelledby="qr-error-correction" className="flex gap-1 p-1 rounded-xl border"
               style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
               {EC_LEVELS.map(({ value, recovery }) => (
-                <button key={value} onClick={() => setEcLevel(value)}
+                <button key={value} type="button" aria-pressed={ecLevel === value} onClick={() => setEcLevel(value)}
                   title={`${t('qrGenerator.recovery')} ${recovery}`}
                   className="flex-1 px-2 py-1.5 rounded-lg fs-sm font-medium transition-all duration-150"
                   style={{
@@ -189,14 +190,14 @@ export function QrGenerator() {
           {/* Colors */}
           <div className="grid grid-cols-2 gap-3">
             {([
-              { label: t('qrGenerator.foreground'), value: fg, set: setFg },
-              { label: t('qrGenerator.background'), value: bg, set: setBg },
-            ] as const).map(({ label, value, set }) => (
+              { id: 'qr-foreground', label: t('qrGenerator.foreground'), value: fg, set: setFg },
+              { id: 'qr-background', label: t('qrGenerator.background'), value: bg, set: setBg },
+            ] as const).map(({ id, label, value, set }) => (
               <div key={label} className="space-y-2">
-                <label className="fs-xs font-medium" style={{ color: 'var(--text-subtle)' }}>{label}</label>
+                <label htmlFor={id} className="fs-xs font-medium" style={{ color: 'var(--text-subtle)' }}>{label}</label>
                 <div className="flex items-center gap-2 rounded-xl border px-2 py-1.5"
                   style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
-                  <input type="color" value={value} onChange={e => set(e.target.value)}
+                  <input id={id} type="color" value={value} onChange={e => set(e.target.value)}
                     aria-label={label}
                     className="w-7 h-7 rounded cursor-pointer border-0 bg-transparent p-0 shrink-0" />
                   <span className="fs-xs font-mono uppercase" style={{ color: 'var(--text-muted)' }}>{value}</span>
@@ -208,13 +209,13 @@ export function QrGenerator() {
           {/* Size + margin */}
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
-              <label className="fs-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
+              <p id="qr-export-size" className="fs-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
                 {t('qrGenerator.exportSize')}
-              </label>
-              <div className="flex gap-1 p-1 rounded-xl border"
+              </p>
+              <div role="group" aria-labelledby="qr-export-size" className="flex gap-1 p-1 rounded-xl border"
                 style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
                 {SIZE_OPTIONS.map(s => (
-                  <button key={s} onClick={() => setSize(s)}
+                  <button key={s} type="button" aria-pressed={size === s} onClick={() => setSize(s)}
                     className="flex-1 px-1 py-1.5 rounded-lg fs-xs font-medium transition-all duration-150"
                     style={{
                       background: size === s ? ACCENT_FILL : 'transparent',
@@ -226,11 +227,11 @@ export function QrGenerator() {
               </div>
             </div>
             <div className="space-y-2">
-              <label className="fs-xs font-medium flex items-center justify-between" style={{ color: 'var(--text-subtle)' }}>
+              <label htmlFor="qr-margin" className="fs-xs font-medium flex items-center justify-between" style={{ color: 'var(--text-subtle)' }}>
                 <span>{t('qrGenerator.quietZone')}</span>
                 <span className="font-mono" style={{ color: '#8b5cf6' }}>{margin}</span>
               </label>
-              <input type="range" min={0} max={8} value={margin}
+              <input id="qr-margin" type="range" min={0} max={8} value={margin}
                 onChange={e => setMargin(Number(e.target.value))}
                 aria-label={t('qrGenerator.quietZone')}
                 className="w-full h-1.5 rounded-full appearance-none cursor-pointer mt-2.5"

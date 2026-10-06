@@ -168,14 +168,14 @@ export function SpeedTest() {
       )}
 
       {/* Mode selector — segmented cards */}
-      <div className="grid grid-cols-2 gap-3" role="radiogroup" aria-label={t('speedTest.modeLabel')}>
+      <div className="grid grid-cols-2 gap-3" role="group" aria-label={t('speedTest.modeLabel')}>
         {([
           { id: 'continuous' as const, icon: Activity, title: t('speedTest.modeContinuous'), desc: t('speedTest.modeContinuousDesc') },
           { id: 'max' as const,        icon: Zap,      title: t('speedTest.modeMax'),        desc: t('speedTest.modeMaxDesc') },
         ]).map(({ id, icon: Icon, title, desc }) => {
           const selected = mode === id
           return (
-            <button key={id} type="button" role="radio" aria-checked={selected}
+            <button key={id} type="button" aria-pressed={selected}
               onClick={() => { if (!isRunning) setMode(id) }} disabled={isRunning}
               className="group relative text-left rounded-2xl border p-4 transition-all duration-200 disabled:cursor-not-allowed"
               style={{

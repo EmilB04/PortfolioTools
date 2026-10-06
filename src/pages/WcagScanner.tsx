@@ -305,6 +305,11 @@ export function WcagScanner() {
           style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}>
           <Globe size={15} style={{ color: 'var(--text-subtle)' }} className="shrink-0" />
           <input
+            type="url"
+            inputMode="url"
+            autoCapitalize="off"
+            spellCheck={false}
+            aria-label={t('wcagScanner.urlLabel')}
             value={url}
             onChange={e => setUrl(e.target.value)}
             onKeyDown={e => { if (e.key === 'Enter' && !isScanning) scan() }}
@@ -320,7 +325,7 @@ export function WcagScanner() {
             <span className="fs-xs shrink-0" style={{ color: 'var(--text-subtle)' }}>{t('wcagScanner.pages')}</span>
             <div className="flex gap-1 p-1 rounded-xl border" style={{ background: 'var(--surface-card)', borderColor: 'var(--border)' }}>
               {MAX_OPTIONS.map(n => (
-                <button key={n} onClick={() => setMaxPages(n)} disabled={isScanning}
+                <button key={n} type="button" aria-pressed={maxPages === n} onClick={() => setMaxPages(n)} disabled={isScanning}
                   className="px-2.5 py-1 rounded-lg fs-sm font-medium transition-all duration-150 disabled:cursor-not-allowed"
                   style={{
                     background: maxPages === n ? ACCENT_FILL : 'transparent',
@@ -423,7 +428,7 @@ export function WcagScanner() {
           return (
             <div key={p.url} className="rounded-xl border overflow-hidden"
               style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
-              <button onClick={() => setOpenPage(isOpen ? null : p.url)}
+              <button aria-expanded={isOpen} onClick={() => setOpenPage(isOpen ? null : p.url)}
                 className="w-full flex items-center justify-between gap-3 px-4 py-3 text-left">
                 <span className="flex items-center gap-2.5 min-w-0">
                   <span

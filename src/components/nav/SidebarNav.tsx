@@ -70,8 +70,8 @@ export function SidebarNav({ collapsed, isMobileDrawer, mobileClose }: SidebarNa
         return (
           <section
             key={group.category}
-            aria-labelledby={isOverview ? undefined : headingId}
-            aria-label={isOverview ? label : undefined}
+            aria-labelledby={isOverview || iconOnly ? undefined : headingId}
+            aria-label={isOverview || iconOnly ? label : undefined}
             className={groupIndex > 0 ? 'mt-1 pt-1' : ''}
             style={
               groupIndex > 0 && iconOnly

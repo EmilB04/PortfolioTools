@@ -1,6 +1,6 @@
 {
   "nav": {
-    "dashboard": "Oversikt",
+    "dashboard": "Alle verktøy",
     "fileConverter": "Filkonverterer",
     "fileCompress": "Filkomprimering",
     "speedTest": "Hastighetstest",
@@ -30,12 +30,13 @@
     "categories": {
       "overview": "Oversikt",
       "developer": "Utvikler",
-      "time": "Tid",
+      "time": "Tid og dato",
       "network": "Nettverk",
-      "files": "Filer",
+      "files": "Filer og bilder",
       "web": "Web",
-      "utilities": "Diverse"
-    }
+      "utilities": "Hverdag"
+    },
+    "skipToContent": "Hopp til innhold"
   },
   "theme": {
     "light": "Lys",
@@ -52,23 +53,21 @@
   },
   "settingsMenu": {
     "settings": "Innstillinger",
-    "appearance": "Utseende",
-    "accentColor": "Aksentfarge",
-    "chooseAccent": "Velg aksentfarge"
+    "appearance": "Utseende"
   },
   "cookieConsent": {
     "section": "Personvern",
-    "message": "Dette nettstedet bruker informasjonskapsler for å huske tema, aksentfarge og språk. Ingenting deles med tredjeparter.",
+    "message": "Nettstedet husker tema og språk på denne enheten når du tillater lagring av innstillinger.",
     "accept": "Godta",
     "decline": "Avslå",
     "manage": "Endre cookie-innstillinger",
-    "statusAccepted": "Valgene dine lagres på denne enheten.",
-    "statusDeclined": "Valgene dine lagres ikke. De gjelder kun for denne økten.",
+    "statusAccepted": "Denne enheten lagrer valgene dine.",
+    "statusDeclined": "Denne enheten lagrer ikke valgene dine. De gjelder for denne økten.",
     "statusUndecided": "Du har ikke tatt et valg ennå."
   },
   "dashboard": {
-    "title": "Portfolio Tools",
-    "subtitle": "Nettleserbaserte verktøy. Ingenting lastes opp, ingenting spores.",
+    "title": "Riktig verktøy.",
+    "subtitle": "Små verktøy for hverdagsoppgaver. Finn, konverter, lag og sjekk på ett sted.",
     "openTool": "Åpne verktøy",
     "openNamed": "Åpne {{tool}}",
     "comingSoon": "Kommer snart",
@@ -77,14 +76,26 @@
     "pause": "Pause rotasjon",
     "resume": "Gjenoppta rotasjon",
     "search": {
-      "placeholder": "Søk i verktøy…",
+      "placeholder": "Søk etter verktøy, oppgaver eller formater…",
       "clear": "Tøm søk",
       "resultsCount": "{{count}} verktøy treffer",
       "resultsCount_other": "{{count}} verktøy treffer",
-      "noResults": "Ingen verktøy matcher \"{{query}}\""
+      "noResults": "Ingen verktøy funnet for «{{query}}»",
+      "label": "Finn et verktøy",
+      "shortcut": "⌘ / Ctrl K",
+      "openFirst": "Åpne det første søkeresultatet",
+      "enterHint": "Bruk piltastene opp og ned for å velge et verktøy, Enter for å åpne det og Escape for å lukke søket.",
+      "try": "Prøv en oppgave:",
+      "resultsTitle": "Finn ditt verktøy",
+      "resultsDescription": "Treff oppdateres mens du skriver. Beste treff vises først.",
+      "showingQuery": "Resultater for «{{query}}»",
+      "reset": "Nullstill filtre",
+      "noResultsHint": "Prøv et kortere søk som «bilde», «JSON» eller «passord», eller velg en annen kategori.",
+      "browsingCategory": "Kategori: {{category}}"
     },
     "filters": {
-      "all": "Alle"
+      "all": "Alle verktøy",
+      "label": "Filtrer verktøy etter kategori"
     },
     "stats": {
       "formatsSupported": "Formater støttet",
@@ -96,6 +107,27 @@
       "avgUpload": "Snitt opplasting",
       "testsRun": "Tester i dag",
       "altFromOcr": "Alt-tekst fra OCR"
+    },
+    "titleAccent": "Akkurat når du trenger det.",
+    "collection": "{{count}} verktøy · {{categories}} kategorier",
+    "browseTitle": "Utforsk verktøykassen",
+    "browseDescription": "Velg en kategori, eller bruk søket over.",
+    "toolCount_one": "{{count}} verktøy",
+    "toolCount_other": "{{count}} verktøy",
+    "note": "Ingen konto nødvendig. De fleste verktøy kjører direkte i nettleseren.",
+    "suggestions": {
+      "jsonTools": "Formater JSON",
+      "fileCompress": "Komprimer et bilde",
+      "qrGenerator": "Lag en QR-kode",
+      "passwordGenerator": "Lag et passord"
+    },
+    "categoryDescriptions": {
+      "developer": "Formater, feilsøk og jobb med data.",
+      "time": "Få oversikt over datoer og tidsplaner.",
+      "network": "Forstå tilkoblingen og IP-adressene dine.",
+      "files": "Konverter, komprimer og marker filene dine.",
+      "web": "Jobb med QR-koder og tilgjengelighet på nett.",
+      "utilities": "Nyttige hjelpere for hverdagsoppgaver."
     }
   },
   "tools": {
@@ -113,11 +145,13 @@
         "input": "Et skjermbilde du limer inn eller drar inn",
         "process": "Marker, sladd eller legg til alt-tekst",
         "output": "Et kopiklart bilde eller markdown-lenke"
-      }
+      },
+      "summary": "Marker skjermbilder, sladd sensitive detaljer og eksporter bilder eller Markdown.",
+      "keywords": "screenshot annotate annotation redact blur image ocr markdown markup skjermbilde bilde marker sladd sensurer"
     },
     "fileConverter": {
       "name": "Filkonverterer",
-      "description": "Konverter bilder (PNG, JPEG, WebP, GIF, BMP, SVG) datafiler (JSON, CSV, TSV) og PowerPoint (PPTX til Markdown eller PDF), direkte i nettleseren.",
+      "description": "Konverter bilder (PNG, JPEG, WebP, GIF, BMP, SVG), datafiler (JSON, CSV, TSV) og PowerPoint-filer (PPTX til Markdown eller PDF) i nettleseren.",
       "badge": "10+ formater",
       "stats": {
         "aLabel": "Formater støttet",
@@ -129,11 +163,13 @@
         "input": "Et bilde eller en datafil",
         "process": "Konverter den til et annet format",
         "output": "Den konverterte filen, klar for nedlasting"
-      }
+      },
+      "summary": "Konverter bilder, JSON, CSV og PowerPoint-filer til formatet du trenger.",
+      "keywords": "convert converter image file png jpg jpeg webp gif bmp svg json csv tsv pptx powerpoint pdf markdown konverter bilde fil format"
     },
     "fileCompress": {
       "name": "Filkomprimering",
-      "description": "Komprimer bilder (JPEG, PNG, WebP, GIF, BMP, SVG) med kvalitetskontroll, eller Gzip hvilken som helst fil, direkte i nettleseren.",
+      "description": "Komprimer bilder (JPEG, PNG, WebP, GIF, BMP, SVG) med kvalitetskontroll, eller Gzip hvilken som helst fil, i nettleseren.",
       "badge": "Bilder + Gzip",
       "stats": {
         "aLabel": "Formater støttet",
@@ -144,12 +180,14 @@
       "info": {
         "input": "Et bilde eller hvilken som helst fil",
         "process": "Komprimer den med justerbar kvalitet",
-        "output": "En mindre fil med vist spart størrelse"
-      }
+        "output": "En mindre fil og størrelsen du sparte"
+      },
+      "summary": "Gjør bilder mindre med justerbar kvalitet, eller komprimer filer med Gzip.",
+      "keywords": "compress compression shrink reduce size image file jpg jpeg png webp gif bmp svg gzip zip komprimer komprimering bilde fil størrelse"
     },
     "speedTest": {
       "name": "Hastighetstest",
-      "description": "Mål nedlasting, opplasting og forsinkelse i sanntid. Kontinuerlig overvåking eller enkel makstest.",
+      "description": "Mål nedlasting, opplasting og forsinkelse i sanntid, eller kjør én makstest.",
       "badge": "Sanntid",
       "stats": {
         "aLabel": "Tester i dag",
@@ -161,11 +199,13 @@
         "input": "Nettverksforbindelsen din i sanntid",
         "process": "Mål nedlasting, opplasting og forsinkelse",
         "output": "Hastighets- og pingresultater i sanntid"
-      }
+      },
+      "summary": "Mål nedlastingshastighet, opplastingshastighet og forsinkelse på nettet ditt.",
+      "keywords": "speed internet bandwidth download upload ping latency connection mbps hastighet internett båndbredde nedlasting opplasting"
     },
     "qrGenerator": {
       "name": "QR-generator",
-      "description": "Lag QR-koder for lenker, tekst eller Wi-Fi med egne farger, og eksporter PNG eller SVG, alt i nettleseren.",
+      "description": "Lag QR-koder for lenker, tekst eller Wi-Fi med egne farger. Eksporter PNG eller SVG i nettleseren.",
       "badge": "PNG + SVG",
       "stats": {
         "aLabel": "Eksportformater",
@@ -177,11 +217,13 @@
         "input": "En lenke, tekst eller Wi-Fi-detaljer",
         "process": "Kod det om til en QR-kode",
         "output": "En nedlastbar PNG eller SVG"
-      }
+      },
+      "summary": "Lag en QR-kode for en lenke, tekst eller Wi-Fi. Last ned som PNG eller SVG.",
+      "keywords": "qr code qrcode create generate link url wifi wi fi png svg lag generer kode lenke"
     },
     "qrReader": {
       "name": "QR-leser",
-      "description": "Last opp et bilde av en QR-kode og avkod den umiddelbart, alt i nettleseren.",
+      "description": "Last opp et bilde av en QR-kode og avkod den i nettleseren.",
       "badge": "Avkoder lokalt",
       "stats": {
         "aLabel": "Inndata",
@@ -193,7 +235,9 @@
         "input": "Et bilde eller skjermbilde av en QR-kode",
         "process": "Dekod dataene i koden",
         "output": "URL-en eller teksten den inneholder"
-      }
+      },
+      "summary": "Les en QR-kode fra et bilde for å finne lenken eller teksten den inneholder.",
+      "keywords": "qr code qrcode scan read decode image camera qr kode skann les dekod bilde"
     },
     "wcagScanner": {
       "name": "WCAG-skanner",
@@ -209,11 +253,13 @@
         "input": "En nettside-URL å gjennomsøke",
         "process": "Sjekk hver side med axe-core",
         "output": "En liste over tilgjengelighetsproblemer per side"
-      }
+      },
+      "summary": "Skann et nettsted for tilgjengelighetsproblemer og se resultater for hver side.",
+      "keywords": "wcag accessibility a11y website audit scan axe contrast tilgjengelighet nettside nettsted skann kontrast"
     },
     "counter": {
       "name": "Teller",
-      "description": "Tell personer som kommer inn og går ut av et arrangement med en enkel manuell telling. Lagres på denne enheten.",
+      "description": "Tell personer som kommer inn og går ut av et arrangement med en enkel manuell telling. Tallene blir på denne enheten.",
       "badge": "Manuell telling",
       "stats": {
         "aLabel": "Inne",
@@ -225,11 +271,13 @@
         "input": "Trykk hver gang noen kommer inn eller går ut",
         "process": "Tell opp løpende totaler",
         "output": "Et live antall inne / ute"
-      }
+      },
+      "summary": "Hold oversikt over personer som kommer og går, med løpende telling.",
+      "keywords": "counter count tally people event attendance capacity occupancy teller tell telling personer arrangement antall"
     },
     "jsonTools": {
       "name": "JSON-verktøy",
-      "description": "Formater, valider og spør i JSON med en levende JSONPath-utforsker. Formater pent, minifiser eller sorter nøkler, alt i nettleseren.",
+      "description": "Formater, valider og spør i JSON med en levende JSONPath-utforsker. Formater pent, minifiser eller sorter nøkler i nettleseren.",
       "badge": "JSONPath innebygd",
       "stats": {
         "aLabel": "Formateringsmoduser",
@@ -241,7 +289,9 @@
         "input": "Rå JSON-tekst",
         "process": "Formater, valider eller spør med JSONPath",
         "output": "Formatert, minifisert eller filtrert JSON"
-      }
+      },
+      "summary": "Formater, valider og utforsk JSON. Minifiser data eller finn verdier med JSONPath.",
+      "keywords": "json pretty print formatter validate minify format data sort keys jsonpath formater valider data"
     },
     "jwtDecoder": {
       "name": "JWT-dekoder",
@@ -257,7 +307,9 @@
         "input": "Et JWT-token",
         "process": "Dekod header og payload",
         "output": "Lesbare claims og utløpsstatus"
-      }
+      },
+      "summary": "Les header og payload i et JWT, undersøk claims og sjekk når det utløper.",
+      "keywords": "jwt token decode decoder authentication auth claims expiry expiration dekod token autentisering utløp"
     },
     "encoder": {
       "name": "Koder / Dekoder",
@@ -273,11 +325,13 @@
         "input": "Tekst som skal konverteres",
         "process": "Kod eller dekod den (Base64, URL, hex …)",
         "output": "Den konverterte teksten"
-      }
+      },
+      "summary": "Kod eller dekod tekst med Base64, URL, HTML-entiteter og hex.",
+      "keywords": "encode decode base64 base64url url html hex text converter kod dekod tekst koding"
     },
     "hashGenerator": {
       "name": "Hash-generator",
-      "description": "Generer SHA-1-, SHA-256-, SHA-384- og SHA-512-hasher fra tekst eller en fil, i hex eller Base64. WebCrypto beregner dem lokalt.",
+      "description": "Generer SHA-1-, SHA-256-, SHA-384- og SHA-512-hasher fra tekst eller en fil, i hex eller Base64. WebCrypto beregner dem i nettleseren.",
       "badge": "WebCrypto",
       "stats": {
         "aLabel": "Algoritmer",
@@ -289,7 +343,9 @@
         "input": "Tekst eller en fil",
         "process": "Hash den med SHA-1 / 256 / 384 / 512",
         "output": "En hex- eller Base64-digest"
-      }
+      },
+      "summary": "Lag SHA-hasher fra tekst eller filer, med hex og Base64 som utdata.",
+      "keywords": "hash checksum sha1 sha256 sha384 sha512 digest fingerprint file text sjekksum fil tekst"
     },
     "idGenerator": {
       "name": "ID-generator",
@@ -305,7 +361,9 @@
         "input": "Et format og en batchstørrelse",
         "process": "Generer tilfeldige eller tidsbaserte ID-er",
         "output": "En liste med klare ID-er"
-      }
+      },
+      "summary": "Lag UUID-er, ULID-er, Nano ID-er og korte koder én om gangen eller i grupper.",
+      "keywords": "uuid uuidv4 uuidv7 ulid nanoid nano id unique identifier random bulk batch unik identifikator tilfeldig"
     },
     "regexTester": {
       "name": "Regex-tester",
@@ -321,7 +379,9 @@
         "input": "Et mønster og eksempeltekst",
         "process": "Match det live med valgte flagg",
         "output": "Markerte treff, grupper og erstatninger"
-      }
+      },
+      "summary": "Test regulære uttrykk med markerte treff, fangstgrupper og erstatninger.",
+      "keywords": "regex regexp regular expression pattern match replace test regulære uttrykk mønster treff erstatt"
     },
     "cronExplainer": {
       "name": "Cron-forklaring",
@@ -337,7 +397,9 @@
         "input": "Et cron-uttrykk",
         "process": "Tolk tidsplanen",
         "output": "En beskrivelse i klartekst og neste kjøringstidspunkter"
-      }
+      },
+      "summary": "Gjør et cron-uttrykk til en lesbar tidsplan og se de neste kjøringene.",
+      "keywords": "cron schedule scheduling crontab daily weekly job timer plan tidsplan kjøring daglig ukentlig"
     },
     "timestampConverter": {
       "name": "Tidsstempel-konverterer",
@@ -353,7 +415,9 @@
         "input": "Et tidsstempel eller en dato",
         "process": "Konverter mellom epoke, ISO og lokal tid",
         "output": "Alle formater pluss en live relativ tid"
-      }
+      },
+      "summary": "Konverter Unix-tidsstempler, ISO-datoer og lokal tid mellom tidssoner.",
+      "keywords": "timestamp unix epoch date time iso timezone utc convert tidsstempel dato tid tidssone konverter"
     },
     "subnetCalculator": {
       "name": "Subnett-kalkulator",
@@ -369,7 +433,9 @@
         "input": "En CIDR-blokk eller IP-adresse",
         "process": "Beregn nettverk-, kringkastings- og vertsområder",
         "output": "Subnettdetaljer og valgfri oppdeling"
-      }
+      },
+      "summary": "Beregn IPv4-subnett, adresseområder og brukbare verter fra en CIDR-blokk.",
+      "keywords": "subnet ipv4 ip cidr network mask broadcast host range address subnett nettverk adresse maske"
     },
     "passwordGenerator": {
       "name": "Passordgenerator",
@@ -385,7 +451,9 @@
         "input": "Ønsket lengde og tegnpreferanser",
         "process": "Generer et tilfeldig passord eller en passordfrase",
         "output": "Et sterkt passord med vist entropi og styrke"
-      }
+      },
+      "summary": "Lag sterke, tilfeldige passord eller passordfraser som er lette å huske.",
+      "keywords": "password passphrase generate random secure security strength entropy passord passordfrase lag generer sikker sikkerhet"
     },
     "passwordChecker": {
       "name": "Passordsjekker",
@@ -401,7 +469,9 @@
         "input": "Et passord du skriver inn",
         "process": "Beregn entropi og sjekk vanlige mønstre",
         "output": "Styrkevurdering og estimert knekketid"
-      }
+      },
+      "summary": "Sjekk styrken til et passord, vanlige mønstre og anslått knekketid.",
+      "keywords": "password check strength secure security entropy crack passord sjekk styrke sikkerhet"
     }
   },
   "footer": {
@@ -497,7 +567,7 @@
     "reset": "Nullstill"
   },
   "qrReader": {
-    "privacyNote": "Avkodet lokalt i nettleseren din. Bildet lastes aldri opp noe sted.",
+    "privacyNote": "Avkodet i nettleseren din. Bildet blir på enheten din.",
     "imageTitle": "Bilde",
     "clear": "Tøm",
     "dropTitle": "Slipp et QR-kode-bilde her",
@@ -541,7 +611,8 @@
       "serious": "Alvorlig",
       "moderate": "Moderat",
       "minor": "Mindre"
-    }
+    },
+    "urlLabel": "Nettadresse som skal skannes"
   },
   "counter": {
     "title": "Inngangsteller",
@@ -550,23 +621,24 @@
     "exited": "Ute",
     "netInside": "Netto inne",
     "tapToCorrect": "trykk på tallet for å rette",
-    "actionHint": "Store + teller umiddelbart. Lille − og manuelle endringer ber deg bekrefte først.",
+    "actionHint": "Trykk på store + for å telle. Lille − og manuelle endringer ber deg bekrefte.",
     "savedNote": "Lagret på denne enheten",
     "resetLabel": "Nullstill telling",
     "cancel": "Avbryt",
     "confirm": "Bekreft",
     "confirmRemoveTitle": "Fjerne én registrering?",
-    "confirmRemoveBody": "Dette trekker 1 fra {{label}}, nå {{from}} → {{to}}. Bruk dette for å rette en feiltrykk.",
+    "confirmRemoveBody": "Trekk 1 fra {{label}}: {{from}} → {{to}}. Bruk dette for å rette et feiltrykk.",
     "confirmEditTitle": "Sette telling manuelt?",
-    "confirmEditBody": "Endre {{label}} fra {{from}} til {{to}}. Gjør dette kun for å rette et feil totaltall.",
+    "confirmEditBody": "Endre {{label}} fra {{from}} til {{to}}. Bruk dette for å rette et feil totaltall.",
     "confirmResetTitle": "Nullstille all telling?",
-    "confirmResetBody": "Dette setter både Inne og Ute tilbake til 0. Dette kan ikke angres."
+    "confirmResetBody": "Inne og Ute går tilbake til 0. Du kan ikke angre dette.",
+    "editCount": "Endre antall {{label}}"
   },
   "screenshotAnnotator": {
     "title": "Skjermbildeannotering",
     "subtitle": "Skjermbilde → markert markdown · kun i nettleseren, ingen opplasting",
     "dropTitle": "Lim inn, slipp eller klikk for å legge til et skjermbilde",
-    "dropHint": "Trykk Ctrl+V hvor som helst på siden for å lime inn rett fra Print Screen. Bildet forlater aldri nettleseren.",
+    "dropHint": "Trykk Ctrl+V på siden for å lime inn fra Print Screen. Bildet blir i nettleseren.",
     "tool": {
       "crop": "Beskjær",
       "arrow": "Pil",
@@ -599,7 +671,7 @@
     "ocrLoading": "Laster OCR-motor. Første kjøring laster ned ca. 2 MB fra et CDN…",
     "filenameLabel": "Filnavn i markdown",
     "embedLabel": "Bygg inn bildet som base64 data-URI",
-    "embedWarn": "Data-URI-en er ca. {{kb}} KB tekst. GitHub og GitLab fjerner disse, så bruk Kopier bilde der i stedet.",
+    "embedWarn": "Data-URI-en er ca. {{kb}} KB tekst. GitHub og GitLab fjerner disse, så bruk Kopier bilde der.",
     "markdownLabel": "Markdown",
     "copyImage": "Kopier bilde",
     "copyMarkdown": "Kopier markdown",
@@ -612,7 +684,7 @@
     "errNoLabel": "Skriv etiketteksten først, klikk så på lerretet.",
     "errNoText": "Fant ingen lesbar tekst i bildet.",
     "errOcr": "OCR klarte ikke å kjøre. Sjekk tilkoblingen og prøv igjen.",
-    "ocrPrivacy": "Bildet ditt lastes aldri opp. OCR kjører lokalt, men første kjøring laster ned modellen fra et offentlig CDN (jsDelivr).",
+    "ocrPrivacy": "Bildet ditt blir på enheten din. OCR kjører i nettleseren, men første kjøring laster ned modellen fra et offentlig CDN (jsDelivr).",
     "removeImage": "Fjern bilde",
     "removeConfirm": "Forkast markeringer?"
   },
@@ -620,7 +692,7 @@
     "copy": "Kopier",
     "copied": "Kopiert!",
     "copyFailed": "Kopiering feilet",
-    "localOnly": "Kjører helt i nettleseren din. Ingenting lastes opp.",
+    "localOnly": "Kjører i nettleseren din. Ingenting forlater enheten din.",
     "sample": "Last inn eksempel",
     "clear": "Tøm",
     "showInfo": "Vis detaljer",
@@ -628,7 +700,8 @@
     "howItWorks": "Slik fungerer det",
     "stepInput": "Inndata",
     "stepProcess": "Prosess",
-    "stepOutput": "Utdata"
+    "stepOutput": "Utdata",
+    "loading": "Laster verktøy…"
   },
   "jsonTools": {
     "inputTitle": "Inndata",
@@ -666,7 +739,7 @@
     "queryResult": "Resultat"
   },
   "jwtDecoder": {
-    "privacyNote": "Dekoding skjer helt i nettleseren din. Tokenet sendes aldri noe sted.",
+    "privacyNote": "Nettleseren din dekoder tokenet. Det blir på enheten din.",
     "inputTitle": "Token",
     "inputLabel": "JWT",
     "inputHint": "Lim inn et helt token, med eller uten «Bearer »-prefiks.",
@@ -695,7 +768,7 @@
       "name": "Navn",
       "roles": "Roller"
     },
-    "signatureWarning": "Dette dekoder kun tokenet. Signaturen verifiseres ikke. Ikke stol på disse claimsene før du har verifisert dem mot utstederens nøkkel.",
+    "signatureWarning": "Dette dekoder tokenet uten å verifisere signaturen. Sjekk claimsene mot utstederens nøkkel før du stoler på dem.",
     "validity": {
       "valid": "Gyldig til {{date}}",
       "expired": "Utløp {{date}}",
@@ -747,7 +820,7 @@
     }
   },
   "hashGenerator": {
-    "privacyNote": "Hashing skjer lokalt med nettleserens WebCrypto-API. Ingenting lastes opp.",
+    "privacyNote": "Nettleseren din hasher inndata med WebCrypto-API-et. Ingenting forlater enheten din.",
     "errors": {
       "digest": "Klarte ikke å beregne hashen.",
       "tooLarge": "Filen er større enn 256 MB. Velg en mindre fil.",
@@ -772,7 +845,7 @@
     "sha1Note": "SHA-1 er ikke lenger kollisjonssikker. Bruk SHA-256 eller sterkere der sikkerhet er viktig."
   },
   "idGenerator": {
-    "privacyNote": "Hver ID genereres lokalt med crypto.getRandomValues. Ingenting sendes noe sted.",
+    "privacyNote": "Nettleseren din genererer ID-er med crypto.getRandomValues. Ingenting forlater enheten din.",
     "settingsTitle": "Innstillinger",
     "regenerate": "Generer på nytt",
     "kindLabel": "ID-type",
@@ -841,7 +914,7 @@
     "expressionHint": "Standard 5-felts cron-syntaks (minutt time dag måned ukedag), eller et makro som @daily.",
     "errors": {
       "empty": "Skriv inn et cron-uttrykk.",
-      "fieldCount": "Et cron-uttrykk må ha nøyaktig 5 felt adskilt med mellomrom. Fant {{token}}.",
+      "fieldCount": "Et cron-uttrykk må ha 5 felt adskilt med mellomrom. Fant {{token}}.",
       "range": "«{{token}}» er utenfor gyldig område for feltet {{field}}.",
       "syntax": "Klarte ikke å tolke «{{token}}» i feltet {{field}}."
     },
@@ -961,7 +1034,7 @@
     }
   },
   "passwordGenerator": {
-    "privacyNote": "Generert lokalt med Web Crypto sin tilfeldighetsgenerator. Sendes aldri noe sted og lagres ikke.",
+    "privacyNote": "Nettleseren din genererer passord med Web Crypto sin tilfeldighetsgenerator. Ingenting sendes eller lagres.",
     "resultTitle": "Passord",
     "regenerate": "Generer på nytt",
     "errors": {
@@ -1015,7 +1088,7 @@
     }
   },
   "passwordChecker": {
-    "privacyNote": "Sjekket lokalt med samme matematikk som generatoren. Sendes aldri noe sted og lagres ikke.",
+    "privacyNote": "Nettleseren din sjekker passordet med samme matematikk som generatoren. Ingenting sendes eller lagres.",
     "inputTitle": "Passord",
     "placeholder": "Skriv inn et passord for å sjekke det…",
     "show": "Vis passord",
@@ -1037,5 +1110,22 @@
       "noRepeat": "Ingen gjentatte tegn på rad (aaa)",
       "noSequential": "Ingen sekvenser på rad (abc, 123, qwe)"
     }
+  },
+  "seo": {
+    "description": "Finn verktøy for hverdagsoppgaver: konverter og komprimer filer, formater JSON, lag QR-koder, sjekk passord og mer. Ingen konto nødvendig.",
+    "enableJavaScript": "Aktiver JavaScript for å bruke de interaktive verktøyene. Du kan utforske verktøyene nedenfor."
+  },
+  "notFound": {
+    "title": "Siden finnes ikke",
+    "description": "Denne siden finnes ikke. Søk i verktøykassen for å finne det du trenger."
+  },
+  "spotlight": {
+    "close": "Lukk søk",
+    "results": "Verktøy som passer",
+    "noResultsHint": "Prøv et kortere søk som «bilde», «JSON» eller «passord».",
+    "navigate": "Velg",
+    "open": "Åpne verktøy",
+    "dismiss": "Lukk",
+    "keyboardHint": "Bruk piltastene opp og ned for å velge et verktøy, Enter for å åpne det og Escape for å lukke søket."
   }
 }

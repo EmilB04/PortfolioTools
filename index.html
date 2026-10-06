@@ -4,45 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Portfolio Tools — browser-based developer utilities</title>
-    <meta
-      name="description"
-      content="A collection of fast, private developer and IT utilities that run entirely in your browser: JWT decoder, JSON formatter, hashing, encoding, cron, subnet and more. Nothing is uploaded."
-    />
+    <!-- SEO:start --><!-- SEO:end -->
     <meta name="author" content="Emil Berglund" />
     <meta name="color-scheme" content="dark light" />
-    <meta name="theme-color" content="#0a0a0c" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#fbfbfc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#12160f" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#e9ebe2" media="(prefers-color-scheme: light)" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script id="initial-theme">
+      (() => {
+        let preference = null
+        try {
+          if (localStorage.getItem('cookie-consent') === 'accepted') preference = localStorage.getItem('theme')
+        } catch { /* Storage may be unavailable; use the system appearance. */ }
+        const light = preference === 'light' || (preference !== 'dark' && window.matchMedia('(prefers-color-scheme: light)').matches)
+        document.documentElement.classList.toggle('light', light)
+        document.documentElement.classList.toggle('dark', !light)
+      })()
+    </script>
+    <style id="initial-theme-style">
+      html { background: #12160f; color: #eceee2; color-scheme: dark; }
+      html.light { background: #e9ebe2; color: #1e241c; color-scheme: light; }
+      body { margin: 0; }
+    </style>
+    <link rel="stylesheet" href="/src/index.css" />
+
+    <link rel="preload" href="/fonts/bricolage-grotesque-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
 
     <link rel="icon" type="image/png" sizes="256x256" href="/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-    <link rel="canonical" href="https://tools.emilb.no/" />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Portfolio Tools" />
-    <meta property="og:title" content="Portfolio Tools — browser-based developer utilities" />
-    <meta
-      property="og:description"
-      content="Fast, private developer and IT utilities that run entirely in your browser. Nothing is uploaded."
-    />
-    <meta property="og:url" content="https://tools.emilb.no/" />
-    <meta property="og:image" content="https://tools.emilb.no/og-image.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Portfolio Tools — browser-based developer utilities" />
-    <meta
-      name="twitter:description"
-      content="Fast, private developer and IT utilities that run entirely in your browser. Nothing is uploaded."
-    />
-    <meta name="twitter:image" content="https://tools.emilb.no/og-image.png" />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"><!-- CONTENT:start --><!-- CONTENT:end --></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

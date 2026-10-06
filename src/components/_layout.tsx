@@ -1,8 +1,11 @@
-import { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Suspense, useCallback, useEffect, useState } from 'react'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Menu } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Sidebar } from './nav/Sidebar'
+import { SpotlightSearch } from './SpotlightSearch'
+import { ToolIntroduction } from './ToolIntroduction'
+import { PageSeo } from './PageSeo'
 import { Footer } from './footer/Footer'
 import HeaderSection from './header/HeaderSection'
 
@@ -10,10 +13,47 @@ function getInitialCollapsed(): boolean {
   try { return localStorage.getItem('sidebar-collapsed') === 'true' } catch { return false }
 }
 
+export interface LayoutOutletContext {
+  openSearch: (query?: string) => void
+}
+
 export function Layout() {
   const { t } = useTranslation()
+  const navigate = useNavigate()
+  const location = useLocation()
   const [collapsed, setCollapsed] = useState(getInitialCollapsed)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [searchRequest, setSearchRequest] = useState<{ query: string } | null>(null)
+
+  const openSearch = useCallback((query = '') => {
+    setMobileOpen(false)
+    setSearchRequest({ query })
+  }, [])
+
+  // Preserve existing search links while keeping ordinary typing local to the overlay.
+  useEffect(() => {
+    if (location.pathname !== '/') return
+    const params = new URLSearchParams(location.search)
+    if (!params.has('q') && params.get('focus') !== 'search') return
+    openSearch(params.get('q') ?? '')
+    params.delete('q')
+    params.delete('focus')
+    navigate({ pathname: '/', search: params.toString() }, { replace: true })
+  }, [location.pathname, location.search, navigate, openSearch])
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMobileOpen(false)
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault()
+        const input = document.getElementById('spotlight-input') as HTMLInputElement | null
+        if (input) { input.focus(); input.select() }
+        else openSearch()
+      }
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [openSearch])
 
   function toggleCollapsed() {
     setCollapsed(prev => {
@@ -25,9 +65,15 @@ export function Layout() {
 
   return (
     <div className="h-screen flex overflow-hidden">
+      <PageSeo />
+      {searchRequest && <SpotlightSearch initialQuery={searchRequest.query} onClose={() => setSearchRequest(null)} />}
+      <a href="#main-content" className="skip-link">{t('nav.skipToContent')}</a>
       {/* Mobile backdrop */}
       {mobileOpen && (
-        <div
+        <button
+          type="button"
+          tabIndex={-1}
+          aria-label={t('nav.closeMenu')}
           className="fixed inset-0 z-40 bg-black/60 lg:hidden"
           onClick={() => setMobileOpen(false)}
         />
@@ -37,7 +83,8 @@ export function Layout() {
       <div className="hidden lg:block shrink-0">
         <Sidebar collapsed={collapsed} onToggle={toggleCollapsed} />
       </div>
-      <div className={`fixed inset-y-0 left-0 z-50 lg:hidden transition-transform duration-200 ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <div id="mobile-tool-navigation" inert={!mobileOpen}
+        className={`fixed inset-y-0 left-0 z-50 lg:hidden transition-transform duration-200 ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <Sidebar collapsed={false} onToggle={() => setMobileOpen(false)} mobileClose={() => setMobileOpen(false)} />
       </div>
 
@@ -52,17 +99,21 @@ export function Layout() {
             style={{ color: 'var(--text-muted)' }}
             onClick={() => setMobileOpen(true)}
             aria-label={t('nav.openMenu')}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-tool-navigation"
           >
             <Menu size={20} />
           </button>
           <div className="hidden lg:block" />
 
-          <HeaderSection />
+          <HeaderSection onSearch={openSearch} />
         </header>
 
         <div className="flex-1 overflow-y-auto flex flex-col">
-          <main className="flex-1" style={{ padding: 'var(--gap-page)' }}>
-            <Outlet />
+          <main id="main-content" tabIndex={-1} className="flex-1" style={{ padding: 'var(--gap-page)' }}>
+            <Suspense fallback={<ToolIntroduction pathname={location.pathname} />}>
+              <Outlet context={{ openSearch } satisfies LayoutOutletContext} />
+            </Suspense>
           </main>
           <Footer />
         </div>

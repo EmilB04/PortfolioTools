@@ -8,7 +8,7 @@ interface BrandMarkProps {
 
 /**
  * The shared "EB · PortfolioTools" brand badge. Uses the same black EB mark as the
- * browser tab icon and the sibling portfolio projects, always on a white pill so the
+ * browser tab icon and the sibling portfolio projects, always on an ivory pill so the
  * black glyph keeps its contrast in both themes.
  */
 export function BrandMark({ iconOnly = false, className = '' }: BrandMarkProps) {
@@ -17,7 +17,7 @@ export function BrandMark({ iconOnly = false, className = '' }: BrandMarkProps) 
       href="https://emilb.no"
       target="_blank"
       rel="noopener noreferrer"
-      className={`flex min-w-0 shrink-0 items-center gap-1.5 rounded-full border bg-white text-black transition-colors duration-300 ${
+      className={`flex min-w-0 shrink-0 items-center gap-1.5 rounded-full border bg-[#eceee2] text-[#1e241c] transition-colors duration-300 ${
         iconOnly ? 'h-7 w-7 justify-center' : 'h-9 p-[3px]'
       } ${className}`}
       style={{ borderColor: 'var(--border)' }}
@@ -30,7 +30,7 @@ export function BrandMark({ iconOnly = false, className = '' }: BrandMarkProps) 
           PortfolioTools
         </span>
       )}
-      <span className="sr-only">PortfolioTools — emilb.no</span>
+      <span className="sr-only">PortfolioTools by emilb.no</span>
     </a>
   )
 }

@@ -75,7 +75,9 @@ export function QrReader() {
         </ActionButton>
       )}>
         {!file ? (
-          <div
+          <>
+          <button
+            type="button"
             onDragOver={e => { e.preventDefault(); setDropActive(true) }}
             onDragLeave={() => setDropActive(false)}
             onDrop={e => {
@@ -85,22 +87,21 @@ export function QrReader() {
               if (f) loadFile(f)
             }}
             onClick={() => inputRef.current?.click()}
-            role="button"
-            tabIndex={0}
-            onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') inputRef.current?.click() }}
-            className="rounded-xl border-2 border-dashed flex flex-col items-center justify-center gap-3 py-16 px-6 cursor-pointer transition-colors"
+            className="w-full rounded-xl border-2 border-dashed flex flex-col items-center justify-center gap-3 py-16 px-6 cursor-pointer transition-colors"
             style={{
               background: 'var(--surface-card)',
               borderColor: dropActive ? 'var(--tool)' : 'var(--border)',
             }}
           >
-            <Upload size={32} className="tool-text" style={{ opacity: 0.8 }} />
-            <p className="fs-sm font-semibold" style={{ color: 'var(--text)' }}>
+            <Upload aria-hidden="true" size={32} className="tool-text" style={{ opacity: 0.8 }} />
+            <span className="fs-sm font-semibold" style={{ color: 'var(--text)' }}>
               {t('qrReader.dropTitle')}
-            </p>
-            <p className="fs-xs text-center max-w-sm" style={{ color: 'var(--text-subtle)' }}>
+            </span>
+            <span className="fs-xs text-center max-w-sm" style={{ color: 'var(--text-subtle)' }}>
               {t('qrReader.dropHint')}
-            </p>
+            </span>
+
+          </button>
             <input
               ref={inputRef}
               type="file"
@@ -108,7 +109,7 @@ export function QrReader() {
               className="hidden"
               onChange={e => { const f = e.target.files?.[0]; if (f) loadFile(f) }}
             />
-          </div>
+          </>
         ) : (
           <div className="flex flex-col items-center gap-3">
             {previewUrl && (

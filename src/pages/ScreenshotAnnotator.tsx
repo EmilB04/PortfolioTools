@@ -402,7 +402,9 @@ export function ScreenshotAnnotator() {
 
       {!img ? (
         /* Drop zone */
-        <div
+        <>
+        <button
+          type="button"
           onDragOver={e => { e.preventDefault(); setDropActive(true) }}
           onDragLeave={() => setDropActive(false)}
           onDrop={e => {
@@ -412,19 +414,21 @@ export function ScreenshotAnnotator() {
             if (file) loadFile(file)
           }}
           onClick={() => fileRef.current?.click()}
-          className="rounded-2xl border-2 border-dashed flex flex-col items-center justify-center gap-3 py-20 px-6 cursor-pointer transition-colors"
+          className="w-full rounded-2xl border-2 border-dashed flex flex-col items-center justify-center gap-3 py-20 px-6 cursor-pointer transition-colors"
           style={{
             background: 'var(--surface)',
             borderColor: dropActive ? ACCENT : 'var(--border)',
           }}
         >
-          <ClipboardPaste size={36} style={{ color: ACCENT, opacity: 0.8 }} />
-          <p className="fs-sm font-semibold" style={{ color: 'var(--text)' }}>
+          <ClipboardPaste aria-hidden="true" size={36} style={{ color: ACCENT, opacity: 0.8 }} />
+          <span className="fs-sm font-semibold" style={{ color: 'var(--text)' }}>
             {t('screenshotAnnotator.dropTitle')}
-          </p>
-          <p className="fs-xs text-center max-w-sm" style={{ color: 'var(--text-subtle)' }}>
+          </span>
+          <span className="fs-xs text-center max-w-sm" style={{ color: 'var(--text-subtle)' }}>
             {t('screenshotAnnotator.dropHint')}
-          </p>
+          </span>
+
+        </button>
           <input
             ref={fileRef}
             type="file"
@@ -432,7 +436,7 @@ export function ScreenshotAnnotator() {
             className="hidden"
             onChange={e => { const f = e.target.files?.[0]; if (f) loadFile(f) }}
           />
-        </div>
+        </>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-6 items-start">
 
@@ -442,7 +446,7 @@ export function ScreenshotAnnotator() {
               <div className="flex gap-1 p-1 rounded-xl border"
                 style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
                 {TOOLS.map(({ id, icon: Icon }) => (
-                  <button key={id} onClick={() => { setTool(id); setError(null) }}
+                  <button key={id} type="button" onClick={() => { setTool(id); setError(null) }}
                     title={t(`screenshotAnnotator.tool.${id}`)}
                     aria-label={t(`screenshotAnnotator.tool.${id}`)}
                     aria-pressed={tool === id}
@@ -545,16 +549,17 @@ export function ScreenshotAnnotator() {
           {/* Output panel */}
           <div className="space-y-4">
             <div className="space-y-2">
-              <label className="fs-xs font-medium flex items-center justify-between" style={{ color: 'var(--text-subtle)' }}>
-                {t('screenshotAnnotator.altLabel')}
+              <div className="fs-xs font-medium flex items-center justify-between" style={{ color: 'var(--text-subtle)' }}>
+                <label htmlFor="screenshot-alt">{t('screenshotAnnotator.altLabel')}</label>
                 <button onClick={runOcr} disabled={ocrBusy}
                   className="inline-flex items-center gap-1 fs-xs font-medium transition-opacity hover:opacity-70 disabled:opacity-50"
                   style={{ color: ACCENT }}>
                   <ScanText size={12} />
                   {ocrBusy ? `${ocrPct}%` : t('screenshotAnnotator.ocrSuggest')}
                 </button>
-              </label>
+              </div>
               <input
+                id="screenshot-alt"
                 value={alt}
                 onChange={e => setAlt(e.target.value)}
                 placeholder={t('screenshotAnnotator.altPlaceholder')}
@@ -568,10 +573,11 @@ export function ScreenshotAnnotator() {
             </div>
 
             <div className="space-y-2">
-              <label className="fs-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
+              <label htmlFor="screenshot-filename" className="fs-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
                 {t('screenshotAnnotator.filenameLabel')}
               </label>
               <input
+                id="screenshot-filename"
                 value={filename}
                 onChange={e => setFilename(e.target.value)}
                 disabled={dataUri}
@@ -592,9 +598,9 @@ export function ScreenshotAnnotator() {
             </div>
 
             <div className="space-y-2">
-              <label className="fs-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
+              <p className="fs-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
                 {t('screenshotAnnotator.markdownLabel')}
-              </label>
+              </p>
               <pre className="rounded-xl border px-3 py-2 fs-xs font-mono overflow-x-auto whitespace-pre-wrap break-all max-h-28"
                 style={{ background: 'var(--surface-card)', borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
                 {dataUri && encoded

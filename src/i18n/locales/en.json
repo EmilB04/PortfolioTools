@@ -1,6 +1,6 @@
 {
   "nav": {
-    "dashboard": "Dashboard",
+    "dashboard": "All tools",
     "fileConverter": "File Converter",
     "fileCompress": "File Compress",
     "speedTest": "Speed Test",
@@ -30,12 +30,13 @@
     "categories": {
       "overview": "Overview",
       "developer": "Developer",
-      "time": "Time",
+      "time": "Time & dates",
       "network": "Network",
-      "files": "Files",
+      "files": "Files & images",
       "web": "Web",
-      "utilities": "Utilities"
-    }
+      "utilities": "Everyday"
+    },
+    "skipToContent": "Skip to content"
   },
   "theme": {
     "light": "Light",
@@ -52,23 +53,21 @@
   },
   "settingsMenu": {
     "settings": "Settings",
-    "appearance": "Appearance",
-    "accentColor": "Accent color",
-    "chooseAccent": "Choose accent color"
+    "appearance": "Appearance"
   },
   "cookieConsent": {
     "section": "Privacy",
-    "message": "This site uses cookies to remember your theme, accent color and language. Nothing is shared with third parties.",
+    "message": "This site remembers your theme and language on this device when you allow preferences.",
     "accept": "Accept",
     "decline": "Decline",
     "manage": "Change cookie preferences",
-    "statusAccepted": "Preferences are being saved on this device.",
-    "statusDeclined": "Preferences are not saved. Your choices only apply to this session.",
+    "statusAccepted": "This device saves your preferences.",
+    "statusDeclined": "This device does not save your preferences. Your choices last for this session.",
     "statusUndecided": "You haven't made a choice yet."
   },
   "dashboard": {
-    "title": "Portfolio Tools",
-    "subtitle": "Browser-based utilities. Nothing uploads, nothing gets tracked.",
+    "title": "The right tool.",
+    "subtitle": "Small tools for everyday tasks. Find, convert, create, and check in one place.",
     "openTool": "Open Tool",
     "openNamed": "Open {{tool}}",
     "comingSoon": "Coming soon",
@@ -77,14 +76,26 @@
     "pause": "Pause rotation",
     "resume": "Resume rotation",
     "search": {
-      "placeholder": "Search tools…",
+      "placeholder": "Search tools, tasks, or formats…",
       "clear": "Clear search",
       "resultsCount": "{{count}} tool matches",
       "resultsCount_other": "{{count}} tools match",
-      "noResults": "No tools match \"{{query}}\""
+      "noResults": "No tools found for “{{query}}”",
+      "label": "Find a tool",
+      "shortcut": "⌘ / Ctrl K",
+      "openFirst": "Open the first search result",
+      "enterHint": "Use the up and down arrow keys to choose a tool, Enter to open it, and Escape to close search.",
+      "try": "Try a task:",
+      "resultsTitle": "Find your tool",
+      "resultsDescription": "Matches update as you type. Best matches appear first.",
+      "showingQuery": "Results for “{{query}}”",
+      "reset": "Reset filters",
+      "noResultsHint": "Try a shorter term like “image”, “JSON”, or “password”, or choose another category.",
+      "browsingCategory": "Category: {{category}}"
     },
     "filters": {
-      "all": "All"
+      "all": "All tools",
+      "label": "Filter tools by category"
     },
     "stats": {
       "formatsSupported": "Formats supported",
@@ -96,6 +107,27 @@
       "avgUpload": "Avg. upload",
       "testsRun": "Tests today",
       "altFromOcr": "Alt text from OCR"
+    },
+    "titleAccent": "Right when you need it.",
+    "collection": "{{count}} tools · {{categories}} categories",
+    "browseTitle": "Explore the toolbox",
+    "browseDescription": "Pick a category, or search above.",
+    "toolCount_one": "{{count}} tool",
+    "toolCount_other": "{{count}} tools",
+    "note": "No account needed. Most tools run directly in your browser.",
+    "suggestions": {
+      "jsonTools": "Format JSON",
+      "fileCompress": "Shrink an image",
+      "qrGenerator": "Create a QR code",
+      "passwordGenerator": "Generate a password"
+    },
+    "categoryDescriptions": {
+      "developer": "Format, debug, and work with data.",
+      "time": "Make sense of dates and schedules.",
+      "network": "Understand your connection and IP addresses.",
+      "files": "Convert, compress, and mark up your files.",
+      "web": "Work with QR codes and website accessibility.",
+      "utilities": "Useful helpers for everyday tasks."
     }
   },
   "tools": {
@@ -113,11 +145,13 @@
         "input": "A screenshot you paste or drop in",
         "process": "Annotate, redact or add alt text",
         "output": "A copy-ready image or markdown link"
-      }
+      },
+      "summary": "Annotate screenshots, redact sensitive details, and export images or Markdown.",
+      "keywords": "screenshot annotate annotation redact blur image ocr markdown markup skjermbilde bilde marker sladd sensurer"
     },
     "fileConverter": {
       "name": "File Converter",
-      "description": "Convert images (PNG, JPEG, WebP, GIF, BMP, SVG) data files (JSON, CSV, TSV) and PowerPoint (PPTX to Markdown or PDF), all in your browser.",
+      "description": "Convert images (PNG, JPEG, WebP, GIF, BMP, SVG), data files (JSON, CSV, TSV) and PowerPoint files (PPTX to Markdown or PDF) in your browser.",
       "badge": "10+ formats",
       "stats": {
         "aLabel": "Formats supported",
@@ -129,11 +163,13 @@
         "input": "An image or data file",
         "process": "Convert it to another format",
         "output": "The converted file, ready to download"
-      }
+      },
+      "summary": "Convert images, JSON, CSV, and PowerPoint files into the format you need.",
+      "keywords": "convert converter image file png jpg jpeg webp gif bmp svg json csv tsv pptx powerpoint pdf markdown konverter bilde fil format"
     },
     "fileCompress": {
       "name": "File Compress",
-      "description": "Compress images (JPEG, PNG, WebP, GIF, BMP, SVG) with quality control, or Gzip any file, all in your browser.",
+      "description": "Compress images (JPEG, PNG, WebP, GIF, BMP, SVG) with quality control, or Gzip any file, in your browser.",
       "badge": "Images + Gzip",
       "stats": {
         "aLabel": "Formats supported",
@@ -144,12 +180,14 @@
       "info": {
         "input": "An image or any file",
         "process": "Compress it with adjustable quality",
-        "output": "A smaller file with the size saved shown"
-      }
+        "output": "A smaller file and the size you saved"
+      },
+      "summary": "Make images smaller with adjustable quality, or Gzip any file.",
+      "keywords": "compress compression shrink reduce size image file jpg jpeg png webp gif bmp svg gzip zip komprimer komprimering bilde fil størrelse"
     },
     "speedTest": {
       "name": "Speed Test",
-      "description": "Measure your real-time download, upload and latency. Continuous monitoring or one-shot max speed.",
+      "description": "Measure download, upload and latency in real time, or run a one-shot max speed test.",
       "badge": "Real-time",
       "stats": {
         "aLabel": "Tests today",
@@ -161,11 +199,13 @@
         "input": "Your live network connection",
         "process": "Measure download, upload and latency",
         "output": "Real-time speed and ping results"
-      }
+      },
+      "summary": "Measure your internet’s download speed, upload speed, and latency.",
+      "keywords": "speed internet bandwidth download upload ping latency connection mbps hastighet internett båndbredde nedlasting opplasting"
     },
     "qrGenerator": {
       "name": "QR Generator",
-      "description": "Create QR codes for links, text or Wi-Fi with custom colors, and export PNG or SVG, all in your browser.",
+      "description": "Create QR codes for links, text or Wi-Fi with custom colors. Export PNG or SVG in your browser.",
       "badge": "PNG + SVG",
       "stats": {
         "aLabel": "Export formats",
@@ -177,11 +217,13 @@
         "input": "A link, text or Wi-Fi details",
         "process": "Encode it into a QR code",
         "output": "A downloadable PNG or SVG"
-      }
+      },
+      "summary": "Create a QR code for a link, text, or Wi-Fi. Download it as PNG or SVG.",
+      "keywords": "qr code qrcode create generate link url wifi wi fi png svg lag generer kode lenke"
     },
     "qrReader": {
       "name": "QR Reader",
-      "description": "Upload an image of a QR code and decode it instantly, all in your browser.",
+      "description": "Upload an image of a QR code and decode it in your browser.",
       "badge": "Decodes locally",
       "stats": {
         "aLabel": "Input",
@@ -193,7 +235,9 @@
         "input": "A photo or screenshot of a QR code",
         "process": "Decode the embedded data",
         "output": "The URL or text it contains"
-      }
+      },
+      "summary": "Read a QR code from an image to reveal the link or text inside.",
+      "keywords": "qr code qrcode scan read decode image camera qr kode skann les dekod bilde"
     },
     "wcagScanner": {
       "name": "WCAG Scanner",
@@ -209,11 +253,13 @@
         "input": "A site URL to crawl",
         "process": "Audit every page with axe-core",
         "output": "A list of accessibility issues per page"
-      }
+      },
+      "summary": "Scan a website for accessibility issues and review results for each page.",
+      "keywords": "wcag accessibility a11y website audit scan axe contrast tilgjengelighet nettside nettsted skann kontrast"
     },
     "counter": {
       "name": "Counter",
-      "description": "Track people entering and exiting a venue with a simple manual tally. Saved on this device.",
+      "description": "Track people entering and exiting a venue with a simple manual tally. Your count stays on this device.",
       "badge": "Manual tally",
       "stats": {
         "aLabel": "Entered",
@@ -225,11 +271,13 @@
         "input": "Taps as people enter or exit",
         "process": "Tally the running total",
         "output": "A live entered / exited count"
-      }
+      },
+      "summary": "Keep track of people entering and leaving, with a running total.",
+      "keywords": "counter count tally people event attendance capacity occupancy teller tell telling personer arrangement antall"
     },
     "jsonTools": {
       "name": "JSON Tools",
-      "description": "Format, validate and query JSON with a live JSONPath explorer. Pretty-print, minify or sort keys, all in your browser.",
+      "description": "Format, validate and query JSON with a live JSONPath explorer. Pretty-print, minify or sort keys in your browser.",
       "badge": "JSONPath built-in",
       "stats": {
         "aLabel": "Formatting modes",
@@ -241,7 +289,9 @@
         "input": "Raw JSON text",
         "process": "Format, validate or query it with JSONPath",
         "output": "Pretty-printed, minified or filtered JSON"
-      }
+      },
+      "summary": "Format, validate, and explore JSON. Minify data or find values with JSONPath.",
+      "keywords": "json pretty print formatter validate minify format data sort keys jsonpath formater valider data"
     },
     "jwtDecoder": {
       "name": "JWT Decoder",
@@ -257,7 +307,9 @@
         "input": "A JWT token",
         "process": "Decode its header and payload",
         "output": "Readable claims and expiry status"
-      }
+      },
+      "summary": "Read a JWT’s header and payload, inspect claims, and check when it expires.",
+      "keywords": "jwt token decode decoder authentication auth claims expiry expiration dekod token autentisering utløp"
     },
     "encoder": {
       "name": "Encoder / Decoder",
@@ -273,11 +325,13 @@
         "input": "Text to convert",
         "process": "Encode or decode it (Base64, URL, hex…)",
         "output": "The converted text"
-      }
+      },
+      "summary": "Encode or decode text with Base64, URL, HTML entities, and hex.",
+      "keywords": "encode decode base64 base64url url html hex text converter kod dekod tekst koding"
     },
     "hashGenerator": {
       "name": "Hash Generator",
-      "description": "Generate SHA-1, SHA-256, SHA-384 and SHA-512 digests from text or a file, in hex or Base64. WebCrypto computes them locally.",
+      "description": "Generate SHA-1, SHA-256, SHA-384 and SHA-512 digests from text or a file, in hex or Base64. WebCrypto computes them in your browser.",
       "badge": "WebCrypto",
       "stats": {
         "aLabel": "Algorithms",
@@ -289,7 +343,9 @@
         "input": "Text or a file",
         "process": "Hash it with SHA-1 / 256 / 384 / 512",
         "output": "A hex or Base64 digest"
-      }
+      },
+      "summary": "Generate SHA hashes from text or files, with hex and Base64 output.",
+      "keywords": "hash checksum sha1 sha256 sha384 sha512 digest fingerprint file text sjekksum fil tekst"
     },
     "idGenerator": {
       "name": "ID Generator",
@@ -305,7 +361,9 @@
         "input": "A format and batch size",
         "process": "Generate random or time-based IDs",
         "output": "A list of ready-to-use IDs"
-      }
+      },
+      "summary": "Create UUIDs, ULIDs, Nano IDs, and short codes one at a time or in batches.",
+      "keywords": "uuid uuidv4 uuidv7 ulid nanoid nano id unique identifier random bulk batch unik identifikator tilfeldig"
     },
     "regexTester": {
       "name": "Regex Tester",
@@ -321,7 +379,9 @@
         "input": "A pattern and sample text",
         "process": "Match it live with your chosen flags",
         "output": "Highlighted matches, groups and replacements"
-      }
+      },
+      "summary": "Test regular expressions with highlighted matches, capture groups, and replacements.",
+      "keywords": "regex regexp regular expression pattern match replace test regulære uttrykk mønster treff erstatt"
     },
     "cronExplainer": {
       "name": "Cron Explainer",
@@ -337,7 +397,9 @@
         "input": "A cron expression",
         "process": "Parse its schedule",
         "output": "A plain-language description and next run times"
-      }
+      },
+      "summary": "Turn a cron expression into a readable schedule and see the next runs.",
+      "keywords": "cron schedule scheduling crontab daily weekly job timer plan tidsplan kjøring daglig ukentlig"
     },
     "timestampConverter": {
       "name": "Timestamp Converter",
@@ -353,7 +415,9 @@
         "input": "A timestamp or date",
         "process": "Convert between epoch, ISO and local time",
         "output": "All formats plus a live relative time"
-      }
+      },
+      "summary": "Convert Unix timestamps, ISO dates, and local time across time zones.",
+      "keywords": "timestamp unix epoch date time iso timezone utc convert tidsstempel dato tid tidssone konverter"
     },
     "subnetCalculator": {
       "name": "Subnet Calculator",
@@ -369,7 +433,9 @@
         "input": "A CIDR block or IP address",
         "process": "Calculate network, broadcast and host ranges",
         "output": "Subnet details and optional splits"
-      }
+      },
+      "summary": "Calculate IPv4 subnets, address ranges, and usable hosts from a CIDR block.",
+      "keywords": "subnet ipv4 ip cidr network mask broadcast host range address subnett nettverk adresse maske"
     },
     "passwordGenerator": {
       "name": "Password Generator",
@@ -385,7 +451,9 @@
         "input": "Your length and character preferences",
         "process": "Generate a random password or passphrase",
         "output": "A strong password with entropy and strength shown"
-      }
+      },
+      "summary": "Create strong random passwords or memorable passphrases.",
+      "keywords": "password passphrase generate random secure security strength entropy passord passordfrase lag generer sikker sikkerhet"
     },
     "passwordChecker": {
       "name": "Password Checker",
@@ -401,7 +469,9 @@
         "input": "A password you type",
         "process": "Score entropy and check common patterns",
         "output": "A strength rating and estimated crack time"
-      }
+      },
+      "summary": "Check a password’s strength, common patterns, and estimated crack time.",
+      "keywords": "password check strength secure security entropy crack passord sjekk styrke sikkerhet"
     }
   },
   "footer": {
@@ -497,7 +567,7 @@
     "reset": "Reset"
   },
   "qrReader": {
-    "privacyNote": "Decoded locally in your browser. The image never gets uploaded.",
+    "privacyNote": "Decoded in your browser. The image stays on your device.",
     "imageTitle": "Image",
     "clear": "Clear",
     "dropTitle": "Drop a QR code image here",
@@ -541,7 +611,8 @@
       "serious": "Serious",
       "moderate": "Moderate",
       "minor": "Minor"
-    }
+    },
+    "urlLabel": "Website URL to scan"
   },
   "counter": {
     "title": "Entrance Counter",
@@ -550,23 +621,24 @@
     "exited": "Exited",
     "netInside": "Net inside",
     "tapToCorrect": "tap number to correct",
-    "actionHint": "Big + counts instantly. Small − and manual edits ask you to confirm first.",
+    "actionHint": "Tap the big + to count. Small − and manual edits ask you to confirm.",
     "savedNote": "Saved on this device",
     "resetLabel": "Reset counts",
     "cancel": "Cancel",
     "confirm": "Confirm",
     "confirmRemoveTitle": "Remove one entry?",
-    "confirmRemoveBody": "This will subtract 1 from {{label}}, currently {{from}} → {{to}}. Use this to correct a mistap.",
+    "confirmRemoveBody": "Subtract 1 from {{label}}: {{from}} → {{to}}. Use this to correct a mistap.",
     "confirmEditTitle": "Set count manually?",
-    "confirmEditBody": "Change {{label}} from {{from}} to {{to}}. Only do this to fix an incorrect total.",
+    "confirmEditBody": "Change {{label}} from {{from}} to {{to}}. Use this to fix a wrong total.",
     "confirmResetTitle": "Reset all counts?",
-    "confirmResetBody": "This sets both Entered and Exited back to 0. This cannot be undone."
+    "confirmResetBody": "Entered and Exited go back to 0. You can't undo this.",
+    "editCount": "Edit {{label}} count"
   },
   "screenshotAnnotator": {
     "title": "Screenshot Annotator",
     "subtitle": "Screenshot → annotated markdown · browser-only, no uploads",
     "dropTitle": "Paste, drop or click to add a screenshot",
-    "dropHint": "Press Ctrl+V anywhere on this page to paste straight from Print Screen. Your image never leaves the browser.",
+    "dropHint": "Press Ctrl+V on this page to paste from Print Screen. Your image stays in the browser.",
     "tool": {
       "crop": "Crop",
       "arrow": "Arrow",
@@ -599,7 +671,7 @@
     "ocrLoading": "Loading OCR engine. First run downloads about 2 MB from a CDN…",
     "filenameLabel": "Filename in markdown",
     "embedLabel": "Embed image as base64 data URI",
-    "embedWarn": "Data URI is ~{{kb}} KB of text. GitHub and GitLab strip these, so use Copy image there instead.",
+    "embedWarn": "Data URI is ~{{kb}} KB of text. GitHub and GitLab strip these, so use Copy image there.",
     "markdownLabel": "Markdown",
     "copyImage": "Copy image",
     "copyMarkdown": "Copy markdown",
@@ -612,7 +684,7 @@
     "errNoLabel": "Type the label text first, then click the canvas.",
     "errNoText": "No readable text found in the image.",
     "errOcr": "OCR failed to run. Check your connection and try again.",
-    "ocrPrivacy": "Your image is never uploaded. OCR runs locally, but the first run downloads its model from a public CDN (jsDelivr).",
+    "ocrPrivacy": "Your image stays on your device. OCR runs in your browser, but the first run downloads its model from a public CDN (jsDelivr).",
     "removeImage": "Remove image",
     "removeConfirm": "Discard annotations?"
   },
@@ -620,7 +692,7 @@
     "copy": "Copy",
     "copied": "Copied!",
     "copyFailed": "Copy failed",
-    "localOnly": "Runs entirely in your browser. Nothing gets uploaded.",
+    "localOnly": "Runs in your browser. Nothing leaves your device.",
     "sample": "Load sample",
     "clear": "Clear",
     "showInfo": "Show details",
@@ -628,7 +700,8 @@
     "howItWorks": "How it works",
     "stepInput": "Input",
     "stepProcess": "Process",
-    "stepOutput": "Output"
+    "stepOutput": "Output",
+    "loading": "Loading tool…"
   },
   "jsonTools": {
     "inputTitle": "Input",
@@ -666,7 +739,7 @@
     "queryResult": "Result"
   },
   "jwtDecoder": {
-    "privacyNote": "Decoding happens entirely in your browser. The token never gets sent anywhere.",
+    "privacyNote": "Your browser decodes the token. It stays on your device.",
     "inputTitle": "Token",
     "inputLabel": "JWT",
     "inputHint": "Paste a full token, with or without the \"Bearer \" prefix.",
@@ -695,7 +768,7 @@
       "name": "Name",
       "roles": "Roles"
     },
-    "signatureWarning": "This only decodes the token. It doesn't verify the signature. Never trust these claims without checking them against the issuer's key.",
+    "signatureWarning": "This decodes the token without verifying its signature. Check the claims against the issuer's key before you trust them.",
     "validity": {
       "valid": "Valid until {{date}}",
       "expired": "Expired {{date}}",
@@ -747,7 +820,7 @@
     }
   },
   "hashGenerator": {
-    "privacyNote": "Hashing runs locally with the browser's WebCrypto API. Nothing gets uploaded.",
+    "privacyNote": "Your browser hashes the input with its WebCrypto API. Nothing leaves your device.",
     "errors": {
       "digest": "Couldn't compute the hash.",
       "tooLarge": "That file is larger than 256 MB. Pick a smaller one.",
@@ -772,7 +845,7 @@
     "sha1Note": "SHA-1 is no longer collision-resistant. Prefer SHA-256 or stronger wherever security matters."
   },
   "idGenerator": {
-    "privacyNote": "Every ID is generated locally with crypto.getRandomValues. Nothing gets sent anywhere.",
+    "privacyNote": "Your browser generates IDs with crypto.getRandomValues. Nothing leaves your device.",
     "settingsTitle": "Settings",
     "regenerate": "Regenerate",
     "kindLabel": "ID type",
@@ -841,7 +914,7 @@
     "expressionHint": "Standard 5-field cron syntax (minute hour day month weekday), or a macro like @daily.",
     "errors": {
       "empty": "Enter a cron expression.",
-      "fieldCount": "A cron expression needs exactly 5 space-separated fields. Found {{token}}.",
+      "fieldCount": "A cron expression needs 5 space-separated fields. Found {{token}}.",
       "range": "\"{{token}}\" is out of range for the {{field}} field.",
       "syntax": "Couldn't parse \"{{token}}\" in the {{field}} field."
     },
@@ -961,7 +1034,7 @@
     }
   },
   "passwordGenerator": {
-    "privacyNote": "Generated locally with the Web Crypto RNG. Never sent anywhere, never stored.",
+    "privacyNote": "Your browser generates passwords with the Web Crypto RNG. It sends and stores nothing.",
     "resultTitle": "Password",
     "regenerate": "Regenerate",
     "errors": {
@@ -1015,7 +1088,7 @@
     }
   },
   "passwordChecker": {
-    "privacyNote": "Checked locally with the same math as the generator. Never sent anywhere, never stored.",
+    "privacyNote": "Your browser checks the password with the same math as the generator. It sends and stores nothing.",
     "inputTitle": "Password",
     "placeholder": "Type a password to check…",
     "show": "Show password",
@@ -1037,5 +1110,22 @@
       "noRepeat": "No repeated character runs (aaa)",
       "noSequential": "No sequential runs (abc, 123, qwe)"
     }
+  },
+  "seo": {
+    "description": "Find tools for everyday tasks: convert and compress files, format JSON, create QR codes, check passwords, and more. No account needed.",
+    "enableJavaScript": "Enable JavaScript to use the interactive tools. You can browse the toolbox below."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "This page does not exist. Search the toolbox to find what you need."
+  },
+  "spotlight": {
+    "close": "Close search",
+    "results": "Matching tools",
+    "noResultsHint": "Try a shorter term like “image”, “JSON”, or “password”.",
+    "navigate": "Navigate",
+    "open": "Open tool",
+    "dismiss": "Close",
+    "keyboardHint": "Use the up and down arrow keys to choose a tool, Enter to open it, and Escape to close search."
   }
 }
