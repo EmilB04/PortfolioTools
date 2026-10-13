@@ -1,51 +1,61 @@
-# PortfolioTools
+<h1 align="center">PortfolioTools</h1>
 
-A collection of browser-based tools for files, development, dates, networks,
-QR codes, accessibility, and everyday tasks.
+<p align="center"><strong>A toolbox in your browser.</strong><br />
+Handy tools for files, development, dates, networks, QR codes, accessibility and everyday tasks.</p>
 
-## Find a tool
+<p align="center">
+  <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white" alt="React 19" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Cloudflare-Pages-F38020?logo=cloudflare&logoColor=white" alt="Cloudflare Pages" />
+  <img src="https://img.shields.io/badge/Languages-NO%20%2F%20EN-785A85" alt="Norwegian and English" />
+</p>
 
-The landing page opens a Spotlight-style search window. Results update instantly as you type. Search by a tool name, format, or task (for
-example, `format JSON`, `shrink image`, or `UUID`), or browse the six categories.
-Tool names and task aliases are ranked ahead of incidental description matches.
+## Find a tool fast
 
-- **⌘K / Ctrl+K:** open and focus search from any tool page.
-- **↑ / ↓:** select a result.
-- **Enter:** open the selected tool.
-- **Escape:** close the window and return focus to its opener.
-- Search opens over the current page without navigating away. Category filters remain in the URL; existing `?q=…` and `?focus=search` links open the search window.
+The landing page opens a Spotlight-style search. Search by tool name, format or task, for example `format JSON`, `shrink image` or `UUID`, or browse the six categories. Names and task aliases rank ahead of incidental description matches.
 
-English and Norwegian both include concise tool summaries and search keywords.
-`src/tools/registry.ts` remains the source for dashboard and navigation entries;
-add each tool's `name`, `summary`, `description`, `badge`, and `keywords` to both
-locale files.
+| Key | Action |
+| --- | --- |
+| <kbd>⌘K</kbd> / <kbd>Ctrl+K</kbd> | Open search from any tool page |
+| <kbd>↑</kbd> / <kbd>↓</kbd> | Select a result |
+| <kbd>Enter</kbd> | Open the selected tool |
+| <kbd>Esc</kbd> | Close and return focus |
+
+Search opens over the current page without navigating. Category filters stay in the URL, and existing `?q=…` and `?focus=search` links still open the search window.
+
+## What's in the box
+
+JSON tools, JWT decoder, regex tester, cron explainer, encoders and hashes, ID and password generators, file converter and compressor, QR generator and reader, screenshot annotator, timestamp converter, subnet calculator, speed test, WCAG scanner and more. Most tools process data locally in your browser. Speed tests use Cloudflare's network endpoints, and website accessibility scans use the scanning API.
 
 ## Design
 
-PortfolioTools shares PortfolioPortal and PortfolioV2's Terreng direction:
-peat and ivory surfaces, a fixed amber accent, organic card shapes, subtle
-contour lines, Bricolage Grotesque, and Newsreader. Fonts are served locally.
-Light, dark, and system appearance modes share this palette; there is no
-accent-color setting or stored accent override.
+PortfolioTools shares PortfolioPortal and PortfolioV2's Terreng direction: peat and ivory surfaces, a fixed amber accent, organic card shapes, subtle contour lines, Bricolage Grotesque and Newsreader, all served locally. Light, dark and system modes share one palette.
 
-## Development
+## Run locally
 
-```sh
+```bash
 npm install
 npm run dev
-npm run build
 npm run lint
+npm run build
 ```
 
-Most tools process data locally. Speed tests use Cloudflare's network endpoints,
-and website accessibility scans use the scanning API.
+## SEO and accessibility
 
-### SEO and semantics
+`npm run build` generates a separate HTML file for every registered tool with its own title, description, canonical URL, social metadata and structured data. Each page has a visible intro and crawlable links before JavaScript runs. The build also writes `robots.txt`, `sitemap.xml` and a `404.html` fallback, and unknown routes are marked `noindex`.
 
-`npm run build` generates a separate HTML file for every registered tool, with a unique title, description, canonical URL, social metadata, and structured data. Each page includes a visible tool introduction and crawlable toolbox links before JavaScript runs. `src/lib/seo.ts` supplies the same metadata during navigation and language changes; search/filter parameters stay out of canonical URLs.
+After a build, run `npm run check:seo` to verify metadata, links, structured data and route coverage. Pass a local Pages URL to also check HTTP responses: `npm run check:seo -- http://127.0.0.1:8789`.
 
-Run `npm run check:seo` after a build to verify metadata, crawlable links, structured data, and route coverage. Pass a local Cloudflare Pages URL to also check HTTP responses: `npm run check:seo -- http://127.0.0.1:8789`.
+Interactive tools need JavaScript. Tool pages load on demand, so the landing page never downloads file conversion, OCR or chart libraries upfront. Keyboard users get a skip link, controls have labels or accessible names, and selection buttons expose their state.
 
-The build also generates `robots.txt`, `sitemap.xml`, and a `404.html` fallback. Cloudflare Pages serves the generated HTML at clean URLs and uses the fallback for missing pages. The React wildcard route marks unknown pages `noindex`. Interactive tools need JavaScript; generated introductory content and navigation remain usable without it. Tool pages load on demand so the landing page does not download file conversion, OCR, or chart libraries upfront.
+## Adding a tool
 
-Keyboard users can skip directly to the main content. Controls use associated labels or accessible names, selection buttons expose their state, and enabled buttons have pointer cursors. Disabled buttons retain a disabled cursor.
+Register it in `src/tools/registry.ts`, the source for dashboard and navigation entries, and add its `name`, `summary`, `description`, `badge` and `keywords` to both locale files.
+
+## Built with
+
+React · TypeScript · Vite · Tailwind CSS · Framer Motion · Cloudflare Pages Functions
+
+---
+
+Created by [Emil Berglund](https://github.com/EmilB04)
